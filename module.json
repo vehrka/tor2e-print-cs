@@ -13,6 +13,9 @@
       { "id": "tor2e", "type": "system", "compatibility": { "minimum": "5.0.0" } }
     ]
   },
+  "url": "#{URL}#",
+  "manifest": "#{MANIFEST}#",
+  "download": "#{DOWNLOAD}#",
   "flags": {
     "hotReload": {
       "extensions": ["hbs", "css", "json"],
