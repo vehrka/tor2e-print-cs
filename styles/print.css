@@ -1,0 +1,478 @@
+@page { margin: 8mm; }
+
+/* Header button on legacy ActorSheet — tor2e header CSS makes link text huge.
+   Force compact size + reset font. */
+.window-app .window-header a.tor2eprint-btn,
+.window-app .window-header .tor2eprint-btn {
+  font-family: inherit !important;
+  font-size: 12px !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  line-height: 1.2 !important;
+  color: inherit !important;
+  padding: 0 4px !important;
+  margin: 0 !important;
+}
+.tor2eprint-btn {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  color: inherit;
+  font-size: 12px;
+}
+
+.tor2e-print {
+  font-family: "Book Antiqua", "Palatino Linotype", Palatino, Georgia, serif;
+  color: #2a1810;
+  background: #f5ecd6;
+  padding: 6mm;
+  font-size: 9pt;
+  line-height: 1.25;
+  display: flex;
+  flex-direction: column;
+  gap: 3mm;
+}
+
+.tor2e-print h1, .tor2e-print h2, .tor2e-print h3 { color: #8b1a1a; }
+
+.tor2e-print h2 {
+  font-size: 11pt;
+  margin: 0 0 2mm;
+  padding-bottom: 1mm;
+  border-bottom: 1px solid #8b1a1a;
+  font-variant: small-caps;
+  letter-spacing: 0.06em;
+  text-align: center;
+}
+
+.tor2e-print h3 {
+  font-size: 9.5pt;
+  margin: 2mm 0 1mm;
+  font-variant: small-caps;
+  letter-spacing: 0.04em;
+  text-align: center;
+  border-bottom: 1px dotted #8b1a1a;
+  padding-bottom: 0.5mm;
+}
+
+.tor2e-print .tp-label {
+  color: #8b1a1a;
+  font-weight: bold;
+  font-variant: small-caps;
+}
+.tor2e-print .tp-muted { color: #8a7a6a; font-style: italic; }
+
+/* Banner */
+.tp-banner {
+  text-align: center;
+  border-top: 2px solid #8b1a1a;
+  border-bottom: 2px solid #8b1a1a;
+  padding: 1mm 0;
+  background: rgba(139, 26, 26, 0.04);
+  position: relative;
+}
+.tp-banner::before, .tp-banner::after {
+  content: "❦";
+  color: #8b1a1a;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12pt;
+}
+.tp-banner::before { left: 8mm; }
+.tp-banner::after  { right: 8mm; }
+.tp-banner-title {
+  font-variant: small-caps;
+  letter-spacing: 0.4em;
+  color: #8b1a1a;
+  font-size: 11pt;
+}
+.tp-banner-name {
+  font-family: "Trajan Pro", "Cinzel", "Book Antiqua", serif;
+  font-size: 18pt;
+  color: #2a1810;
+  letter-spacing: 0.05em;
+  font-style: italic;
+}
+
+/* Block (boxed sections) */
+.tor2e-print .tp-block {
+  break-inside: avoid;
+  page-break-inside: avoid;
+  border: 1px solid #c5a677;
+  padding: 2.5mm 3mm 2mm;
+  background: rgba(255, 252, 240, 0.5);
+}
+
+/* Top grid: character | center (emblem+stature+adventurer) | gear */
+.tp-grid-top {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 4mm;
+  align-items: stretch;
+}
+
+.tp-character {}
+
+.tp-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2mm;
+}
+.tp-emblem img {
+  width: 30mm;
+  height: 30mm;
+  border-radius: 50%;
+  border: 2px solid #8b1a1a;
+  object-fit: cover;
+  background: #fff;
+}
+.tp-stature-row {
+  display: flex;
+  gap: 6mm;
+  margin-top: 1mm;
+}
+.tp-stature-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5mm;
+}
+.tp-stature-label {
+  font-variant: small-caps;
+  font-weight: bold;
+  color: #8b1a1a;
+  font-size: 8pt;
+  letter-spacing: 0.06em;
+}
+.tp-diamond {
+  width: 10mm;
+  height: 10mm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 1.5px solid #8b1a1a;
+  transform: rotate(45deg);
+}
+.tp-diamond-val {
+  transform: rotate(-45deg);
+  font-size: 13pt;
+  font-weight: bold;
+  color: #2a1810;
+  line-height: 1;
+}
+.tp-fellowship {
+  width: 100%;
+  margin-top: 5mm;
+}
+
+.tp-gear {}
+
+/* Definition list */
+.tp-dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.5mm 3mm;
+  margin: 0;
+}
+.tp-dl dt {
+  color: #8b1a1a;
+  font-weight: bold;
+  font-variant: small-caps;
+  font-size: 10.5pt;
+  white-space: nowrap;
+}
+.tp-dl dd {
+  margin: 0;
+  font-size: 10.5pt;
+  word-break: break-word;
+}
+
+/* Combined mid grid: rewards | strength | heart | wits | endurance | hope | conditions
+   Row 1 = attrs (rewards/endurance/hope/conditions span both rows)
+   Row 2 = skill columns under each attribute */
+.tp-grid-mid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 0.8fr;
+  grid-auto-rows: auto;
+  gap: 3mm;
+  align-items: stretch;
+}
+.tp-grid-mid .tp-span-rows { grid-row: span 2; }
+.tp-resource-col {
+  display: flex;
+  flex-direction: column;
+  gap: 3mm;
+}
+.tp-resource-col .tp-resource-cell { flex: 1; }
+.tp-skill-col {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.tp-attr-cell {
+  border: 1px solid #c5a677;
+  background: rgba(255, 252, 240, 0.5);
+  padding: 2mm;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1mm;
+}
+.tp-attr-label {
+  font-variant: small-caps;
+  font-weight: bold;
+  color: #8b1a1a;
+  letter-spacing: 0.08em;
+  font-size: 10pt;
+}
+/* TN diamond (big, center) + rating diamond (small, top-right) + TN label (bottom-left) */
+.tp-attr-tngroup {
+  position: relative;
+  width: 24mm;
+  height: 16mm;
+  margin: 1mm 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tp-attr-shape {
+  width: 13mm;
+  height: 13mm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 2px solid #8b1a1a;
+  transform: rotate(45deg);
+}
+.tp-attr-value {
+  transform: rotate(-45deg);
+  font-size: 13pt;
+  font-weight: bold;
+  color: #8b1a1a;
+  line-height: 1;
+}
+.tp-attr-rating {
+  position: absolute;
+  top: 0;
+  right: 1mm;
+  width: 7mm;
+  height: 7mm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 1.5px solid #8b1a1a;
+  transform: rotate(45deg);
+}
+.tp-attr-rating-val {
+  transform: rotate(-45deg);
+  font-size: 9pt;
+  font-weight: bold;
+  color: #8b1a1a;
+  line-height: 1;
+}
+.tp-attr-tnlabel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  font-variant: small-caps;
+  color: #8b1a1a;
+  font-size: 9pt;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+}
+
+.tp-resource-cell {
+  border: 1px solid #c5a677;
+  background: rgba(255, 252, 240, 0.5);
+  padding: 2mm;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.tp-resource-cell h3 { width: 100%; margin: 0 0 1.5mm; }
+.tp-resource-big {
+  font-size: 14pt;
+  font-weight: bold;
+  color: #2a1810;
+  margin: 1mm 0;
+}
+.tp-resource-sub {
+  display: flex;
+  flex-direction: column;
+  font-size: 10pt;
+  color: #5a3a2a;
+  align-items: center;
+  gap: 0.5mm;
+}
+.tp-resource-sub-bottom { margin-top: auto; }
+.tp-conditions {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 10.5pt;
+  width: 100%;
+}
+.tp-conditions li {
+  padding: 0.3mm 0;
+  border-bottom: 1px dotted #c5a677;
+  display: flex;
+  align-items: center;
+  gap: 2mm;
+}
+.tp-conditions li:last-child { border-bottom: 0; }
+.tp-check {
+  display: inline-block;
+  width: 3.2mm;
+  height: 3.2mm;
+  border: 1px solid #2a1810;
+  background: #fff;
+  flex-shrink: 0;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.tp-skill {
+  display: grid;
+  grid-template-columns: 4mm 1fr 4mm auto;
+  gap: 1.5mm;
+  align-items: center;
+  font-size: 10.5pt;
+  padding: 0.3mm 0;
+  border-bottom: 1px dotted #d5b88a;
+}
+.tp-flag-fav, .tp-flag-mag { min-width: 4mm; }
+.tp-skill-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tp-pips { white-space: nowrap; }
+.tp-pip {
+  display: inline-block;
+  width: 2.2mm;
+  height: 2.2mm;
+  border: 1px solid #2a1810;
+  margin-right: 0.4mm;
+  vertical-align: middle;
+  background: transparent;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  transform: rotate(45deg);
+}
+.tp-pip.filled { background: #8b1a1a; border-color: #8b1a1a; }
+.tp-flag {
+  display: inline-block;
+  width: 3.2mm;
+  height: 3.2mm;
+  text-align: center;
+  font-size: 6.5pt;
+  font-weight: bold;
+  line-height: 3.2mm;
+  border: 1px solid #8b1a1a;
+  border-radius: 50%;
+  margin-left: 0.5mm;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.tp-flag.tp-fav { background: #8b1a1a; color: #fff; }
+.tp-flag.tp-mag { background: #f5ecd6; color: #8b1a1a; }
+
+/* Generic lists */
+.tp-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 8.5pt;
+}
+.tp-list li {
+  padding: 0.3mm 0;
+  border-bottom: 1px dotted #d5b88a;
+}
+.tp-list li:last-child { border-bottom: 0; }
+.tp-gear .tp-list { font-size: 10.5pt; }
+
+/* Combat row at bottom (full width strip): proficiencies | weapons | armour */
+.tp-grid-combat {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr;
+  gap: 3mm;
+}
+
+/* Tables */
+.tp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 10pt;
+}
+.tp-table th, .tp-table td {
+  border: 1px solid #c5a677;
+  padding: 0.6mm 1.2mm;
+  text-align: left;
+}
+.tp-table th {
+  background: #e9dcb8;
+  color: #8b1a1a;
+  font-variant: small-caps;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.tp-equipped td:first-child::before {
+  content: "● ";
+  color: #8b1a1a;
+}
+
+.tp-resource {
+  display: flex;
+  justify-content: space-between;
+  padding: 1mm 0 0;
+  margin-top: 1mm;
+  border-top: 1px dotted #c5a677;
+}
+
+/* Print rules: kill chrome, fill page */
+@media print {
+  body > *:not(.tor2eprint-window):not(:has(.tor2e-print)) { display: none !important; }
+  .tor2eprint-window,
+  .application:has(.tor2e-print),
+  .window-app:has(.tor2e-print) {
+    position: static !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    max-width: none !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: 0 !important;
+    background: #fff !important;
+    transform: none !important;
+    overflow: visible !important;
+  }
+  .tor2eprint-window > .window-header,
+  .tor2eprint-window .window-resize-handle,
+  .application:has(.tor2e-print) > .window-header,
+  .application:has(.tor2e-print) .window-resize-handle { display: none !important; }
+  .tor2eprint-window .window-content,
+  .application:has(.tor2e-print) .window-content {
+    overflow: visible !important;
+    height: auto !important;
+    padding: 0 !important;
+    background: #fff !important;
+  }
+  .tor2e-print {
+    padding: 0 !important;
+    background: #fff !important;
+    width: 100% !important;
+  }
+  .tor2e-print .tp-block,
+  .tp-attr-cell,
+  .tp-resource-cell { background: #fff !important; }
+}

@@ -1,0 +1,47 @@
+{
+  "TOR2EPRINT": {
+    "PrintSheet": "Print Sheet",
+    "Sections": {
+      "Attributes": "Attributes",
+      "Skills": "Common Skills",
+      "Combat": "Combat Proficiencies",
+      "Weapons": "Weapons",
+      "Armour": "Armour",
+      "Rewards": "Rewards",
+      "Virtues": "Virtues",
+      "Traits": "Traits",
+      "History": "History",
+      "Biography": "Biography",
+      "Resources": "Resources",
+      "Conditions": "Conditions",
+      "Injury": "Injury",
+      "Stature": "Stature"
+    },
+    "Labels": {
+      "Favoured": "F",
+      "Magical": "M",
+      "TargetNumber": "TN",
+      "Damage": "Damage",
+      "Injury": "Injury",
+      "Load": "Load",
+      "Protection": "Protection",
+      "Notes": "Notes",
+      "Name": "Name",
+      "Endurance": "Endurance",
+      "Hope": "Hope",
+      "Shadow": "Shadow",
+      "ShadowPoints": "Shadow Points",
+      "ShadowScars": "Shadow Scars",
+      "Temporary": "Temporary",
+      "Parry": "Parry",
+      "Fellowship": "Fellowship",
+      "Patron": "Patron",
+      "SkillPoints": "Skill Points",
+      "AdventurePoints": "Adventure Points",
+      "Miserable": "Miserable",
+      "Wounded": "Wounded",
+      "Poisoned": "Poisoned",
+      "Weary": "Weary"
+    }
+  }
+}

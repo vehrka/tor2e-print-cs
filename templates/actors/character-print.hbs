@@ -1,0 +1,263 @@
+<section class="tor2e-print">
+
+  <header class="tp-banner">
+    <div class="tp-banner-title">Character</div>
+    <div class="tp-banner-name">{{name}}</div>
+  </header>
+
+  <div class="tp-grid-top">
+
+    <section class="tp-block tp-character">
+      <h2>Character</h2>
+      <dl class="tp-dl">
+        <dt>{{localize "tor2e.actors.biography.culture"}}</dt><dd>{{biography.culture.value}}</dd>
+        <dt>{{localize "tor2e.actors.biography.calling"}}</dt><dd>{{callingLabel}}</dd>
+        <dt>{{localize "tor2e.actors.biography.standardOfLiving"}}</dt><dd>{{standardOfLivingLabel}}</dd>
+        <dt>{{localize "tor2e.actors.biography.culturalBlessing"}}</dt><dd>{{biography.culturalBlessing.value}}</dd>
+        <dt>{{localize "tor2e.actors.biography.shadowPath"}}</dt><dd>{{biography.shadowPath.value}}</dd>
+        <dt>{{localize "tor2e.actors.biography.fellowshipFocus"}}</dt><dd>{{biography.fellowshipFocus.value}}</dd>
+        <dt>{{localize "tor2e.actors.biography.age"}}</dt><dd>{{biography.age.value}}</dd>
+        <dt>{{localize "TOR2EPRINT.Labels.Fellowship"}}</dt><dd></dd>
+        <dt>{{localize "TOR2EPRINT.Labels.SkillPoints"}}</dt><dd></dd>
+        <dt>{{localize "TOR2EPRINT.Labels.AdventurePoints"}}</dt><dd></dd>
+      </dl>
+    </section>
+
+    <section class="tp-center">
+      <div class="tp-emblem">
+        {{#if img}}<img src="{{img}}" alt="{{name}}"/>{{/if}}
+      </div>
+      <div class="tp-stature-row">
+        <div class="tp-stature-cell">
+          <span class="tp-stature-label">{{localize "tor2e.statureStats.valour"}}</span>
+          <div class="tp-diamond">
+            <span class="tp-diamond-val">{{stature.valour.value}}</span>
+          </div>
+        </div>
+        <div class="tp-stature-cell">
+          <span class="tp-stature-label">{{localize "tor2e.statureStats.wisdom"}}</span>
+          <div class="tp-diamond">
+            <span class="tp-diamond-val">{{stature.wisdom.value}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="tp-fellowship">
+        <h3>Adventurer</h3>
+        <dl class="tp-dl">
+          <dt>Standing</dt><dd>{{biography.title.value}}</dd>
+          <dt>{{localize "TOR2EPRINT.Labels.Patron"}}</dt><dd></dd>
+        </dl>
+      </div>
+    </section>
+
+    <section class="tp-block tp-gear">
+      <h2>Gear</h2>
+      <ul class="tp-list">
+        {{#each weapons}}<li><strong>{{this.name}}</strong></li>{{/each}}
+        {{#each armours}}<li>{{this.name}}</li>{{/each}}
+        {{#each equipment}}<li>{{this.name}}{{#if this.showQty}} ×{{this.quantity}}{{/if}}</li>{{/each}}
+        {{#unless weapons}}{{#unless armours}}{{#unless equipment}}<li class="tp-muted">—</li>{{/unless}}{{/unless}}{{/unless}}
+      </ul>
+    </section>
+
+  </div>
+
+  <div class="tp-grid-mid">
+
+    <section class="tp-block tp-rewards-virtues tp-span-rows">
+      <h2>{{localize "TOR2EPRINT.Sections.Rewards"}}</h2>
+      <ul class="tp-list">
+        {{#each rewards}}<li><strong>{{this.name}}</strong></li>{{else}}<li class="tp-muted">—</li>{{/each}}
+      </ul>
+      <h2>{{localize "TOR2EPRINT.Sections.Virtues"}}</h2>
+      <ul class="tp-list">
+        {{#each virtues}}<li><strong>{{this.name}}</strong></li>{{else}}<li class="tp-muted">—</li>{{/each}}
+      </ul>
+      <h2>{{localize "TOR2EPRINT.Sections.Traits"}}</h2>
+      <ul class="tp-list">
+        {{#each traits}}<li><strong>{{this.name}}</strong></li>{{else}}<li class="tp-muted">—</li>{{/each}}
+      </ul>
+    </section>
+
+    <div class="tp-attr-cell">
+      <div class="tp-attr-label">{{localize "tor2e.stats.strength"}}</div>
+      <div class="tp-attr-tngroup">
+        <span class="tp-attr-tnlabel">{{localize "TOR2EPRINT.Labels.TargetNumber"}}</span>
+        <div class="tp-attr-shape">
+          <span class="tp-attr-value">{{attributes.strength.tn}}</span>
+        </div>
+        <div class="tp-attr-rating">
+          <span class="tp-attr-rating-val">{{attributes.strength.value}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tp-attr-cell">
+      <div class="tp-attr-label">{{localize "tor2e.stats.heart"}}</div>
+      <div class="tp-attr-tngroup">
+        <span class="tp-attr-tnlabel">{{localize "TOR2EPRINT.Labels.TargetNumber"}}</span>
+        <div class="tp-attr-shape">
+          <span class="tp-attr-value">{{attributes.heart.tn}}</span>
+        </div>
+        <div class="tp-attr-rating">
+          <span class="tp-attr-rating-val">{{attributes.heart.value}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tp-attr-cell">
+      <div class="tp-attr-label">{{localize "tor2e.stats.wits"}}</div>
+      <div class="tp-attr-tngroup">
+        <span class="tp-attr-tnlabel">{{localize "TOR2EPRINT.Labels.TargetNumber"}}</span>
+        <div class="tp-attr-shape">
+          <span class="tp-attr-value">{{attributes.wits.tn}}</span>
+        </div>
+        <div class="tp-attr-rating">
+          <span class="tp-attr-rating-val">{{attributes.wits.value}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tp-resource-col tp-span-rows">
+      <div class="tp-resource-cell">
+        <h3>{{localize "TOR2EPRINT.Labels.Endurance"}}</h3>
+        <div class="tp-resource-big">{{resources.endurance.max}}</div>
+      </div>
+      <div class="tp-resource-cell">
+        <h3>{{localize "TOR2EPRINT.Labels.Hope"}}</h3>
+        <div class="tp-resource-big">{{resources.hope.max}}</div>
+        <div class="tp-resource-sub tp-resource-sub-bottom">
+          <span>{{localize "TOR2EPRINT.Labels.ShadowPoints"}}:</span>
+          <span>{{localize "TOR2EPRINT.Labels.ShadowScars"}}:</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tp-resource-col tp-span-rows">
+      <div class="tp-resource-cell">
+        <h3>{{localize "TOR2EPRINT.Sections.Conditions"}}</h3>
+        <ul class="tp-conditions">
+          <li><span class="tp-check"></span>{{localize "TOR2EPRINT.Labels.Miserable"}}</li>
+          <li><span class="tp-check"></span>{{localize "TOR2EPRINT.Labels.Wounded"}}</li>
+          <li><span class="tp-check"></span>{{localize "TOR2EPRINT.Labels.Poisoned"}}</li>
+          <li><span class="tp-check"></span>{{localize "TOR2EPRINT.Labels.Weary"}}</li>
+        </ul>
+      </div>
+      <div class="tp-resource-cell">
+        <h3>{{localize "TOR2EPRINT.Sections.Injury"}}</h3>
+      </div>
+    </div>
+
+    <ul class="tp-skill-col">
+      {{#each skillsByAttr.strength}}
+      <li class="tp-skill">
+        <span class="tp-flag-fav">
+          {{#if this.favoured}}<span class="tp-flag tp-fav">F</span>{{/if}}
+        </span>
+        <span class="tp-skill-name">{{localize this.label}}</span>
+        <span class="tp-flag-mag">
+          {{#if this.magical}}<span class="tp-flag tp-mag">M</span>{{/if}}
+        </span>
+        <span class="tp-pips">
+          {{#each this.pips}}<span class="tp-pip {{#if this.filled}}filled{{/if}}"></span>{{/each}}
+        </span>
+      </li>
+      {{/each}}
+    </ul>
+
+    <ul class="tp-skill-col">
+      {{#each skillsByAttr.heart}}
+      <li class="tp-skill">
+        <span class="tp-flag-fav">
+          {{#if this.favoured}}<span class="tp-flag tp-fav">F</span>{{/if}}
+        </span>
+        <span class="tp-skill-name">{{localize this.label}}</span>
+        <span class="tp-flag-mag">
+          {{#if this.magical}}<span class="tp-flag tp-mag">M</span>{{/if}}
+        </span>
+        <span class="tp-pips">
+          {{#each this.pips}}<span class="tp-pip {{#if this.filled}}filled{{/if}}"></span>{{/each}}
+        </span>
+      </li>
+      {{/each}}
+    </ul>
+
+    <ul class="tp-skill-col">
+      {{#each skillsByAttr.wits}}
+      <li class="tp-skill">
+        <span class="tp-flag-fav">
+          {{#if this.favoured}}<span class="tp-flag tp-fav">F</span>{{/if}}
+        </span>
+        <span class="tp-skill-name">{{localize this.label}}</span>
+        <span class="tp-flag-mag">
+          {{#if this.magical}}<span class="tp-flag tp-mag">M</span>{{/if}}
+        </span>
+        <span class="tp-pips">
+          {{#each this.pips}}<span class="tp-pip {{#if this.filled}}filled{{/if}}"></span>{{/each}}
+        </span>
+      </li>
+      {{/each}}
+    </ul>
+
+  </div>
+
+  <div class="tp-grid-combat">
+
+    <section class="tp-block tp-prof">
+      <h2>{{localize "TOR2EPRINT.Sections.Combat"}}</h2>
+      <table class="tp-table">
+        <thead><tr><th>Name</th><th>Val</th></tr></thead>
+        <tbody>
+          {{#each proficiencies}}
+          <tr><td>{{localize this.label}}</td><td class="tp-pips">{{#each this.pips}}<span class="tp-pip {{#if this.filled}}filled{{/if}}"></span>{{/each}}</td></tr>
+          {{/each}}
+        </tbody>
+      </table>
+      <div class="tp-resource"><span class="tp-label">{{localize "TOR2EPRINT.Labels.Parry"}}</span><strong>{{combatAttributes.parry.value}}</strong></div>
+    </section>
+
+    <section class="tp-block tp-weapons">
+      <h2>{{localize "TOR2EPRINT.Sections.Weapons"}} (War Gear)</h2>
+      <table class="tp-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>{{localize "TOR2EPRINT.Labels.Damage"}}</th>
+            <th>{{localize "TOR2EPRINT.Labels.Injury"}}</th>
+            <th>{{localize "TOR2EPRINT.Labels.Load"}}</th>
+            <th>{{localize "TOR2EPRINT.Labels.Notes"}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each weapons}}
+          <tr class="{{#if this.equipped}}tp-equipped{{/if}}">
+            <td>{{this.name}}</td>
+            <td>{{this.damage}}</td>
+            <td>{{this.injury}}</td>
+            <td>{{this.load}}</td>
+            <td>{{this.notes}}</td>
+          </tr>
+          {{else}}<tr><td colspan="5" class="tp-muted">—</td></tr>{{/each}}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="tp-block tp-armour">
+      <h2>{{localize "TOR2EPRINT.Sections.Armour"}}</h2>
+      <table class="tp-table">
+        <thead><tr><th>Name</th><th>{{localize "TOR2EPRINT.Labels.Protection"}}</th><th>{{localize "TOR2EPRINT.Labels.Load"}}</th></tr></thead>
+        <tbody>
+          {{#each armours}}
+          <tr class="{{#if this.equipped}}tp-equipped{{/if}}">
+            <td>{{this.name}}</td>
+            <td>{{this.protection}}</td>
+            <td>{{this.load}}</td>
+          </tr>
+          {{else}}<tr><td colspan="3" class="tp-muted">—</td></tr>{{/each}}
+        </tbody>
+      </table>
+    </section>
+
+  </div>
+
+</section>
