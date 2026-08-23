@@ -2,7 +2,7 @@
   "id": "tor2eprint",
   "title": "TOR2e Print Sheets",
   "description": "Print-optimized character sheet for The One Ring 2e.",
-  "version": "0.2.0",
+  "version": "#{VERSION}#",
   "compatibility": { "minimum": "14", "verified": "14" },
   "authors": [{ "name": "pedrof" }],
   "esmodules": ["tor2eprint.mjs"],
