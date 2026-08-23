@@ -436,7 +436,29 @@
 
 /* Print rules: kill chrome, fill page */
 @media print {
-  body > *:not(.tor2eprint-window):not(:has(.tor2e-print)) { display: none !important; }
+  /* v14 mounts ApplicationV2 windows deep inside #interface, so sibling-only
+     hiding no longer reaches the chrome. Hide every element that neither
+     contains nor is contained by the print window, then restore its ancestors. */
+  body *:not(:has(.tor2e-print)):not(.tor2eprint-window):not(.tor2eprint-window *) {
+    display: none !important;
+  }
+  body :has(.tor2e-print) {
+    display: block !important;
+    position: static !important;
+    inset: auto !important;
+    width: auto !important;
+    height: auto !important;
+    max-width: none !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    background: #fff !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    transform: none !important;
+    z-index: auto !important;
+  }
   .tor2eprint-window,
   .application:has(.tor2e-print),
   .window-app:has(.tor2e-print) {

@@ -1,13 +1,13 @@
 import { Tor2eCharacterPrint } from "./modules/apps/character-print.mjs";
 
 const MODULE_ID = "tor2eprint";
+const BUTTON_CLASS = "tor2eprint-btn";
 const TEMPLATE_PATHS = [
   `modules/${MODULE_ID}/templates/actors/character-print.hbs`
 ];
 
 Hooks.once("init", () => {
-  const loader = foundry.applications?.handlebars?.loadTemplates ?? loadTemplates;
-  loader(TEMPLATE_PATHS);
+  foundry.applications.handlebars.loadTemplates(TEMPLATE_PATHS);
 });
 
 function openPrint(actor) {
@@ -15,37 +15,72 @@ function openPrint(actor) {
   new Tor2eCharacterPrint({ document: actor }).render(true);
 }
 
-Hooks.on("getActorSheetHeaderButtons", (sheet, buttons) => {
-  const actor = sheet?.actor ?? sheet?.document;
-  if (!actor || actor.type !== "character") return;
-  if (buttons.some((b) => b.class === "tor2eprint-btn")) return;
+/**
+ * Resolve the printable character Actor an ApplicationV2 sheet is displaying.
+ * @param {ApplicationV2} app
+ * @returns {Actor|null}
+ */
+function printableActor(app) {
+  const actor = app?.document;
+  if (!actor || actor.documentName !== "Actor" || actor.type !== "character") return null;
+  return actor;
+}
 
-  buttons.unshift({
-    label: game.i18n.localize("TOR2EPRINT.PrintSheet"),
-    class: "tor2eprint-btn",
+/**
+ * Preferred injection path: ApplicationV2 header controls.
+ * Foundry renders the entry in the window header (or its overflow menu) and
+ * dispatches the action through the app's action handlers.
+ */
+Hooks.on("getHeaderControlsApplicationV2", (app, controls) => {
+  const actor = printableActor(app);
+  if (!actor) return;
+  if (controls.some((c) => c.action === BUTTON_CLASS)) return;
+
+  controls.push({
     icon: "fa-solid fa-print",
-    onclick: () => openPrint(actor)
+    label: "TOR2EPRINT.PrintSheet",
+    action: BUTTON_CLASS,
+    onClick: () => openPrint(actor)
   });
 });
 
+/**
+ * Fallback injection: some sheets consume header controls without honouring
+ * `onClick`. Bind the rendered control directly, or inject one if absent.
+ */
 Hooks.on("renderActorSheetV2", (app, html) => {
-  const actor = app.document;
-  if (!actor || actor.type !== "character") return;
+  const actor = printableActor(app);
+  if (!actor) return;
   const root = html instanceof HTMLElement ? html : html?.[0];
-  if (!root) return;
-  const header = root.querySelector(".window-header");
-  if (!header || header.querySelector(".tor2eprint-btn")) return;
+  const header = root?.querySelector(".window-header");
+  if (!header) return;
 
+  const existing = root.querySelector(`[data-action="${BUTTON_CLASS}"]`);
+  if (existing) {
+    if (existing.dataset.tor2eprintBound) return;
+    existing.dataset.tor2eprintBound = "1";
+    existing.addEventListener("click", (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      openPrint(actor);
+    });
+    return;
+  }
+
+  if (header.querySelector(`.${BUTTON_CLASS}`)) return;
+  const label = game.i18n.localize("TOR2EPRINT.PrintSheet");
   const btn = document.createElement("button");
   btn.type = "button";
-  btn.className = "header-control fa-solid fa-print tor2eprint-btn";
-  btn.title = game.i18n.localize("TOR2EPRINT.PrintSheet");
-  btn.setAttribute("aria-label", game.i18n.localize("TOR2EPRINT.PrintSheet"));
+  btn.className = `header-control icon fa-solid fa-print ${BUTTON_CLASS}`;
+  btn.dataset.tor2eprintBound = "1";
+  btn.title = label;
+  btn.setAttribute("aria-label", label);
   btn.addEventListener("click", (ev) => {
     ev.preventDefault();
     ev.stopPropagation();
     openPrint(actor);
   });
   const title = header.querySelector(".window-title");
-  (title?.after ? title.after.bind(title) : header.appendChild.bind(header))(btn);
+  if (title) title.after(btn);
+  else header.appendChild(btn);
 });
