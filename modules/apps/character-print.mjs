@@ -13,8 +13,7 @@ function entries(obj) {
 
 async function enrich(html) {
   if (!html) return "";
-  const TE = foundry.applications?.ux?.TextEditor?.implementation ?? TextEditor;
-  return TE.enrichHTML(String(html), { async: true });
+  return foundry.applications.ux.TextEditor.implementation.enrichHTML(String(html));
 }
 
 export class Tor2eCharacterPrint extends HandlebarsApplicationMixin(ApplicationV2) {

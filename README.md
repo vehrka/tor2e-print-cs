@@ -1,13 +1,13 @@
 # TOR2e Print Sheets
 
-Foundry VTT v13 module. Adds a print-optimized character sheet for **The One Ring 2nd Edition** (`tor2e`) system.
+Foundry VTT v14 module. Adds a print-optimized character sheet for **The One Ring 2nd Edition** (`tor2e`) system.
 
 Click the **print** icon in any character sheet's window header → opens a print-friendly window → native `window.print()` dialog fires automatically.
 
 ## Requirements
 
-- Foundry VTT **v13**
-- `tor2e` system **≥ 5.0.0**
+- Foundry VTT **v14**
+- `tor2e` system **≥ 6.0.0** (verified 6.1.0)
 
 ## Install
 

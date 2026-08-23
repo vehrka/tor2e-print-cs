@@ -1,12 +1,12 @@
-#CLAUDE.md — TOR2e Print Sheet (Foundry VTT v13 Module)
+#CLAUDE.md — TOR2e Print Sheet (Foundry VTT v14 Module)
 
 ## Project Overview
 
-Foundry VTT v13 **module** that adds a print-optimized character-sheet layout for the **The One Ring 2nd edition** system (`tor2e`). Adds a "Print" button to the existing actor sheet; clicking opens a separate ApplicationV2 window rendering a print-friendly Handlebars template, then auto-triggers `window.print()`.
+Foundry VTT v14 **module** that adds a print-optimized character-sheet layout for the **The One Ring 2nd edition** system (`tor2e`). Adds a "Print" button to the existing actor sheet; clicking opens a separate ApplicationV2 window rendering a print-friendly Handlebars template, then auto-triggers `window.print()`.
 
 - **Module id:** `tor2eprint` (folder name must match)
-- **Target:** Foundry VTT v13 (minimum 13)
-- **Depends on system:** `tor2e` (>= 5.0.0)
+- **Target:** Foundry VTT v14 (minimum 14)
+- **Depends on system:** `tor2e` (>= 6.0.0, verified 6.1.0)
 - **Language:** Plain JavaScript ESM (`.mjs`) — no TypeScript, no bundler, no build step
 - **Type:** Foundry **module** (not a system) — installs alongside the `tor2e` system
 
@@ -25,14 +25,14 @@ Foundry VTT v13 **module** that adds a print-optimized character-sheet layout fo
 
 ## Status
 
-- **v0.1 implemented:** `character` actor type only. Files in repo root: `module.json`, `tor2eprint.mjs`, `modules/apps/character-print.mjs`, `templates/actors/character-print.hbs`, `styles/print.css`, `lang/en.json`, `README.md`, `deploy.sh`. Print context covers attributes, stature, resources, conditions, common skills (by attribute, with pips/favoured/magical), combat proficiencies, weapons, armour, equipment (`miscellaneous` items), virtues, rewards, traits, biography, history.
-- **Not implemented:** `adversary`, `npc`, `community` print variants. Defer until requested.
+- **v0.2 implemented:** `character` actor type only; targets Foundry v14 + tor2e 6.x. Files in repo root: `module.json`, `tor2eprint.mjs`, `modules/apps/character-print.mjs`, `templates/actors/character-print.hbs`, `styles/print.css`, `lang/en.json`, `README.md`, `deploy.sh`. Print context covers attributes, stature, resources, conditions, common skills (by attribute, with pips/favoured/magical), combat proficiencies, weapons, armour, equipment (`miscellaneous` items), virtues, rewards, traits, biography, history.
+- **Not implemented:** `adversary`, `npc`, `community`, `lore` print variants. Defer until requested.
 
 ## TOR2e System Schema (read before coding sheet logic)
 
-- **Actor types:** `community`, `npc`, `adversary`, `character` (player hero); see `ref/foundryvtt-tor2e/src/template.json` and `ref/foundryvtt-tor2e/src/modules/models/actors/*.model.mjs`
+- **Actor types:** `community`, `npc`, `adversary`, `lore`, `character` (player hero); see `ref/foundryvtt-tor2e/src/system.json` (`documentTypes`) and `ref/foundryvtt-tor2e/src/modules/models/actors/*.model.mjs`
 - **Item types:** weapon, armour, skill, virtues (note: type id is plural `virtues`, not `virtue`), reward, trait, song, mount, journey-log, undertaking, fell-ability, combat-task, standing, miscellaneous (see `ref/foundryvtt-tor2e/src/modules/models/items/`)
-- **Existing sheets to inject Print button into:** legacy `Tor2eCharacterSheet` (tor2e 5.x; legacy `ActorSheet`). Future `Tor2eCharacterSheetV2` (tor2e 6.x; `ApplicationV2`). Module supports both via dual hook (see Button injection below).
+- **Existing sheet to inject Print button into:** `Tor2eCharacterSheetV2` (tor2e 6.x), at `ref/foundryvtt-tor2e/src/modules/applications/sheets/character-sheet.mjs` — `HandlebarsApplicationMixin(foundry.applications.sheets.ActorSheetV2)`. Legacy `ActorSheet` support dropped in v0.2.0.
 - **Field paths:** read via `actor.system.*` — confirm against the relevant `*.model.mjs` DataModel. Schema uses legacy `{value, type, label}` blocks (e.g. `system.attributes.strength.value`, `system.commonSkills.athletics.value`, `system.combatProficiencies.swords.value`, `system.resources.endurance.{value,max}`, weapons: `system.damage.value` / `system.injury.value` / `system.load.value` / `system.notes.value` / `system.skill.{name,value}`, armour: `system.protection.value`).
 - **Localization:** reuse keys from `ref/foundryvtt-tor2e/src/lang/en.json` (e.g. `tor2e.actors.stats.endurance`, `tor2e.commonSkills.*`, `tor2e.combatProficiencies.*`, `tor2e.stats.{strength,heart,wits}`, `tor2e.statureStats.{valour,wisdom}`).
 
@@ -55,23 +55,22 @@ tor2eprint/
 └── CLAUDE.md                # This file
 ```
 
-Future actor-type variants (adversary/npc/community) follow the same `*-print.mjs` + `*-print.hbs` pattern under the existing dirs.
+Future actor-type variants (adversary/npc/community/lore) follow the same `*-print.mjs` + `*-print.hbs` pattern under the existing dirs.
 
-### v13 Patterns (mandatory)
+### v14 Patterns (mandatory)
 
-- **Print window:** `ApplicationV2` + `HandlebarsApplicationMixin` only — no `Application`/`FormApplication` for our own classes. (Note: tor2e 5.x system sheet is legacy `ActorSheet` — that's external code, do not touch.)
+- **Print window:** `ApplicationV2` + `HandlebarsApplicationMixin` only — no `Application`/`FormApplication`.
 - **Pattern (mirror `ref/starwarsd6/modules/apps/character-print.mjs`):**
   - `static DEFAULT_OPTIONS` with `classes`, `position`, `window`
   - `static PARTS` mapping `sheet` → template path under `modules/tor2eprint/templates/...`
   - `_prepareContext(options)` builds the Handlebars context from `actor.system` + `actor.items`
   - `_onRender(context, options)` triggers `window.print()` on `options.isFirstRender`
-- **Button injection (dual hook):**
-  - `Hooks.on("getActorSheetHeaderButtons", (sheet, buttons) => …)` — for legacy `ActorSheet` (tor2e 5.x). Push `{label, class, icon, onclick}` into `buttons` array. Foundry renders it next to "PopOut! / Sheet / Prototype Token / Close".
-  - `Hooks.on("renderActorSheetV2", (app, html) => …)` — for ApplicationV2 sheet (tor2e 6.x+). `html` is `HTMLElement`. Inject button after `.window-header .window-title`.
-  - Both hooks active concurrently: idempotent guards (`buttons.some(b => b.class === "tor2eprint-btn")` / `header.querySelector(".tor2eprint-btn")`) prevent duplicates if both fire.
-  - Guard `actor.type === "character"` in both. Click handler: `openPrint(actor)` → `new Tor2eCharacterPrint({ document: actor }).render(true)`.
-  - Note: tor2e 5.x ships **legacy** `ActorSheet` (verified empirically — header shows PopOut!/Sheet/Prototype Token/Close, not v13 ApplicationV2 chrome). Keep both hooks until tor2e migrates.
-- **No deprecated APIs:** avoid `mergeObject`, `duplicate`, jQuery sheet-data mutations, old `getData`-based sheets.
+- **Button injection (ApplicationV2 only):**
+  - Primary: `Hooks.on("getHeaderControlsApplicationV2", (app, controls) => …)`. Push `{icon, label, action: "tor2eprint-btn", onClick}`. Foundry places it in the window header or its overflow menu.
+  - Fallback: `Hooks.on("renderActorSheetV2", (app, html) => …)`. If a `[data-action="tor2eprint-btn"]` control was rendered, bind its click directly (guarded by `dataset.tor2eprintBound`); otherwise inject a `.header-control` button after `.window-header .window-title`.
+  - Guard in both via `printableActor(app)`: `app.document.documentName === "Actor" && type === "character"`.
+  - Click handler: `openPrint(actor)` → `new Tor2eCharacterPrint({ document: actor }).render(true)`.
+- **No deprecated APIs:** avoid `mergeObject`, `duplicate`, jQuery sheet-data mutations, old `getData`-based sheets. Use namespaced entry points only — `foundry.applications.handlebars.loadTemplates`, `foundry.applications.ux.TextEditor.implementation.enrichHTML(html)` (no `{async:true}` option); the bare globals are gone in v14.
 - **Init hook:** all setup (CONFIG registrations, template preloads via `loadTemplates`) inside `Hooks.once("init", …)` in `tor2eprint.mjs`.
 
 ### Template Path Convention
@@ -93,15 +92,15 @@ Current shape (keep authors + `flags.hotReload` block when editing):
   "id": "tor2eprint",
   "title": "TOR2e Print Sheets",
   "description": "Print-optimized character sheet for The One Ring 2e.",
-  "version": "0.1.0",
-  "compatibility": { "minimum": "13", "verified": "13", "maximum": "13" },
+  "version": "0.2.0",
+  "compatibility": { "minimum": "14", "verified": "14" },
   "authors": [{ "name": "pedrof" }],
   "esmodules": ["tor2eprint.mjs"],
   "styles": ["styles/print.css"],
   "languages": [{ "lang": "en", "name": "English", "path": "lang/en.json" }],
   "relationships": {
     "systems": [
-      { "id": "tor2e", "type": "system", "compatibility": { "minimum": "5.0.0" } }
+      { "id": "tor2e", "type": "system", "compatibility": { "minimum": "6.0.0", "verified": "6.1.0" } }
     ]
   },
   "flags": {
@@ -139,7 +138,7 @@ Current shape (keep authors + `flags.hotReload` block when editing):
 
 1. Don't assume schema — confirm field paths against `ref/foundryvtt-tor2e/src/modules/models/actors/*.model.mjs` before reading them.
 2. Minimum code. No drive-by refactors of reference dirs (`ref/` is read-only).
-3. Define acceptance: button renders on actor sheet → click opens print window → window auto-prints → layout fits one A4. Verify in a running v13 instance before reporting done.
+3. Define acceptance: button renders on actor sheet → click opens print window → window auto-prints → layout fits one A4. Verify in a running v14 instance before reporting done.
 4. Surface tradeoffs when picking layout (single-page squeeze vs multi-page) — ask before deciding.
 
 ## Development Workflow
@@ -170,7 +169,7 @@ Edit host/path to match target.
 
 ### Verification checklist (run before "done")
 
-- [ ] Module enables without console errors on v13 + tor2e
+- [ ] Module enables without console errors on v14 + tor2e 6.x
 - [ ] Print button visible on each supported actor sheet type
 - [ ] Click opens ApplicationV2 print window with actor data
 - [ ] `window.print()` fires once on first render only
