@@ -11,6 +11,22 @@ Click the **print** icon in any character sheet's window header → opens a prin
 
 ## Install
 
+### Manifest URL (recommended)
+
+In Foundry: **Add-on Modules → Install Module → Manifest URL**, paste:
+
+```
+https://github.com/vehrka/tor2e-print-cs/releases/latest/download/module.json
+```
+
+This tracks the latest release, so Foundry offers updates as new versions ship.
+
+To pin a specific version instead (no auto-update):
+
+```
+https://github.com/vehrka/tor2e-print-cs/releases/download/v0.2.0/module.json
+```
+
 ### Symlink (development)
 
 ```bash
@@ -30,16 +46,16 @@ Launch a world running the `tor2e` system → **Game Settings → Manage Modules
 ## Usage
 
 1. Open a **Player Character** actor sheet.
-2. Click the **Print Sheet** button in the window header strip (next to "PopOut!" / "Sheet" / "Close" on tor2e 5.x; next to the title on tor2e 6.x ApplicationV2 sheets).
+2. Click the **Print Sheet** button in the window header, next to the sheet title (it moves into the header's overflow menu if the window is narrow).
 3. Print sheet window opens; browser print dialog fires after ~200 ms.
 4. Choose paper: **A4 landscape**.
 5. Enable **Background graphics** in the print dialog to keep red accents and filled pips.
 
-## Scope (v0.1)
+## Scope (v0.2)
 
 | Supported | Not yet |
 |-----------|---------|
-| `character` actor | `adversary`, `npc`, `community` |
+| `character` actor | `adversary`, `npc`, `community`, `lore` |
 | Attributes, stature, resources, conditions | Editing in print view |
 | Common skills (18) with pips, favoured, magical | PDF export |
 | Combat proficiencies, parry | Compendium / journal print |
@@ -53,7 +69,7 @@ Launch a world running the `tor2e` system → **Game Settings → Manage Modules
 ```
 tor2eprint/
 ├── module.json
-├── tor2eprint.mjs               # Init + getActorSheetHeaderButtons (legacy) + renderActorSheetV2 hooks
+├── tor2eprint.mjs               # Init + getHeaderControlsApplicationV2 / renderActorSheetV2 hooks
 ├── modules/apps/character-print.mjs   # ApplicationV2 print sheet
 ├── templates/actors/character-print.hbs
 ├── styles/print.css             # Layout + @media print rules
@@ -70,10 +86,10 @@ tor2eprint/
 ## Troubleshooting
 
 **Print button missing on the actor sheet.**
-Module wires two hooks (`getActorSheetHeaderButtons` for legacy `ActorSheet`, `renderActorSheetV2` for ApplicationV2). One should fire. Reload the world (F5) after enabling. If still missing:
+The button is added through `getHeaderControlsApplicationV2`, with `renderActorSheetV2` as a fallback. Check the header's overflow menu first — a narrow window moves controls there. Reload the world (F5) after enabling. If still missing:
 - Open console (F12) → check for errors loading `tor2eprint.mjs`.
 - Confirm module is enabled in **Manage Modules**.
-- Confirm actor is type `character` (NPC/adversary/community not yet supported).
+- Confirm actor is type `character` (NPC/adversary/community/lore not yet supported).
 
 **Print preview shows Foundry chrome (sidebar, hotbar).**
 Browser must support `:has()` selector (Chromium 105+, Firefox 121+, Safari 15.4+). Update Foundry's bundled Chromium or your browser.
@@ -82,7 +98,7 @@ Browser must support `:has()` selector (Chromium 105+, Firefox 121+, Safari 15.4
 Enable **Background graphics** (Chrome) or **Print backgrounds** (Firefox) in the print dialog.
 
 **Characters from other actor types print incorrectly.**
-v0.1 only supports `character`. Adversary/NPC variants are out of scope.
+v0.2 only supports `character`. Adversary/NPC/community/lore variants are out of scope.
 
 ## License
 
