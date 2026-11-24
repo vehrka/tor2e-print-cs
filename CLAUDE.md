@@ -20,6 +20,7 @@ Foundry VTT v14 **module** that adds a print-optimized character-sheet layout fo
 | `ref/starwarsd6/templates/actors/` | Print Handlebars template reference (`character-sheet-print.hbs`, `npc-sheet-print.hbs`) |
 | `ref/img/tor2e_img_example.png` | **Target print layout reference** — desired visual layout for printed character sheet |
 | `PRPs/feats/feat001-create-print-module.md` | Original feature spec / PRP for the print module |
+| `backlog/` | **The to-do board** (Backlog.md): next steps, ideas, bugs. See *Tasks* below |
 
 > Note: `ref/tor-2e-macros/` not currently checked out. `ref/` is read-only — never modify.
 
@@ -27,6 +28,22 @@ Foundry VTT v14 **module** that adds a print-optimized character-sheet layout fo
 
 - **v0.2 implemented:** `character` actor type only; targets Foundry v14 + tor2e 6.x. Files in repo root: `module.json`, `tor2eprint.mjs`, `modules/apps/character-print.mjs`, `templates/actors/character-print.hbs`, `styles/print.css`, `lang/en.json`, `README.md`, `deploy.sh`. Print context covers attributes, stature, resources, conditions, common skills (by attribute, with pips/favoured/magical), combat proficiencies, weapons, armour, equipment (`miscellaneous` items), virtues, rewards, traits, biography, history.
 - **Not implemented:** `adversary`, `npc`, `community`, `lore` print variants. Defer until requested.
+- Open work lives in `backlog/`, not here. Keep this section to what is built.
+
+## Tasks (Backlog.md)
+
+Open work is tracked as Markdown tasks in `backlog/tasks/`, managed with the `backlog` CLI (dev dependency, pinned in `package.json`: `npx backlog …`). Run `npm install` once. Don't keep to-do lists in this file or in `PRPs/`.
+
+- Read: `npx backlog task list --plain`, `npx backlog task <id> --plain`, `npm run board` (TUI), `npm run board:web` (web kanban).
+- Write through the CLI, not by hand: `npx backlog task create "…" -m "<milestone>" -l <labels> --priority … --ac "…"`, `npx backlog task edit <id> -s "In Progress"` / `--check-ac 1` / `--check-dod 1` / `--notes "…"`, then `-s Done`.
+- Milestones: *TOR system update* (detail in `PRPs/improvements-from-tor2e-6.3.md`), *DH Print parity* (detail in `PRPs/improvements-from-dh-print.md`), *New layouts* (adversary/npc/community/lore). `PRPs/` is git-ignored: quote what a task needs into its description.
+- Labels are in `backlog/config.yml`. The default Definition of Done (smoke check, hand check, README/CLAUDE.md, `module.json` compatibility) is added to every task; tick a DoD item that doesn't apply and say why in `--notes`.
+- Columns follow the dev cycle: **To Do → In Progress → Needs smoke → Hand check → Done**, plus **Blocked**. Skip a step that doesn't apply.
+  - *In Progress*: being built. Set it when you start.
+  - *Needs smoke*: built and the smoke check is written, but `npm run smoke` hasn't run yet. Unused until the smoke tooling exists (*DH Print parity*). A failed run goes back to *In Progress* with a note.
+  - *Hand check*: waiting for a check in a v14 + tor2e world (see the verification checklist below).
+  - *Done*: AC/DoD ticked, docs updated, in the same commit as the work.
+  - *Blocked*: waiting on a decision (e.g. layout tradeoffs, Engineering Principle 4). Say what in `--notes`.
 
 ## TOR2e System Schema (read before coding sheet logic)
 
@@ -50,7 +67,9 @@ tor2eprint/
 │   └── character-print.hbs
 ├── styles/print.css         # Layout + @media print rules; A4 landscape
 ├── lang/en.json             # TOR2EPRINT.* strings
-├── deploy.sh                # rsync deploy to remote Foundry data dir (excludes ref/)
+├── deploy.sh                # rsync deploy to remote Foundry data dir (excludes ref/, node_modules/, backlog/)
+├── package.json             # Dev tooling only (backlog.md); runtime has no build step
+├── backlog/                 # Backlog.md tasks, milestones, config
 ├── README.md
 └── CLAUDE.md                # This file
 ```
@@ -155,10 +174,10 @@ Then enable in **Configuration → Manage Modules** in a world running the `tor2
 
 ### Deploy to remote
 
-`deploy.sh` rsyncs the module to a remote Foundry data dir, excluding `ref/`:
+`deploy.sh` (git-ignored) rsyncs the module to a remote Foundry data dir, excluding dev-only dirs:
 
 ```bash
-rsync -azP --exclude ref/ . vehrka:share/foundrydata_13/Data/modules/tor2eprint/
+rsync -azP --exclude ref/ --exclude node_modules/ --exclude backlog/ . vehrka:share/foundrydata_14/Data/modules/tor2eprint/
 ```
 
 Edit host/path to match target.

@@ -1,0 +1,13 @@
+{
+  "name": "tor2eprint",
+  "private": true,
+  "type": "module",
+  "description": "Dev tooling for the tor2eprint Foundry VTT module. The module itself has no build step.",
+  "scripts": {
+    "board": "backlog board",
+    "board:web": "backlog browser"
+  },
+  "devDependencies": {
+    "backlog.md": "1.57.4"
+  }
+}
