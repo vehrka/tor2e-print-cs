@@ -40,7 +40,7 @@ Open work is tracked as Markdown tasks in `backlog/tasks/`, managed with the `ba
 - Labels are in `backlog/config.yml`. The default Definition of Done (smoke check, hand check, README/CLAUDE.md, `module.json` compatibility) is added to every task; tick a DoD item that doesn't apply and say why in `--notes`.
 - Columns follow the dev cycle: **To Do → In Progress → Needs smoke → Hand check → Done**, plus **Blocked**. Skip a step that doesn't apply.
   - *In Progress*: being built. Set it when you start.
-  - *Needs smoke*: built and the smoke check is written, but `npm run smoke` hasn't run yet. Unused until the smoke tooling exists (*DH Print parity*). A failed run goes back to *In Progress* with a note.
+  - *Needs smoke*: built and the smoke check is written, but `npm run smoke` hasn't run yet. Needs the local dev server (`npm run foundry`). A failed run goes back to *In Progress* with a note.
   - *Hand check*: waiting for a check in a v14 + tor2e world (see the verification checklist below).
   - *Done*: AC/DoD ticked, docs updated, in the same commit as the work.
   - *Blocked*: waiting on a decision (e.g. layout tradeoffs, Engineering Principle 4). Say what in `--notes`.
@@ -68,7 +68,11 @@ tor2eprint/
 ├── styles/print.css         # Layout + @media print rules; A4 landscape
 ├── lang/en.json             # TOR2EPRINT.* strings
 ├── deploy.sh                # rsync runtime files (allow-list, --delete) to $DEPLOY_TARGET
-├── package.json             # Dev tooling only (backlog.md); runtime has no build step
+├── package.json             # Dev tooling only (backlog.md, playwright-core); runtime has no build step
+├── tools/                   # Dev: env.mjs (.env loader), link.mjs, foundry.mjs, smoke.mjs (Playwright runner)
+├── tests/smoke.mjs          # In-page smoke checks, imported by tools/smoke.mjs
+├── fixtures/                # Exported tor2e heroes (fvtt-Actor-*.json) for smoke tests
+├── .foundry-data/           # Git-ignored local Foundry user data (Config/, Data/, Logs/)
 ├── backlog/                 # Backlog.md tasks, milestones, config
 ├── README.md
 └── CLAUDE.md                # This file
@@ -162,15 +166,25 @@ Current shape (keep authors + `flags.hotReload` block when editing):
 
 ## Development Workflow
 
-### Local install / test
-
-Symlink (or copy) the project into Foundry's user data:
+### Local dev loop
 
 ```bash
-ln -s "$(pwd)" "$FOUNDRY_DATA/Data/modules/tor2eprint"
+npm install                 # backlog.md + playwright-core (dev only)
+cp .env.example .env        # FOUNDRY_APP, FOUNDRY_DATA, FOUNDRY_PORT, FOUNDRY_WORLD, SMOKE_*, DEPLOY_TARGET
+npm run link                # symlink repo into $FOUNDRY_DATA/modules/tor2eprint
+npm run foundry             # local Foundry (--noupdate --noupnp), launches $FOUNDRY_WORLD
+npm run smoke               # headless login, runs tests/smoke.mjs in the page, PASS/FAIL, exit 1 on failure
 ```
 
-Then enable in **Configuration → Manage Modules** in a world running the `tor2e` system.
+`tools/env.mjs` takes everything after `=` as the value: put `.env` comments on their own line. Real env vars win over `.env`.
+
+Local data (`.foundry-data/`, git-ignored), one-time setup:
+- `Config/license.json` copied from another local Foundry data dir (same licence).
+- `Data/systems/tor2e` pulled read-only from the server: `bash -c 'set -a; . ./.env; rsync -a "${DEPLOY_TARGET%/modules/*}/systems/tor2e/" .foundry-data/Data/systems/tor2e/'`.
+- World `tor2eprint-test` (system tor2e, user Gamemaster, no password). v14 has no `createWorld` setup action: start Foundry without `--world`, then from `/setup` POST `/create` with `{action: "createWorld", id, title, system: "tor2e"}`. Enable the module once as GM: `game.settings.set("core", "moduleConfiguration", {tor2eprint: true})`.
+- Playwright browser, once: `npx -y playwright-core@1.65.0 install chromium-headless-shell`.
+
+Port 30001 (DH dev uses 30002). Smoke results are `{id, what, actual, expected, pass}`; `pass: null` prints as info and doesn't fail.
 
 ### Deploy to remote
 
