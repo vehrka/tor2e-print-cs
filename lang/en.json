@@ -3,7 +3,8 @@
     "PrintSheet": "Print Sheet",
     "ChooseFormat": "Choose a format to print.",
     "Format": {
-      "classic": "Classic"
+      "classic": "Classic",
+      "form": "Form"
     },
     "Sections": {
       "Attributes": "Attributes",
@@ -19,7 +20,8 @@
       "Resources": "Resources",
       "Conditions": "Conditions",
       "Injury": "Injury",
-      "Stature": "Stature"
+      "Stature": "Stature",
+      "UsefulItems": "Useful Items"
     },
     "Labels": {
       "Favoured": "F",
@@ -45,7 +47,14 @@
       "Miserable": "Miserable",
       "Wounded": "Wounded",
       "Poisoned": "Poisoned",
-      "Weary": "Weary"
+      "Weary": "Weary",
+      "Character": "Character",
+      "HeroicCulture": "Heroic Culture",
+      "Rating": "Rating",
+      "TargetNumberLong": "Target Number",
+      "Scars": "Scars",
+      "Helm": "Helm",
+      "Anguished": "Anguished"
     }
   }
 }

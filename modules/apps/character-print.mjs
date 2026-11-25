@@ -4,7 +4,8 @@ const TEMPLATE_ROOT = "modules/tor2eprint/templates/actors";
 
 /** Print formats: id -> sheet template. The toolbar shows one button per entry. */
 const FORMATS = {
-  classic: `${TEMPLATE_ROOT}/character-print.hbs`
+  classic: `${TEMPLATE_ROOT}/character-print.hbs`,
+  form: `${TEMPLATE_ROOT}/character-print-form.hbs`
 };
 
 const PIP_MAX = 6;
@@ -265,7 +266,7 @@ export class Tor2eCharacterPrint extends HandlebarsApplicationMixin(ApplicationV
   };
 
   /** Format templates, preloaded at init so the sheet part can use them as partials. */
-  static TEMPLATES = Object.values(FORMATS);
+  static TEMPLATES = [...Object.values(FORMATS), `${TEMPLATE_ROOT}/form-skill.hbs`];
 
   /** @type {string|null} format shown in the sheet part */
   format = null;

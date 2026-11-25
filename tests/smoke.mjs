@@ -45,14 +45,15 @@ try {
     check('P3', 'click opens print window for the actor', !!win?.rendered, true);
     const formats = [...(win?.element.querySelectorAll('[data-action="format"]') ?? [])].map(b => b.dataset.format);
     check('P4', 'window opens with format toolbar + hint, no sheet, no print',
-        [formats.join(','), !!win?.element.querySelector('.tor2e-print-hint'), !!win?.element.querySelector('.tor2e-print'), prints].join('|'), 'classic|true|false|0');
+        [formats.join(','), !!win?.element.querySelector('.tor2e-print-hint'), !!win?.element.querySelector('.tor2e-print'), prints].join('|'), 'classic,form|true|false|0');
     const shown = [];
     for (const f of formats) {
         win.element.querySelector(`[data-action="format"][data-format="${f}"]`).click();
         await wait(600);
-        if (win.element.querySelector('.tor2e-print') && win.element.querySelector(`[data-format="${f}"].active`)) shown.push(f);
+        if (win.element.querySelector('.tor2e-print') && win.element.querySelector(`[data-format="${f}"].active`)
+        && !/TOR2EPRINT\.|tor2e\./.test(win.element.textContent)) shown.push(f);
     }
-    check('P5', 'each format renders, marked active, prints once per pick', `${shown.join(',')}|${prints}`, `${formats.join(',')}|${formats.length}`);
+    check('P5', 'each format renders (no raw i18n keys), marked active, prints once per pick', `${shown.join(',')}|${prints}`, `${formats.join(',')}|${formats.length}`);
     check('P9', 'print waits until every image settled (Arvegil portrait 404s: decode fails, print still runs)', imagesSettled, true);
     win.element.querySelector('[data-action="format"]').click();
     await wait(600);
@@ -146,6 +147,27 @@ check('C18', 'slots(): weapons 4, useful items 6, short and long lists padded/cu
     }
     check('C19', 'form: conditions follow token statuses; injury printed while wounded',
         `${Object.entries(c.conditions).filter(([, v]) => v).map(([k]) => k).join(',')} ${c.injury}`, 'weary,wounded 3');
+}
+
+// Form layout template (task-24), Arvegil plus a magical skill and a Poisoned/Wounded state.
+{
+    const FORM = `modules/${MODULE_ID}/templates/actors/character-print-form.hbs`;
+    const ctx = { ...ca, conditions: { ...ca.conditions, poisoned: true }, injury: 4,
+        skillsByAttr: { ...ca.skillsByAttr, wits: ca.skillsByAttr.wits.map((sk, i) => ({ ...sk, magical: i === 0 })) } };
+    const el = Object.assign(document.createElement('div'), { innerHTML: await foundry.applications.handlebars.renderTemplate(FORM, ctx) });
+    const t = sel => [...el.querySelectorAll(sel)].map(e => e.textContent.trim().replace(/\s+/g, ' '));
+    check('T0', 'form: section order', t('.tp-form .tf-h').join(','),
+        'Character,Conditions,Strength,Heart,Wits,Skills,Useful Items,Combat Proficiencies,Rewards,Virtues,Endurance 28,Hope 11,Parry 16');
+    check('T1', 'form: conditions (Anguished always empty, Poisoned ticked), injury',
+        [...el.querySelectorAll('.tf-checks li')].map(li => `${li.textContent.trim()}${li.querySelector('.is-on') ? '*' : ''}`).join(',') + '|' + t('.tf-injury b')[0],
+        'Weary,Miserable,Wounded,Anguished,Poisoned*|4');
+    check('T2', 'form: 18 skills, 6 pips each, M on magical, favoured boxes', [el.querySelectorAll('.tf-skill .tf-box').length,
+        el.querySelectorAll('.tf-skills .tf-dia--pip').length, t('.tf-mag').join(','), el.querySelectorAll('.tf-skill .tf-box.is-on').length].join('|'),
+        `18|${(18 + 4) * 6}|M|${ca.skills.filter(sk => sk.favoured).length}`);
+    check('T3', 'form: portrait, header points, 6 useful-item lines, 4 war-gear rows', [el.querySelector('.tf-portrait img')?.getAttribute('src') === ca.img,
+        t('.tf-point b').join('/'), el.querySelectorAll('.tf-useful li').length, el.querySelectorAll('.tf-foot > .tf-gear tbody tr').length].join('|'),
+        `true|${ca.points.adventure}/${ca.points.skill}|6|4`);
+    check('T4', 'form: no raw i18n keys', /TOR2EPRINT\.|tor2e\./.test(el.textContent), false);
 }
 
 // Enrichment (task-2): GM (owner) printing never shows secrets; relative @UUID and @attr inline rolls resolve.

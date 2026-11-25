@@ -26,7 +26,7 @@ Foundry VTT v14 **module** that adds a print-optimized character-sheet layout fo
 
 ## Status
 
-- **v0.2 implemented:** `character` actor type only; targets Foundry v14 + tor2e 6.x. Files in repo root: `module.json`, `tor2eprint.mjs`, `modules/apps/character-print.mjs`, `templates/actors/character-print.hbs`, `styles/print.css`, `lang/en.json`, `README.md`, `deploy.sh`. Print window has a format toolbar (one format: classic, A4 landscape) and prints once per pick. Print context covers attributes, stature, resources, conditions, common skills (by attribute, with pips/favoured/magical), combat proficiencies, weapons, armour, equipment (`miscellaneous` items), virtues, rewards, traits, biography, history; plus form-layout fields (`buildFormFields`: points, treasure, distinctive features, conditions from `actor.statuses`, injury, load, shadow, gear, parry, protection, fixed slots).
+- **v0.2 implemented:** `character` actor type only; targets Foundry v14 + tor2e 6.x. Files in repo root: `module.json`, `tor2eprint.mjs`, `modules/apps/character-print.mjs`, `templates/actors/character-print.hbs`, `styles/print.css`, `lang/en.json`, `README.md`, `deploy.sh`. Print window has a format toolbar and prints once per pick. Formats: `classic` (`character-print.hbs`, A4 landscape) and `form` (`character-print-form.hbs` + `form-skill.hbs` partial, A4 portrait single page after `ref/img/new_cs_v1.jpg`). Print context covers attributes, stature, resources, conditions, common skills (by attribute, with pips/favoured/magical), combat proficiencies, weapons, armour, equipment (`miscellaneous` items), virtues, rewards, traits, biography, history; plus form-layout fields (`buildFormFields`: points, treasure, distinctive features, conditions from `actor.statuses`, injury, load, shadow, gear, parry, protection, fixed slots).
 - **Not implemented:** `adversary`, `npc`, `community`, `lore` print variants. Defer until requested.
 - Open work lives in `backlog/`, not here. Keep this section to what is built.
 
@@ -65,6 +65,7 @@ tor2eprint/
 │   └── character-print.mjs  # Tor2eCharacterPrint (ApplicationV2 + HandlebarsApplicationMixin)
 ├── templates/actors/
 │   ├── character-print.hbs  # Classic format
+│   ├── character-print-form.hbs # Form format (+ form-skill.hbs partial)
 │   ├── print-toolbar.hbs    # Format buttons (hidden on print)
 │   └── print-sheet.hbs      # Wrapper: chosen format partial or hint
 ├── styles/print.css         # Layout + @media print rules; A4 landscape

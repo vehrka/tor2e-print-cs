@@ -1,0 +1,213 @@
+<section class="tor2e-print tp-form">
+
+  <header class="tf-header">
+    <div class="tf-point">
+      <span class="tf-dia tf-dia--md"><b>{{points.adventure}}</b></span>
+      <span class="tf-cap">{{localize "tor2e.statureStats.adventurePoints"}}</span>
+    </div>
+    <div class="tf-name">{{name}}</div>
+    <div class="tf-point">
+      <span class="tf-dia tf-dia--md"><b>{{points.skill}}</b></span>
+      <span class="tf-cap">{{localize "tor2e.actors.sections.skillPoints"}}</span>
+    </div>
+  </header>
+
+  <div class="tf-top">
+    <section class="tf-character">
+      <h3 class="tf-h"><span>{{localize "TOR2EPRINT.Labels.Character"}}</span></h3>
+      <div class="tf-row">
+        <span class="tf-lbl">{{localize "TOR2EPRINT.Labels.HeroicCulture"}}</span><span class="tf-line">{{biography.culture.value}}</span>
+        <span class="tf-lbl">{{localize "tor2e.actors.biography.age"}}</span><span class="tf-line tf-line--short">{{biography.age.value}}</span>
+      </div>
+      <div class="tf-row">
+        <span class="tf-lbl">{{localize "tor2e.actors.biography.culturalBlessing"}}</span><span class="tf-line">{{biography.culturalBlessing.value}}</span>
+      </div>
+      <div class="tf-row">
+        <span class="tf-lbl">{{localize "tor2e.actors.biography.standardOfLiving"}}</span><span class="tf-line">{{standardOfLivingLabel}}</span>
+        <span class="tf-lbl">{{localize "tor2e.actors.sections.treasure"}}</span><span class="tf-line tf-line--short">{{treasure}}</span>
+      </div>
+      <div class="tf-row">
+        <span class="tf-lbl">{{localize "tor2e.actors.biography.calling"}}</span><span class="tf-line">{{callingLabel}}</span>
+        <span class="tf-lbl">{{localize "tor2e.actors.biography.shadowPath"}}</span><span class="tf-line">{{biography.shadowPath.value}}</span>
+      </div>
+      <div class="tf-row tf-row--features">
+        <span class="tf-lbl">{{localize "tor2e.actors.traits.distinctiveFeatures"}}</span>
+        <span class="tf-line tf-line--two">{{#each distinctiveFeatures}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}</span>
+      </div>
+    </section>
+
+    <div class="tf-portrait">{{#if img}}<img src="{{img}}" alt="{{name}}">{{/if}}</div>
+
+    <section class="tf-conditions">
+      <h3 class="tf-h"><span>{{localize "TOR2EPRINT.Sections.Conditions"}}</span></h3>
+      <ul class="tf-checks">
+        <li><span class="tf-box {{#if conditions.weary}}is-on{{/if}}"></span>{{localize "tor2e.effects.weary"}}</li>
+        <li><span class="tf-box {{#if conditions.miserable}}is-on{{/if}}"></span>{{localize "tor2e.effects.miserable"}}</li>
+        <li><span class="tf-box {{#if conditions.wounded}}is-on{{/if}}"></span>{{localize "tor2e.effects.wounded"}}</li>
+        <li><span class="tf-box"></span>{{localize "TOR2EPRINT.Labels.Anguished"}}</li>
+        <li><span class="tf-box {{#if conditions.poisoned}}is-on{{/if}}"></span>{{localize "tor2e.effects.poisoned"}}</li>
+      </ul>
+      <div class="tf-injury">
+        <span class="tf-cap">{{localize "TOR2EPRINT.Sections.Injury"}}</span>
+        <b>{{injury}}</b>
+      </div>
+    </section>
+  </div>
+
+  <div class="tf-body">
+    <section class="tf-attr">
+      <h2 class="tf-h tf-h--big"><span>{{localize "tor2e.stats.strength"}}</span></h2>
+      <div class="tf-attr-dias">
+        <span class="tf-cap">{{localize "TOR2EPRINT.Labels.Rating"}}</span>
+        <span class="tf-dia tf-dia--md"><b>{{attributes.strength.value}}</b></span>
+        <span class="tf-dia tf-dia--lg"><b>{{attributes.strength.tn}}</b></span>
+        <span class="tf-cap">{{localize "TOR2EPRINT.Labels.TargetNumberLong"}}</span>
+      </div>
+    </section>
+    <section class="tf-attr">
+      <h2 class="tf-h tf-h--big"><span>{{localize "tor2e.stats.heart"}}</span></h2>
+      <div class="tf-attr-dias">
+        <span class="tf-cap">{{localize "TOR2EPRINT.Labels.Rating"}}</span>
+        <span class="tf-dia tf-dia--md"><b>{{attributes.heart.value}}</b></span>
+        <span class="tf-dia tf-dia--lg"><b>{{attributes.heart.tn}}</b></span>
+        <span class="tf-cap">{{localize "TOR2EPRINT.Labels.TargetNumberLong"}}</span>
+      </div>
+    </section>
+    <section class="tf-attr">
+      <h2 class="tf-h tf-h--big"><span>{{localize "tor2e.stats.wits"}}</span></h2>
+      <div class="tf-attr-dias">
+        <span class="tf-cap">{{localize "TOR2EPRINT.Labels.Rating"}}</span>
+        <span class="tf-dia tf-dia--md"><b>{{attributes.wits.value}}</b></span>
+        <span class="tf-dia tf-dia--lg"><b>{{attributes.wits.tn}}</b></span>
+        <span class="tf-cap">{{localize "TOR2EPRINT.Labels.TargetNumberLong"}}</span>
+      </div>
+    </section>
+
+    <ul class="tf-skills">
+      {{#each skillsByAttr.strength}}{{> "modules/tor2eprint/templates/actors/form-skill.hbs"}}{{/each}}
+    </ul>
+    <section class="tf-skills-mid">
+      <h3 class="tf-h"><span>{{localize "tor2e.actors.skills.title"}}</span></h3>
+      <ul class="tf-skills">
+        {{#each skillsByAttr.heart}}{{> "modules/tor2eprint/templates/actors/form-skill.hbs"}}{{/each}}
+      </ul>
+    </section>
+    <ul class="tf-skills">
+      {{#each skillsByAttr.wits}}{{> "modules/tor2eprint/templates/actors/form-skill.hbs"}}{{/each}}
+    </ul>
+
+    <section class="tf-useful">
+      <h3 class="tf-h"><span>{{localize "TOR2EPRINT.Sections.UsefulItems"}}</span></h3>
+      <ul class="tf-lines">
+        {{#each usefulItems}}<li>{{#unless empty}}{{name}}{{#if showQty}} ×{{quantity}}{{/if}}{{/unless}}</li>{{/each}}
+      </ul>
+    </section>
+
+    <section class="tf-prof">
+      <h3 class="tf-h"><span>{{localize "tor2e.actors.sections.combatProficiencies"}}</span></h3>
+      <ul class="tf-skills">
+        {{#each formProficiencies}}
+        <li class="tf-skill">
+          <span class="tf-skill-name">{{localize label}}</span>
+          <span class="tf-pips">{{#each pips}}<span class="tf-dia tf-dia--pip {{#if filled}}is-on{{/if}}"></span>{{/each}}</span>
+        </li>
+        {{/each}}
+      </ul>
+    </section>
+    <section class="tf-stature">
+      <h3 class="tf-h"><span>{{localize "tor2e.actors.sections.rewards"}}</span></h3>
+      <div class="tf-stature-body">
+        <ul class="tf-names">{{#each rewards}}<li>{{name}}</li>{{/each}}</ul>
+        <div class="tf-stat">
+          <span class="tf-dia tf-dia--md"><b>{{stature.valour.value}}</b></span>
+          <span class="tf-cap">{{localize "tor2e.statureStats.valour"}}</span>
+        </div>
+      </div>
+    </section>
+    <section class="tf-stature">
+      <h3 class="tf-h"><span>{{localize "tor2e.actors.sections.virtues"}}</span></h3>
+      <div class="tf-stature-body">
+        <ul class="tf-names">{{#each virtues}}<li>{{name}}</li>{{/each}}</ul>
+        <div class="tf-stat">
+          <span class="tf-dia tf-dia--md"><b>{{stature.wisdom.value}}</b></span>
+          <span class="tf-cap">{{localize "tor2e.statureStats.wisdom"}}</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="tf-res">
+      <h2 class="tf-h tf-h--big"><span>{{localize "tor2e.actors.stats.endurance"}} <span class="tf-dia tf-dia--sm"><b>{{endurance.max}}</b></span></span></h2>
+      <div class="tf-res-row">
+        <div class="tf-stat"><span class="tf-dia tf-dia--md"><b>{{endurance.value}}</b></span><span class="tf-cap">{{localize "tor2e.actors.stats.current"}}</span></div>
+        <div class="tf-stat"><span class="tf-dia tf-dia--md"><b>{{load.items}}</b></span><span class="tf-cap">{{localize "tor2e.actors.stats.load"}}</span></div>
+        <span class="tf-plus">+</span>
+        <div class="tf-stat"><span class="tf-dia tf-dia--md"><b>{{load.fatigue}}</b></span><span class="tf-cap">{{localize "tor2e.actors.stats.travelLoad"}}</span></div>
+      </div>
+    </section>
+    <section class="tf-res">
+      <h2 class="tf-h tf-h--big"><span>{{localize "tor2e.actors.stats.hope"}} <span class="tf-dia tf-dia--sm"><b>{{hope.max}}</b></span></span></h2>
+      <div class="tf-res-row">
+        <div class="tf-stat"><span class="tf-dia tf-dia--md"><b>{{hope.value}}</b></span><span class="tf-cap">{{localize "tor2e.actors.stats.current"}}</span></div>
+        <div class="tf-stat"><span class="tf-dia tf-dia--md"><b>{{shadow.temporary}}</b></span><span class="tf-cap">{{localize "tor2e.actors.stats.shadow"}}</span></div>
+        <span class="tf-plus">+</span>
+        <div class="tf-stat"><span class="tf-dia tf-dia--md"><b>{{shadow.scars}}</b></span><span class="tf-cap">{{localize "TOR2EPRINT.Labels.Scars"}}</span></div>
+      </div>
+    </section>
+    <section class="tf-res">
+      <h2 class="tf-h tf-h--big"><span>{{localize "tor2e.actors.stats.parry"}} <span class="tf-dia tf-dia--sm"><b>{{parry.base}}</b></span></span></h2>
+      <div class="tf-res-row">
+        <div class="tf-stat"><span class="tf-dia tf-dia--md"><b>{{parry.shield}}</b></span><span class="tf-cap">{{localize "tor2e.armour.groups.shield"}}</span></div>
+        <div class="tf-stat"><span class="tf-dia tf-dia--md"><b>{{parry.total}}</b></span><span class="tf-cap">{{localize "tor2e.actors.stats.total"}}</span></div>
+      </div>
+    </section>
+  </div>
+
+  <footer class="tf-foot">
+    <table class="tf-gear">
+      <thead>
+        <tr>
+          <th>{{localize "tor2e.actors.sections.war-gear"}}</th>
+          <th>{{localize "tor2e.weapons.details.damage"}}</th>
+          <th>{{localize "tor2e.weapons.details.injury"}}</th>
+          <th>{{localize "tor2e.items.common.load"}}</th>
+          <th>{{localize "tor2e.weapons.details.notes"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each weaponSlots}}
+        {{#if empty}}<tr><td></td><td></td><td></td><td></td><td></td></tr>
+        {{else}}<tr><td>{{name}}</td><td>{{damage}}</td><td>{{injury}}</td><td>{{load}}</td><td class="tf-notes">{{notes}}</td></tr>{{/if}}
+        {{/each}}
+      </tbody>
+    </table>
+    <div class="tf-armour">
+      <table class="tf-gear">
+        <thead>
+          <tr>
+            <th>{{localize "tor2e.actors.sections.armour"}}</th>
+            <th>{{localize "tor2e.items.armours.protection"}}</th>
+            <th>{{localize "tor2e.items.common.load"}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>{{gear.armour.name}}</td><td>{{#unless gear.armour.empty}}{{gear.armour.protection}}{{/unless}}</td><td>{{#unless gear.armour.empty}}{{gear.armour.load}}{{/unless}}</td></tr>
+          <tr><td><span class="tf-sub">{{localize "TOR2EPRINT.Labels.Helm"}}</span> {{gear.helm.name}}</td><td>{{#unless gear.helm.empty}}{{gear.helm.protection}}{{/unless}}</td><td>{{#unless gear.helm.empty}}{{gear.helm.load}}{{/unless}}</td></tr>
+        </tbody>
+        <thead>
+          <tr>
+            <th>{{localize "tor2e.armour.groups.shield"}}</th>
+            <th>{{localize "tor2e.actors.stats.parry"}}</th>
+            <th>{{localize "tor2e.items.common.load"}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>{{gear.shield.name}}</td><td>{{#unless gear.shield.empty}}{{gear.shield.protection}}{{/unless}}</td><td>{{#unless gear.shield.empty}}{{gear.shield.load}}{{/unless}}</td></tr>
+        </tbody>
+      </table>
+      <div class="tf-stat tf-protection">
+        <span class="tf-dia tf-dia--lg"><b>{{protection}}</b></span>
+        <span class="tf-cap">{{localize "tor2e.items.armours.protection"}}</span>
+      </div>
+    </div>
+  </footer>
+</section>

@@ -1,10 +1,11 @@
 ---
 id: TASK-24
 title: Form layout template (character-print-form.hbs)
-status: To Do
+status: Hand check
 assignee:
   - '@claude'
 created_date: '2026-11-24T22:15:44Z'
+updated_date: '2026-11-25T21:27:14Z'
 labels:
   - template
   - i18n
@@ -25,16 +26,22 @@ Source: PRPs/new-layout-cs-v1.md (target image ref/img/new_cs_v1.jpg). §2 (sect
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Clicking Form in the toolbar renders all sections above in image order and prints once
-- [ ] #2 No raw tor2e.* or TOR2EPRINT.* keys in the rendered sheet
-- [ ] #3 Anguished prints empty; Poisoned present; M mark on magical skills; portrait in logo box
-- [ ] #4 README and CLAUDE.md Status describe the two formats
+- [x] #1 Clicking Form in the toolbar renders all sections above in image order and prints once
+- [x] #2 No raw tor2e.* or TOR2EPRINT.* keys in the rendered sheet
+- [x] #3 Anguished prints empty; Poisoned present; M mark on magical skills; portrait in logo box
+- [x] #4 README and CLAUDE.md Status describe the two formats
 <!-- AC:END -->
 
 ## Definition of Done
 <!-- DOD:BEGIN -->
-- [ ] #1 Check in tests/smoke.mjs; `npm run smoke` passes (skip until the smoke tooling exists)
+- [x] #1 Check in tests/smoke.mjs; `npm run smoke` passes (skip until the smoke tooling exists)
 - [ ] #2 Hand check in a v14 + tor2e world if the change has UI: button shows, window opens and prints once, clean preview, no raw `tor2e.*` keys, no console errors
-- [ ] #3 README.md and CLAUDE.md (Status, schema notes) updated in the same commit
-- [ ] #4 module.json `compatibility` / `relationships` updated if the tested Foundry or tor2e build changed; release tag noted if it ships
+- [x] #3 README.md and CLAUDE.md (Status, schema notes) updated in the same commit
+- [x] #4 module.json `compatibility` / `relationships` updated if the tested Foundry or tor2e build changed; release tag noted if it ships
 <!-- DOD:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+templates/actors/character-print-form.hbs (root .tor2e-print.tp-form) + form-skill.hbs partial, registered as format 'form'. Labels: tor2e keys found by value search (tor2e.actors.traits.distinctiveFeatures, tor2e.actors.skills.title, tor2e.actors.sections.war-gear, tor2e.weapons.details.{damage,injury,notes}, tor2e.items.common.load, tor2e.items.armours.protection, tor2e.actors.stats.{current,load,shadow,total,parry}); new TOR2EPRINT keys: Format.form, Sections.UsefulItems, Labels.{Character,HeroicCulture,Rating,TargetNumberLong,Scars,Helm,Anguished}. Image says 'Helm'; tor2e.armour.groups.head is 'Headgear', so Helm is a print key. Smoke T0-T4 + P5 (both formats render without raw keys, print once per pick). Skill order per column matches the image (checked T0/rendered). Unstyled until task-25: visual hand check after the CSS.
+<!-- SECTION:NOTES:END -->
