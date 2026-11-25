@@ -1,10 +1,11 @@
 ---
 id: TASK-5
 title: Reuse tor2e i18n keys for resource labels
-status: To Do
+status: Done
 assignee:
   - '@claude'
 created_date: '2026-11-24T21:58:30Z'
+updated_date: '2026-11-25T21:35:25Z'
 labels:
   - i18n
   - template
@@ -22,15 +23,21 @@ Source: PRPs/improvements-from-tor2e-6.3.md U4. 6.2.1 (#713) relabelled resource
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Each TOR2EPRINT.Labels entry with an exact system equivalent is replaced by the tor2e.* key in template/JS
-- [ ] #2 Unused TOR2EPRINT keys removed from lang/en.json
-- [ ] #3 Hand check: no raw keys; English text unchanged
+- [x] #1 Each TOR2EPRINT.Labels entry with an exact system equivalent is replaced by the tor2e.* key in template/JS
+- [x] #2 Unused TOR2EPRINT keys removed from lang/en.json
+- [x] #3 Hand check: no raw keys; English text unchanged
 <!-- AC:END -->
 
 ## Definition of Done
 <!-- DOD:BEGIN -->
-- [ ] #1 Check in tests/smoke.mjs; `npm run smoke` passes (skip until the smoke tooling exists)
-- [ ] #2 Hand check in a v14 + tor2e world if the change has UI: button shows, window opens and prints once, clean preview, no raw `tor2e.*` keys, no console errors
-- [ ] #3 README.md and CLAUDE.md (Status, schema notes) updated in the same commit
-- [ ] #4 module.json `compatibility` / `relationships` updated if the tested Foundry or tor2e build changed; release tag noted if it ships
+- [x] #1 Check in tests/smoke.mjs; `npm run smoke` passes (skip until the smoke tooling exists)
+- [x] #2 Hand check in a v14 + tor2e world if the change has UI: button shows, window opens and prints once, clean preview, no raw `tor2e.*` keys, no console errors
+- [x] #3 README.md and CLAUDE.md (Status, schema notes) updated in the same commit
+- [x] #4 module.json `compatibility` / `relationships` updated if the tested Foundry or tor2e build changed; release tag noted if it ships
 <!-- DOD:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+17 TOR2EPRINT.Labels keys replaced by tor2e keys (statureStats.adventurePoints, actors.sections.{skillPoints,fellowship}, actors.stats.{endurance,hope,parry,shadowPoints,shadowScars}, weapons.details.{damage,injury,notes}, items.common.load, items.armours.protection, effects.{weary,miserable,wounded,poisoned}); 21 unused Labels removed. Kept print-only: Magical (M), TargetNumber (TN; only tor2e 'TN' key is a chat option), Patron (no tor2e key), Rating, TargetNumberLong, Scars, Helm (tor2e says 'Headgear'), Anguished, Character, HeroicCulture. Sections.* untouched (AC scoped to Labels). AC3 verified headless: Arvegil classic+form innerText identical before/after (221 lines), smoke P6/T4 no raw keys.
+<!-- SECTION:NOTES:END -->
