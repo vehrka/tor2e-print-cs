@@ -23,6 +23,14 @@
   font-size: 12px;
 }
 
+/* Print window: format toolbar above a scrolling preview */
+.tor2eprint-window .window-content { padding: 0; display: flex; flex-direction: column; }
+.tor2e-print-toolbar { display: flex; gap: 0.5rem; padding: 0.5rem; flex: none; }
+.tor2e-print-toolbar button { flex: none; width: auto; }
+.tor2e-print-toolbar button.active { font-weight: bold; }
+.tor2e-print-preview { flex: 1; overflow: auto; }
+.tor2e-print-hint { text-align: center; padding: 1rem; }
+
 .tor2e-print {
   font-family: "Book Antiqua", "Palatino Linotype", Palatino, Georgia, serif;
   color: #2a1810;
@@ -498,6 +506,7 @@
     transform: none !important;
     overflow: visible !important;
   }
+  .tor2e-print-toolbar,
   .tor2eprint-window > .window-header,
   .tor2eprint-window .window-resize-handle,
   .application:has(.tor2e-print) > .window-header,

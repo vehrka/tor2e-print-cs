@@ -1,0 +1,7 @@
+<nav class="tor2e-print-toolbar">
+  {{#each formats}}
+  <button type="button" data-action="format" data-format="{{id}}" class="{{#if active}}active{{/if}}">
+    <i class="fa-solid fa-print" inert></i> {{localize label}}
+  </button>
+  {{/each}}
+</nav>

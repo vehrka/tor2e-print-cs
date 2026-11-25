@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Foundry VTT v14 **module** that adds a print-optimized character-sheet layout for the **The One Ring 2nd edition** system (`tor2e`). Adds a "Print" button to the existing actor sheet; clicking opens a separate ApplicationV2 window rendering a print-friendly Handlebars template, then auto-triggers `window.print()`.
+Foundry VTT v14 **module** that adds a print-optimized character-sheet layout for the **The One Ring 2nd edition** system (`tor2e`). Adds a "Print" button to the existing actor sheet; clicking opens a separate ApplicationV2 window with a format toolbar; each format pick renders that print-friendly Handlebars template and calls `window.print()` once.
 
 - **Module id:** `tor2eprint` (folder name must match)
 - **Target:** Foundry VTT v14 (minimum 14)
@@ -26,7 +26,7 @@ Foundry VTT v14 **module** that adds a print-optimized character-sheet layout fo
 
 ## Status
 
-- **v0.2 implemented:** `character` actor type only; targets Foundry v14 + tor2e 6.x. Files in repo root: `module.json`, `tor2eprint.mjs`, `modules/apps/character-print.mjs`, `templates/actors/character-print.hbs`, `styles/print.css`, `lang/en.json`, `README.md`, `deploy.sh`. Print context covers attributes, stature, resources, conditions, common skills (by attribute, with pips/favoured/magical), combat proficiencies, weapons, armour, equipment (`miscellaneous` items), virtues, rewards, traits, biography, history.
+- **v0.2 implemented:** `character` actor type only; targets Foundry v14 + tor2e 6.x. Files in repo root: `module.json`, `tor2eprint.mjs`, `modules/apps/character-print.mjs`, `templates/actors/character-print.hbs`, `styles/print.css`, `lang/en.json`, `README.md`, `deploy.sh`. Print window has a format toolbar (one format: classic, A4 landscape) and prints once per pick. Print context covers attributes, stature, resources, conditions, common skills (by attribute, with pips/favoured/magical), combat proficiencies, weapons, armour, equipment (`miscellaneous` items), virtues, rewards, traits, biography, history.
 - **Not implemented:** `adversary`, `npc`, `community`, `lore` print variants. Defer until requested.
 - Open work lives in `backlog/`, not here. Keep this section to what is built.
 
@@ -64,7 +64,9 @@ tor2eprint/
 ├── modules/apps/
 │   └── character-print.mjs  # Tor2eCharacterPrint (ApplicationV2 + HandlebarsApplicationMixin)
 ├── templates/actors/
-│   └── character-print.hbs
+│   ├── character-print.hbs  # Classic format
+│   ├── print-toolbar.hbs    # Format buttons (hidden on print)
+│   └── print-sheet.hbs      # Wrapper: chosen format partial or hint
 ├── styles/print.css         # Layout + @media print rules; A4 landscape
 ├── lang/en.json             # TOR2EPRINT.* strings
 ├── deploy.sh                # rsync runtime files (allow-list, --delete) to $DEPLOY_TARGET
@@ -85,9 +87,9 @@ Future actor-type variants (adversary/npc/community/lore) follow the same `*-pri
 - **Print window:** `ApplicationV2` + `HandlebarsApplicationMixin` only — no `Application`/`FormApplication`.
 - **Pattern (mirror `ref/starwarsd6/modules/apps/character-print.mjs`):**
   - `static DEFAULT_OPTIONS` with `classes`, `position`, `window`
-  - `static PARTS` mapping `sheet` → template path under `modules/tor2eprint/templates/...`
-  - `_prepareContext(options)` builds the Handlebars context from `actor.system` + `actor.items`
-  - `_onRender(context, options)` triggers `window.print()` on `options.isFirstRender`
+  - `static PARTS` = `{ toolbar, sheet }` (`print-toolbar.hbs`, `print-sheet.hbs` under `modules/tor2eprint/templates/actors/`); the sheet part includes the chosen format template as a partial. `FORMATS` (id → template) in `character-print.mjs`; `static TEMPLATES` preloaded at init.
+  - `_prepareContext(options)` returns `format`, `formatTemplate`, `formats`, and the actor context (from `actor.system` + `actor.items`) only once a format is picked
+  - `actions.format` → `printFormat(id)` sets `#printPending` and renders; `_onRender` calls `window.print()` once when pending. No print on open or on a plain re-render.
 - **Button injection (ApplicationV2 only):**
   - Primary: `Hooks.on("getHeaderControlsApplicationV2", (app, controls) => …)`. Push `{icon, label, action: "tor2eprint-btn", onClick}`. Foundry places it in the window header or its overflow menu.
   - Fallback: `Hooks.on("renderActorSheetV2", (app, html) => …)`. If a `[data-action="tor2eprint-btn"]` control was rendered, bind its click directly (guarded by `dataset.tor2eprintBound`); otherwise inject a `.header-control` button after `.window-header .window-title`.
@@ -161,7 +163,7 @@ Current shape (keep authors + `flags.hotReload` block when editing):
 
 1. Don't assume schema — confirm field paths against `ref/foundryvtt-tor2e/src/modules/models/actors/*.model.mjs` before reading them.
 2. Minimum code. No drive-by refactors of reference dirs (`ref/` is read-only).
-3. Define acceptance: button renders on actor sheet → click opens print window → window auto-prints → typical hero fits one A4 landscape page (long heroes may flow onto page 2). Verify in a running v14 instance before reporting done.
+3. Define acceptance: button renders on actor sheet → click opens print window with format toolbar → each format pick prints once → typical hero fits one A4 landscape page (long heroes may flow onto page 2). Verify in a running v14 instance before reporting done.
 4. Surface tradeoffs when picking layout (single-page squeeze vs multi-page) — ask before deciding.
 
 ## Development Workflow
@@ -209,7 +211,7 @@ Deployed `module.json` keeps the `#{VERSION}#` tokens (the release workflow fill
 - [ ] Module enables without console errors on v14 + tor2e 6.x
 - [ ] Print button visible on each supported actor sheet type
 - [ ] Click opens ApplicationV2 print window with actor data
-- [ ] `window.print()` fires once on first render only
+- [ ] Window opens without printing; `window.print()` fires once per format pick
 - [ ] Print preview shows clean layout, no Foundry chrome
 - [ ] All labels resolve (no `tor2e.…` raw keys leaking through)
 

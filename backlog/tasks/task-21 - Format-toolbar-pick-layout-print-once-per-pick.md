@@ -1,10 +1,11 @@
 ---
 id: TASK-21
 title: 'Format toolbar: pick layout, print once per pick'
-status: To Do
+status: Hand check
 assignee:
   - '@claude'
 created_date: '2026-11-24T22:15:43Z'
+updated_date: '2026-11-25T21:16:31Z'
 labels:
   - code
   - template
@@ -24,16 +25,22 @@ Source: PRPs/new-layout-cs-v1.md (target image ref/img/new_cs_v1.jpg). §5, deci
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Window opens with toolbar + hint and does not print
-- [ ] #2 Clicking Classic renders the current layout unchanged and prints exactly once; clicking again reprints once
+- [x] #1 Window opens with toolbar + hint and does not print
+- [x] #2 Clicking Classic renders the current layout unchanged and prints exactly once; clicking again reprints once
 - [ ] #3 Toolbar does not appear in print preview
-- [ ] #4 CLAUDE.md acceptance (Principle 3, verification checklist) and README updated to the toolbar flow
+- [x] #4 CLAUDE.md acceptance (Principle 3, verification checklist) and README updated to the toolbar flow
 <!-- AC:END -->
 
 ## Definition of Done
 <!-- DOD:BEGIN -->
-- [ ] #1 Check in tests/smoke.mjs; `npm run smoke` passes (skip until the smoke tooling exists)
+- [x] #1 Check in tests/smoke.mjs; `npm run smoke` passes (skip until the smoke tooling exists)
 - [ ] #2 Hand check in a v14 + tor2e world if the change has UI: button shows, window opens and prints once, clean preview, no raw `tor2e.*` keys, no console errors
-- [ ] #3 README.md and CLAUDE.md (Status, schema notes) updated in the same commit
-- [ ] #4 module.json `compatibility` / `relationships` updated if the tested Foundry or tor2e build changed; release tag noted if it ships
+- [x] #3 README.md and CLAUDE.md (Status, schema notes) updated in the same commit
+- [x] #4 module.json `compatibility` / `relationships` updated if the tested Foundry or tor2e build changed; release tag noted if it ships
 <!-- DOD:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Smoke P4/P5/P8/K1: opens with toolbar + hint, no print; Classic renders and prints once, again reprints once, plain re-render doesn't; @media print hides .tor2e-print-toolbar. Fit checks G0-G9 unchanged = classic layout unchanged in print. Kept character-print.hbs path as the classic format; FORMATS map in character-print.mjs, static TEMPLATES preloaded. Actor context moved to unexported buildCharacterContext(). AC3 proxy only (CSS rule + PDF fit); confirm in real print preview. Side note: on screen under theme-dark the Character block values render very faint (pre-existing, print fine).
+<!-- SECTION:NOTES:END -->

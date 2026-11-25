@@ -61,18 +61,20 @@ try {
     }, MODULE_ID);
 
     // Print fit: open each actor's print window, print it to PDF with the print CSS and count pages.
-    // pdfChecks: [{ id, what, actor, pages, allowTall, pageMm, pageWidthMm }]; pages: expected page count, or null
+    // pdfChecks: [{ id, what, actor, format, pages, allowTall, pageMm, pageWidthMm }]; pages: expected page count, or null
 // to report only; allowTall: a block taller than the page (it must split) is reported, not failed;
 // pageMm / pageWidthMm: printable area (default 194 x 281 = A4 landscape minus 8mm margins).
     for (const c of pdfChecks) {
-        await page.evaluate(async name => {
+        await page.evaluate(async ({ actor, format }) => {
             window.print = () => {};
             const controls = [];
-            Hooks.callAll('getHeaderControlsApplicationV2', { document: game.actors.getName(name) }, controls);
+            Hooks.callAll('getHeaderControlsApplicationV2', { document: game.actors.getName(actor) }, controls);
             controls.find(x => x.action === 'tor2eprint-btn').onClick();
-            await new Promise(r => setTimeout(r, 1000));
+            await new Promise(r => setTimeout(r, 800));
+            document.querySelector(`.tor2eprint-window [data-action="format"][data-format="${format}"]`).click();
+            await new Promise(r => setTimeout(r, 800));
             await Promise.allSettled([...document.querySelectorAll('.tor2e-print img')].map(i => i.decode()));
-        }, c.actor);
+        }, c);
         await page.emulateMedia({ media: 'print' });
         await page.setViewportSize({ width: Math.round((c.pageWidthMm ?? 281) * 96 / 25.4), height: 1000 });
         // A clipping ancestor (Foundry's fixed body/window) would cut the sheet and fake a one-page fit.
