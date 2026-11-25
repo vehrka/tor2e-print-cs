@@ -162,6 +162,34 @@ check('E0', 'history: secret hidden, @attr roll resolved, relative @UUID resolve
     [notes.textContent.includes('SECRET-SMOKE'), notes.querySelector('a.inline-roll')?.textContent.trim(), (a => a && !a.classList.contains('broken') && a.textContent.trim())(notes.querySelector('a.content-link'))].join('|'),
     'false|1d6 + 8|Rel');
 
+// Journal-only item descriptions (task-3): inlined when tor2e.inlineElementFromUuidInDescription is on.
+{
+    const a = game.actors.getName('Arvegil');
+    const virtue = a.items.find(i => i.type === 'virtues');
+    const descBefore = virtue._source.system.description.value;
+    const settingBefore = game.settings.get('tor2e', 'inlineElementFromUuidInDescription');
+    const journal = await JournalEntry.implementation.create({ name: 'smoke journal', pages: [{ name: 'p', type: 'text', text: { content: '<p>JOURNAL-SMOKE</p>' } }] });
+    const virtueDesc = async (setting, desc) => {
+        await game.settings.set('tor2e', 'inlineElementFromUuidInDescription', setting);
+        await virtue.update({ 'system.description.value': desc });
+        return (await contextOf('Arvegil')).virtues.find(v => v.id === virtue.id).description;
+    };
+    try {
+        const link = `<p>@UUID[${journal.pages.contents[0].uuid}]{Label}</p>`;
+        const on = await virtueDesc(true, link);
+        const off = await virtueDesc(false, link);
+        const other = await virtueDesc(true, `<p>Text ${link}</p>`);
+        const missing = await virtueDesc(true, '<p>@UUID[JournalEntry.nope0000nope0000.JournalEntryPage.nope0000nope0000]{Gone}</p>');
+        check('J0', 'journal-only description: inlined when on; link when off / other shape; broken link falls back',
+            [on.includes('JOURNAL-SMOKE'), off.includes('JOURNAL-SMOKE') || !off.includes('Label'), other.includes('JOURNAL-SMOKE'), missing.includes('Gone')].join('|'),
+            'true|false|false|true');
+    } finally {
+        await virtue.update({ 'system.description.value': descBefore });
+        await game.settings.set('tor2e', 'inlineElementFromUuidInDescription', settingBefore);
+        await journal.delete();
+    }
+}
+
 // Print CSS loaded. Foundry may wrap module styles in @layer/@import; walk grouping rules down to @media print.
 const walk = (rules, inPrint = false) => [...rules].flatMap(r => {
     if (r instanceof CSSImportRule) return r.styleSheet ? walk(r.styleSheet.cssRules, inPrint) : [];

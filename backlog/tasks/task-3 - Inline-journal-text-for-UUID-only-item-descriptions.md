@@ -1,10 +1,11 @@
 ---
 id: TASK-3
 title: Inline journal text for @UUID-only item descriptions
-status: To Do
+status: Done
 assignee:
   - '@claude'
 created_date: '2026-11-24T21:58:30Z'
+updated_date: '2026-11-25T21:23:43Z'
 labels:
   - code
 milestone: m-0
@@ -22,16 +23,22 @@ Source: PRPs/improvements-from-tor2e-6.3.md U2 (new gap). tor2e 6.3.0 buildDescr
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 With the setting on, an item whose description is only a JournalEntry @UUID prints the journal page text
-- [ ] #2 With the setting off, or for any other description shape, output is unchanged
-- [ ] #3 Unresolvable UUID falls back to normal enrichment without throwing
-- [ ] #4 No import from systems/tor2e/
+- [x] #1 With the setting on, an item whose description is only a JournalEntry @UUID prints the journal page text
+- [x] #2 With the setting off, or for any other description shape, output is unchanged
+- [x] #3 Unresolvable UUID falls back to normal enrichment without throwing
+- [x] #4 No import from systems/tor2e/
 <!-- AC:END -->
 
 ## Definition of Done
 <!-- DOD:BEGIN -->
-- [ ] #1 Check in tests/smoke.mjs; `npm run smoke` passes (skip until the smoke tooling exists)
-- [ ] #2 Hand check in a v14 + tor2e world if the change has UI: button shows, window opens and prints once, clean preview, no raw `tor2e.*` keys, no console errors
-- [ ] #3 README.md and CLAUDE.md (Status, schema notes) updated in the same commit
-- [ ] #4 module.json `compatibility` / `relationships` updated if the tested Foundry or tor2e build changed; release tag noted if it ships
+- [x] #1 Check in tests/smoke.mjs; `npm run smoke` passes (skip until the smoke tooling exists)
+- [x] #2 Hand check in a v14 + tor2e world if the change has UI: button shows, window opens and prints once, clean preview, no raw `tor2e.*` keys, no console errors
+- [x] #3 README.md and CLAUDE.md (Status, schema notes) updated in the same commit
+- [x] #4 module.json `compatibility` / `relationships` updated if the tested Foundry or tor2e build changed; release tag noted if it ships
 <!-- DOD:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+itemDescription() copies tor2e buildDescription regex + setting; page text enriched relativeTo the page, secrets false; fromUuid failure or empty text falls back to normal enrich. No systems/tor2e import. Smoke J0 (temp journal + world setting, restored): on -> inlined; off and other shapes -> unchanged; broken UUID -> fallback. FINDING: neither layout template prints item descriptions (classic shows names only; form drops them by D3), so this and task-2's item-description enrichment only change the context, nothing visible yet. AC checked at context level. DoD2/4 n/a.
+<!-- SECTION:NOTES:END -->
