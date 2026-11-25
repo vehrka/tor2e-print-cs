@@ -68,6 +68,7 @@ tor2eprint/
 │   ├── character-print-form.hbs # Form format (+ form-skill.hbs partial)
 │   ├── print-toolbar.hbs    # Format buttons (hidden on print)
 │   └── print-sheet.hbs      # Wrapper: chosen format partial or hint
+├── fonts/uncial-antiqua/     # Bundled form-layout heading font + OFL.txt (SIL OFL 1.1)
 ├── styles/print.css         # Layout + @media print rules; A4 landscape
 ├── lang/en.json             # TOR2EPRINT.* strings
 ├── deploy.sh                # rsync runtime files (allow-list, --delete) to $DEPLOY_TARGET
@@ -195,7 +196,7 @@ Port 30001 (DH dev uses 30002). Smoke results are `{id, what, actual, expected, 
 
 ### Deploy to remote
 
-`deploy.sh` (tracked) rsyncs only the runtime files (`module.json`, `tor2eprint.mjs`, `modules/`, `templates/`, `styles/`, `lang/`) with `--delete`, so nothing else (`fixtures/`, `backlog/`, `.git/`, docs) reaches the server and removed files don't linger. Target comes from `DEPLOY_TARGET` (env or `.env`, git-ignored); the script fails if unset. Add a runtime folder (e.g. `fonts/`) to the `--include` list and to the `release.yml` zip together.
+`deploy.sh` (tracked) rsyncs only the runtime files (`module.json`, `tor2eprint.mjs`, `modules/`, `fonts/`, `templates/`, `styles/`, `lang/`) with `--delete`, so nothing else (`fixtures/`, `backlog/`, `.git/`, docs) reaches the server and removed files don't linger. Target comes from `DEPLOY_TARGET` (env or `.env`, git-ignored); the script fails if unset. Add a runtime folder (e.g. `fonts/`) to the `--include` list and to the `release.yml` zip together.
 
 ```bash
 DEPLOY_TARGET=host:path/Data/modules/tor2eprint   # in .env

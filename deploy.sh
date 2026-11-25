@@ -11,6 +11,6 @@ fi
 : "${DEPLOY_TARGET:?Set DEPLOY_TARGET (env or .env), e.g. host:path/Data/modules/tor2eprint}"
 
 rsync -azP --delete "$@" \
-  --include='module.json' --include='tor2eprint.mjs' --include='modules/***' \
+  --include='module.json' --include='tor2eprint.mjs' --include='modules/***' --include='fonts/***' \
   --include='templates/***' --include='styles/***' --include='lang/***' --exclude='*' \
   ./ "${DEPLOY_TARGET%/}/"

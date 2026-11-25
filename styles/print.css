@@ -435,6 +435,12 @@
 }
 
 /* ===== Form layout (.tp-form): A4 portrait, one page, white page, red ink ===== */
+/* Bundled (SIL OFL 1.1, fonts/uncial-antiqua/OFL.txt): no remote font, Foundry may run offline. */
+@font-face {
+  font-family: "Uncial Antiqua";
+  src: url("../fonts/uncial-antiqua/UncialAntiqua-Regular.ttf") format("truetype");
+  font-display: block;
+}
 @page tor2e-portrait { size: A4 portrait; margin: 8mm; }
 
 .tor2e-print.tp-form {
@@ -469,9 +475,9 @@
   padding: 0;
   border: 0;
   color: var(--tf-red);
+  font-family: "Uncial Antiqua", var(--tor2e-font-h3, "Aniron"), serif;
   font-size: 9pt;
-  font-weight: bold;
-  font-variant: small-caps;
+  font-weight: normal;
   letter-spacing: 0.06em;
   text-align: center;
   white-space: nowrap;
