@@ -181,7 +181,6 @@ async function buildCharacterContext(actor) {
     img: a.img,
     protection: a.system.protection?.value ?? 0,
     load: a.system.load?.value ?? 0,
-    group: a.system.group?.value ?? "",
     equipped: !!a.system.equipped?.value
   }));
 
@@ -252,7 +251,7 @@ async function buildCharacterContext(actor) {
 export class Tor2eCharacterPrint extends HandlebarsApplicationMixin(ApplicationV2) {
   static DEFAULT_OPTIONS = {
     id: "tor2e-character-print-{id}",
-    classes: ["tor2e", "tor2eprint", "tor2eprint-window", "print-sheet-window"],
+    classes: ["tor2eprint", "tor2eprint-window", "print-sheet-window"],
     position: { width: 1180, height: 820 },
     window: { resizable: true, title: "TOR2EPRINT.PrintSheet" },
     actions: {
