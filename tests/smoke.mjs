@@ -224,6 +224,10 @@ const walk = (rules, inPrint = false) => [...rules].flatMap(r => {
 });
 const printRules = [...document.styleSheets].flatMap(s => { try { return walk(s.cssRules); } catch { return []; } });
 check('K0', 'print CSS hides Foundry chrome', printRules.some(s => s?.includes(':not(:has(.tor2e-print))')), true);
+const uncial = await document.fonts.load('10px "Uncial Antiqua"');
+const uncialFace = [...document.fonts].find(f => f.family.replace(/"/g, '') === 'Uncial Antiqua');
+check('K2', 'Uncial Antiqua bundled: @font-face loaded, file served by the module',
+    `${uncial.length > 0}|${uncialFace?.status}|${(await fetch(`/modules/${MODULE_ID}/fonts/uncial-antiqua/UncialAntiqua-Regular.ttf`, { method: 'HEAD' })).ok}`, 'true|loaded|true');
 check('K1', 'print CSS hides the format toolbar', printRules.some(s => s?.includes('.tor2e-print-toolbar')), true);
 
 // Fit (tools/smoke.mjs prints each to PDF): typical heroes fit one page; long ones may flow (task-19), reported only.
