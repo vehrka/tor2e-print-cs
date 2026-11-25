@@ -1,11 +1,11 @@
 ---
 id: TASK-7
 title: 'Decide: add Load / Fatigue block'
-status: Blocked
+status: To Do
 assignee:
   - '@claude'
 created_date: '2026-11-24T21:58:31Z'
-updated_date: '2026-11-24T22:13:12Z'
+updated_date: '2026-11-25T06:53:01Z'
 labels:
   - template
   - idea
@@ -24,8 +24,8 @@ Source: PRPs/improvements-from-tor2e-6.3.md U4. The print has no Load/Fatigue bl
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 User decision recorded in notes
-- [ ] #2 If added: block shows fatigue, item load and total load from confirmed schema paths with system i18n keys; layout still fits one A4 landscape page
+- [x] #1 User decision recorded in notes
+- [ ] #2 Endurance block shows fatigue, item load and total load from confirmed schema paths with system i18n keys
 <!-- AC:END -->
 
 ## Definition of Done
@@ -40,4 +40,6 @@ Source: PRPs/improvements-from-tor2e-6.3.md U4. The print has no Load/Fatigue bl
 
 <!-- SECTION:NOTES:BEGIN -->
 Blocked: layout decision (Engineering Principle 4). Ask user: add Load/Fatigue block, and where?
+
+Decided 2026-11-25: add inside the Endurance block (Maximum / Current / Load / Fatigue, as in ref/img/tor2e_img_example.png). One-page fit no longer required (task-19).
 <!-- SECTION:NOTES:END -->

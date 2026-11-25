@@ -5,6 +5,7 @@ status: To Do
 assignee:
   - '@claude'
 created_date: '2026-11-24T22:13:04Z'
+updated_date: '2026-11-25T06:55:55Z'
 labels:
   - tooling
   - docs
@@ -36,3 +37,9 @@ Source: PRPs/improvements-from-dh-print.md DH-5. Copy nearly unchanged from ~/1_
 - [ ] #3 README.md and CLAUDE.md (Status, schema notes) updated in the same commit
 - [ ] #4 module.json `compatibility` / `relationships` updated if the tested Foundry or tor2e build changed; release tag noted if it ships
 <!-- DOD:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Env decided 2026-11-25: FOUNDRY_APP=~/opt/foundryvtt/14.370 (node v24.13.0 via nvm); own .foundry-data/ with Config/license.json copied from 101.33's .foundry-data; tor2e system rsync-pulled read-only from vehrka:share/foundrydata_14/Data/systems/tor2e; Claude creates the dev world (Gamemaster, empty password) via /setup with Playwright. Browser chromium_headless_shell-1254 already in ~/.cache/ms-playwright. Only one dev server at a time (DH also uses port 30000).
+<!-- SECTION:NOTES:END -->

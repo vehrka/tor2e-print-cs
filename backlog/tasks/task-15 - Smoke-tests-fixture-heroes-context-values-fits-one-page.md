@@ -5,6 +5,7 @@ status: To Do
 assignee:
   - '@claude'
 created_date: '2026-11-24T22:13:04Z'
+updated_date: '2026-11-25T06:55:56Z'
 labels:
   - tooling
 milestone: m-1
@@ -34,3 +35,11 @@ Source: PRPs/improvements-from-dh-print.md DH-6 (part 2) + PRPs/improvements-fro
 - [ ] #3 README.md and CLAUDE.md (Status, schema notes) updated in the same commit
 - [ ] #4 module.json `compatibility` / `relationships` updated if the tested Foundry or tor2e build changed; release tag noted if it ships
 <!-- DOD:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+task-19 decided (2026-11-25): classic may flow. Overlong hero: assert no block overlaps and no block is split across pages; a second page is fine. Real fixtures should still fit one page.
+
+Fixtures decided 2026-11-25: user exports 2-3 real heroes from the vehrka world (one with a non-ASCII name); Claude adds the Active Effect hero and the synthetic overlong hero.
+<!-- SECTION:NOTES:END -->

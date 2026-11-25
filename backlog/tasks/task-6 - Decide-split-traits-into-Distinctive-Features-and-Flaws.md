@@ -1,11 +1,11 @@
 ---
 id: TASK-6
 title: 'Decide: split traits into Distinctive Features and Flaws'
-status: Blocked
+status: To Do
 assignee:
   - '@claude'
 created_date: '2026-11-24T21:58:31Z'
-updated_date: '2026-11-24T22:13:12Z'
+updated_date: '2026-11-25T06:53:01Z'
 labels:
   - template
   - idea
@@ -24,8 +24,8 @@ Source: PRPs/improvements-from-tor2e-6.3.md U3. After the 6.2.2 migration trait.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 User decision recorded in notes
-- [ ] #2 If split: template shows two lists with localized system labels; empty group hidden; layout still fits one A4 landscape page
+- [x] #1 User decision recorded in notes
+- [ ] #2 Template shows Distinctive Features and Flaws as two lists with localized system labels; empty group hidden
 <!-- AC:END -->
 
 ## Definition of Done
@@ -40,4 +40,6 @@ Source: PRPs/improvements-from-tor2e-6.3.md U3. After the 6.2.2 migration trait.
 
 <!-- SECTION:NOTES:BEGIN -->
 Blocked: layout decision (Engineering Principle 4). Ask user: split traits into two lists, or keep one list?
+
+Decided 2026-11-25: split into two lists (matches ref/img/tor2e_img_example.png Features/Flaws rows). One-page fit no longer required (task-19: classic may flow).
 <!-- SECTION:NOTES:END -->

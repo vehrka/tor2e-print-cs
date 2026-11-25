@@ -133,7 +133,7 @@ Current shape (keep authors + `flags.hotReload` block when editing):
 
 ## Print Layout Rules
 
-- One actor = one logical page. `@page { size: A4 landscape; margin: 10mm; }` (matches `ref/img/tor2e_img_example.png`).
+- One actor per print; the layout flows and may spill onto a second page (no shrink-to-fit or truncation, decided in task-19). `@page { size: A4 landscape; margin: 10mm; }` (matches `ref/img/tor2e_img_example.png`).
 - Hide Foundry chrome on print using `:has()` selector: `body > *:not(:has(.tor2e-print)) { display: none !important; }` and strip header/resize-handle on the print window.
 - `break-inside: avoid` on each `.tp-block`.
 - No interactive controls in print template — read-only HTML.
@@ -157,7 +157,7 @@ Current shape (keep authors + `flags.hotReload` block when editing):
 
 1. Don't assume schema — confirm field paths against `ref/foundryvtt-tor2e/src/modules/models/actors/*.model.mjs` before reading them.
 2. Minimum code. No drive-by refactors of reference dirs (`ref/` is read-only).
-3. Define acceptance: button renders on actor sheet → click opens print window → window auto-prints → layout fits one A4. Verify in a running v14 instance before reporting done.
+3. Define acceptance: button renders on actor sheet → click opens print window → window auto-prints → typical hero fits one A4 landscape page (long heroes may flow onto page 2). Verify in a running v14 instance before reporting done.
 4. Surface tradeoffs when picking layout (single-page squeeze vs multi-page) — ask before deciding.
 
 ## Development Workflow

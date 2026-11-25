@@ -1,17 +1,18 @@
 ---
 id: TASK-20
 title: 'Decide: bundle Cinzel font for consistent print'
-status: Blocked
+status: To Do
 assignee:
   - '@claude'
 created_date: '2026-11-24T22:13:06Z'
-updated_date: '2026-11-24T22:16:00Z'
+updated_date: '2026-11-25T06:53:02Z'
 labels:
   - css
   - release
   - idea
 milestone: m-1
-dependencies: []
+dependencies:
+  - TASK-26
 priority: low
 ordinal: 13000
 ---
@@ -24,7 +25,7 @@ Source: PRPs/improvements-from-dh-print.md DH-15. TOR headings use 'Trajan Pro',
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 User decision recorded in notes
+- [x] #1 User decision recorded in notes
 - [ ] #2 If adopted: fonts/ with Cinzel + OFL.txt, @font-face with font-display: block, fonts/ in release.yml zip and deploy allow-list, print waits for fonts (DH-4)
 <!-- AC:END -->
 
@@ -42,4 +43,6 @@ Source: PRPs/improvements-from-dh-print.md DH-15. TOR headings use 'Trajan Pro',
 Blocked: user decision. Bundle Cinzel, or keep system font fallback?
 
 Form layout bundles Uncial Antiqua (task-26, new-layout-cs-v1 D8). This task is now only about Cinzel for the classic layout; reuse the fonts/ + release/deploy setup from task-26.
+
+Decided 2026-11-25: bundle Cinzel. Do after task-26 and reuse its fonts/, release.yml and deploy setup.
 <!-- SECTION:NOTES:END -->
