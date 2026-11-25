@@ -44,6 +44,9 @@
 }
 
 .tor2e-print h1, .tor2e-print h2, .tor2e-print h3 { color: #8b1a1a; }
+/* tor2e heading font (Aniron, loaded by the system); the window no longer carries the .tor2e class. */
+.tor2e-print h2 { font-family: var(--tor2e-font-h2, "Aniron"), serif; }
+.tor2e-print h3 { font-family: var(--tor2e-font-h3, "Aniron"), serif; }
 
 .tor2e-print h2 {
   font-size: 11pt;
