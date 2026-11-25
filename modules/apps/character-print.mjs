@@ -18,9 +18,15 @@ function entries(obj) {
   return Object.entries(obj ?? {}).map(([key, val]) => ({ key, ...val }));
 }
 
-async function enrich(html) {
+/**
+ * Enrich HTML for print. secrets is always false: a printout is a handout, even when a GM prints.
+ * @param {string} html
+ * @param {Document} relativeTo  resolves relative @UUID links
+ * @param {object} rollData      resolves @attr in inline rolls
+ */
+async function enrich(html, relativeTo, rollData) {
   if (!html) return "";
-  return foundry.applications.ux.TextEditor.implementation.enrichHTML(String(html));
+  return foundry.applications.ux.TextEditor.implementation.enrichHTML(String(html), { relativeTo, rollData, secrets: false });
 }
 
 async function buildCharacterContext(actor) {
@@ -37,6 +43,7 @@ async function buildCharacterContext(actor) {
   const attrTN = (key) =>
     baseTN - (Number(s.attributes?.[key]?.value) || 0) + (Number(s.bonuses?.tn?.[key]) || 0);
 
+  const rollData = actor.getRollData();
   const itemsByType = (type) => actor.items.filter((i) => i.type === type);
 
   const skills = entries(s.commonSkills).map((sk) => ({
@@ -97,16 +104,16 @@ async function buildCharacterContext(actor) {
       id: i.id,
       name: i.name,
       img: i.img,
-      description: await enrich(i.system.description?.value ?? "")
+      description: await enrich(i.system.description?.value ?? "", i, rollData)
     }))
   );
 
   const history = {
-    background: await enrich(s.history?.background?.value),
-    company: await enrich(s.history?.company?.value),
-    fellowshipPhase: await enrich(s.history?.fellowshipPhase?.value),
-    taleOfYears: await enrich(s.history?.taleOfYears?.value),
-    notes: await enrich(s.history?.notes?.value)
+    background: await enrich(s.history?.background?.value, actor, rollData),
+    company: await enrich(s.history?.company?.value, actor, rollData),
+    fellowshipPhase: await enrich(s.history?.fellowshipPhase?.value, actor, rollData),
+    taleOfYears: await enrich(s.history?.taleOfYears?.value, actor, rollData),
+    notes: await enrich(s.history?.notes?.value, actor, rollData)
   };
 
   const [virtues, rewards, traits] = await Promise.all([
