@@ -1,10 +1,11 @@
 ---
 id: TASK-9
 title: Enforce A4 landscape page size and block flow on print
-status: To Do
+status: Hand check
 assignee:
   - '@claude'
 created_date: '2026-11-24T22:13:03Z'
+updated_date: '2026-11-25T21:11:31Z'
 labels:
   - css
   - docs
@@ -22,16 +23,22 @@ Source: PRPs/improvements-from-dh-print.md DH-3. CLAUDE.md says @page { size: A4
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 @page sets size: A4 landscape
-- [ ] #2 @media print has a body:has(.tor2e-print) block-flow override
-- [ ] #3 CLAUDE.md Print Layout Rules and print.css state the same size and margin
-- [ ] #4 Hand check: print preview defaults to A4 landscape without changing browser settings
+- [x] #1 @page sets size: A4 landscape
+- [x] #2 @media print has a body:has(.tor2e-print) block-flow override
+- [x] #3 CLAUDE.md Print Layout Rules and print.css state the same size and margin
+- [x] #4 Hand check: print preview defaults to A4 landscape without changing browser settings
 <!-- AC:END -->
 
 ## Definition of Done
 <!-- DOD:BEGIN -->
-- [ ] #1 Check in tests/smoke.mjs; `npm run smoke` passes (skip until the smoke tooling exists)
+- [x] #1 Check in tests/smoke.mjs; `npm run smoke` passes (skip until the smoke tooling exists)
 - [ ] #2 Hand check in a v14 + tor2e world if the change has UI: button shows, window opens and prints once, clean preview, no raw `tor2e.*` keys, no console errors
-- [ ] #3 README.md and CLAUDE.md (Status, schema notes) updated in the same commit
-- [ ] #4 module.json `compatibility` / `relationships` updated if the tested Foundry or tor2e build changed; release tag noted if it ships
+- [x] #3 README.md and CLAUDE.md (Status, schema notes) updated in the same commit
+- [x] #4 module.json `compatibility` / `relationships` updated if the tested Foundry or tor2e build changed; release tag noted if it ships
 <!-- DOD:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Margin 8mm (user, 2026-11-25). Finding: before, no size + Foundry's fixed body clipped the print to one page, so overflow was silently cut. With A4 landscape + block flow every fixture spilled to page 2 (~229mm vs 194mm). User chose: tighten print CSS (print-only density block: gaps, paddings, 9pt lists/skills, 8.5pt tables, 22mm portrait). Now 6/7 fixtures = 1 page; Hans Grimald (14 rewards/virtues/traits) = 2 pages (mid row 92mm vs ~71mm budget). Overlong hero = 3 pages; its 20-reward block is taller than a page and splits. AC4 proxy: headless Chromium page.pdf(preferCSSPageSize) gives A4 landscape with default settings; real browser print dialog still to hand check. DoD4 n/a.
+<!-- SECTION:NOTES:END -->

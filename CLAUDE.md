@@ -137,7 +137,7 @@ Current shape (keep authors + `flags.hotReload` block when editing):
 
 ## Print Layout Rules
 
-- One actor per print; the layout flows and may spill onto a second page (no shrink-to-fit or truncation, decided in task-19). `@page { size: A4 landscape; margin: 10mm; }` (matches `ref/img/tor2e_img_example.png`).
+- One actor per print; the layout flows and may spill onto a second page (no shrink-to-fit or truncation, decided in task-19). `@page { size: A4 landscape; margin: 8mm; }` (matches `ref/img/tor2e_img_example.png`). `@media print` puts `body:has(.tor2e-print)` in block flow (`@page` size needs it; Foundry's fixed body otherwise clips the sheet to one page) and tightens spacing/fonts so a typical hero fits one page; `npm run smoke` prints every fixture to PDF and checks the page count (Hans Grimald, 14 rewards/virtues/traits, takes 2).
 - Hide Foundry chrome on print using `:has()` selector: `body > *:not(:has(.tor2e-print)) { display: none !important; }` and strip header/resize-handle on the print window.
 - `break-inside: avoid` on each `.tp-block`.
 - No interactive controls in print template — read-only HTML.

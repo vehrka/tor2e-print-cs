@@ -96,10 +96,13 @@ const walk = (rules, inPrint = false) => [...rules].flatMap(r => {
 const printRules = [...document.styleSheets].flatMap(s => { try { return walk(s.cssRules); } catch { return []; } });
 check('K0', 'print CSS hides Foundry chrome', printRules.some(s => s?.includes(':not(:has(.tor2e-print))')), true);
 
-// Fit (tools/smoke.mjs prints each to PDF): real heroes fit one page; the overlong hero may flow (task-19), reported only.
+// Fit (tools/smoke.mjs prints each to PDF): typical heroes fit one page; long ones may flow (task-19), reported only.
+// Hans Grimald (14 rewards/virtues/traits) is a long hero: 2 pages.
+const LONG = { 'Hans Grimald': 2 };
 export const pdfChecks = [
-    ...FIXTURES.map((actor, i) => ({ id: `G${i}`, what: `${actor} prints on one page`, actor, pages: 1 })),
-    { id: 'G9', what: 'overlong hero page count', actor: OVERLONG, pages: null }
+    ...FIXTURES.map((actor, i) => ({ id: `G${i}`, what: `${actor} prints on ${LONG[actor] ?? 1} page(s)`, actor, pages: LONG[actor] ?? 1 })),
+    // 20 rewards make the rewards/virtues/traits block taller than a page: it has to split.
+    { id: 'G9', what: 'overlong hero flows: page count', actor: OVERLONG, pages: null, allowTall: true }
 ];
 
 export default results;
