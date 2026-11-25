@@ -5,7 +5,7 @@
 Foundry VTT v14 **module** that adds a print-optimized character-sheet layout for the **The One Ring 2nd edition** system (`tor2e`). Adds a "Print" button to the existing actor sheet; clicking opens a separate ApplicationV2 window with a format toolbar; each format pick renders that print-friendly Handlebars template and calls `window.print()` once.
 
 - **Module id:** `tor2eprint` (folder name must match)
-- **Target:** Foundry VTT v14 (minimum 14)
+- **Target:** Foundry VTT v14 (minimum 14.364, verified 14.370, maximum 14)
 - **Depends on system:** `tor2e` (>= 6.0.0, verified 6.3.0)
 - **Language:** Plain JavaScript ESM (`.mjs`) — no TypeScript, no bundler, no build step
 - **Type:** Foundry **module** (not a system) — installs alongside the `tor2e` system
@@ -120,7 +120,7 @@ Current shape (keep authors + `flags.hotReload` block when editing):
   "title": "TOR2e Print Sheets",
   "description": "Print-optimized character sheet for The One Ring 2e.",
   "version": "0.2.0",
-  "compatibility": { "minimum": "14", "verified": "14" },
+  "compatibility": { "minimum": "14.364", "verified": "14.370", "maximum": "14" },
   "authors": [{ "name": "pedrof" }],
   "esmodules": ["tor2eprint.mjs"],
   "styles": ["styles/print.css"],
