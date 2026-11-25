@@ -109,6 +109,22 @@ const ce = await contextOf('Smoke Effect');
 check('C11', 'actor AE on attribute + skill: print shows prepared value (Wits 3/TN 17, Lore 3)',
     `${ce.attributes.wits.value}/${ce.attributes.wits.tn} ${ce.skills.find(s => s.key === 'lore').value}`, '3/17 3');
 
+// Enrichment (task-2): GM (owner) printing never shows secrets; relative @UUID and @attr inline rolls resolve.
+const arvegil = game.actors.getName('Arvegil');
+const dagger = arvegil.items.getName('Dagger');
+const notesBefore = arvegil._source.system.history.notes.value;
+await arvegil.update({ 'system.history.notes.value':
+    `<section class="secret" id="secret-smoke"><p>SECRET-SMOKE</p></section><p>[[/r 1d6 + @attributes.strength.value]] @UUID[.Item.${dagger.id}]{Rel}</p>` });
+let notes;
+try {
+    notes = Object.assign(document.createElement('div'), { innerHTML: (await contextOf('Arvegil')).history.notes });
+} finally {
+    await arvegil.update({ 'system.history.notes.value': notesBefore });
+}
+check('E0', 'history: secret hidden, @attr roll resolved, relative @UUID resolved',
+    [notes.textContent.includes('SECRET-SMOKE'), notes.querySelector('a.inline-roll')?.textContent.trim(), (a => a && !a.classList.contains('broken') && a.textContent.trim())(notes.querySelector('a.content-link'))].join('|'),
+    'false|1d6 + 8|Rel');
+
 // Print CSS loaded. Foundry may wrap module styles in @layer/@import; walk grouping rules down to @media print.
 const walk = (rules, inPrint = false) => [...rules].flatMap(r => {
     if (r instanceof CSSImportRule) return r.styleSheet ? walk(r.styleSheet.cssRules, inPrint) : [];
