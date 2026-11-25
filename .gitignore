@@ -2,3 +2,5 @@ PRPs/
 ref/
 .env
 node_modules/
+# Local Foundry user data (FOUNDRY_DATA points here)
+.foundry-data/

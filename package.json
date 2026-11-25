@@ -4,11 +4,15 @@
   "type": "module",
   "description": "Dev tooling for the tor2eprint Foundry VTT module. The module itself has no build step.",
   "scripts": {
+    "link": "node tools/link.mjs",
+    "foundry": "node tools/foundry.mjs",
+    "smoke": "node tools/smoke.mjs",
+    "deploy": "./deploy.sh",
     "board": "backlog board",
-    "board:web": "backlog browser",
-    "deploy": "./deploy.sh"
+    "board:web": "backlog browser"
   },
   "devDependencies": {
-    "backlog.md": "1.57.4"
+    "backlog.md": "1.57.4",
+    "playwright-core": "1.65.0"
   }
 }

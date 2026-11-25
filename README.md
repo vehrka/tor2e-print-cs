@@ -39,6 +39,10 @@ Copy the entire `tor2eprint/` folder into `$FOUNDRY_DATA/Data/modules/`.
 
 Folder name must be exactly `tor2eprint`.
 
+### Local Foundry and smoke tests (development)
+
+Copy `.env.example` to `.env` and fill in the paths, then: `npm install`, `npm run link` (symlink into `$FOUNDRY_DATA/modules`), `npm run foundry` (local server on `$FOUNDRY_PORT`, launches `$FOUNDRY_WORLD`), `npm run smoke` (headless login, runs `tests/smoke.mjs` in the page, exits 1 on failure). The dev world needs the `tor2e` system and this module enabled; see CLAUDE.md for the one-time setup.
+
 ### Deploy to a remote server (development)
 
 Set `DEPLOY_TARGET=host:path/Data/modules/tor2eprint` in `.env` (or the environment), then `./deploy.sh -n` to preview and `npm run deploy` to sync. Only runtime files are sent; files removed locally are removed remotely. The deployed `module.json` shows `#{VERSION}#` as its version, since only the release workflow fills in the tokens.
