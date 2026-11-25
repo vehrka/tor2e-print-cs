@@ -140,11 +140,13 @@ Current shape (keep authors + `flags.hotReload` block when editing):
 
 ## Print Layout Rules
 
-- One actor per print; the layout flows and may spill onto a second page (no shrink-to-fit or truncation, decided in task-19). `@page { size: A4 landscape; margin: 8mm; }` (matches `ref/img/tor2e_img_example.png`). `@media print` puts `body:has(.tor2e-print)` in block flow (`@page` size needs it; Foundry's fixed body otherwise clips the sheet to one page) and tightens spacing/fonts so a typical hero fits one page; `npm run smoke` prints every fixture to PDF and checks the page count (Hans Grimald, 14 rewards/virtues/traits, takes 2).
+- Two layouts, one actor per print. Both rely on `@media print` putting `body:has(.tor2e-print)` in block flow.
+- **Classic** (`.tor2e-print`, no extra root class): flows and may spill onto a second page (no shrink-to-fit or truncation, decided in task-19). `@page { size: A4 landscape; margin: 8mm; }` (matches `ref/img/tor2e_img_example.png`). `@media print` puts `body:has(.tor2e-print)` in block flow (`@page` size needs it; Foundry's fixed body otherwise clips the sheet to one page) and tightens spacing/fonts so a typical hero fits one page; `npm run smoke` prints every fixture to PDF and checks the page count (Hans Grimald, 14 rewards/virtues/traits, takes 2).
+- **Form** (`.tor2e-print.tp-form`): named page `@page tor2e-portrait { size: A4 portrait; margin: 8mm; }`, fixed 194 × 280 mm sheet, exactly one page; lists are cut to fixed slots/boxes (`overflow: hidden`, no "+N more", task-25 D3). White page, `#8b1a1a` ink, values in `#2a1810`. Every form rule is scoped under `.tp-form`. Smoke H-checks print each fixture (and the overlong hero) to PDF: 1 portrait page, nothing cut at the sheet bottom.
 - Hide Foundry chrome on print using `:has()` selector: `body > *:not(:has(.tor2e-print)) { display: none !important; }` and strip header/resize-handle on the print window.
 - `break-inside: avoid` on each `.tp-block`.
 - No interactive controls in print template — read-only HTML.
-- Color tokens: cream `#f5ecd6` background, dark red `#8b1a1a` accents. Use `print-color-adjust: exact` on filled pips, table headers, flag chips so they survive print without "Background graphics" being toggled.
+- Color tokens (classic): cream `#f5ecd6` background on screen (white on paper), dark red `#8b1a1a` accents. Use `print-color-adjust: exact` on filled pips, table headers, flag chips so they survive print without "Background graphics" being toggled.
 
 ## Coding Standards
 
