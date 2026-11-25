@@ -69,6 +69,7 @@ tor2eprint/
 │   ├── print-toolbar.hbs    # Format buttons (hidden on print)
 │   └── print-sheet.hbs      # Wrapper: chosen format partial or hint
 ├── fonts/uncial-antiqua/     # Bundled form-layout heading font + OFL.txt (SIL OFL 1.1)
+├── fonts/cinzel/            # Bundled hero-name font (both layouts) + OFL.txt (SIL OFL 1.1)
 ├── styles/print.css         # Layout + @media print rules; A4 landscape
 ├── lang/en.json             # TOR2EPRINT.* strings
 ├── deploy.sh                # rsync runtime files (allow-list, --delete) to $DEPLOY_TARGET
