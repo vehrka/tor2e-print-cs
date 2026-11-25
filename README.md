@@ -5,7 +5,7 @@ Foundry VTT v14 module. Adds a print-optimized character sheet for **The One Rin
 Click the **print** icon in any character sheet's window header → opens a print window with a format toolbar → pick a format → native `window.print()` dialog opens. Pick again to reprint.
 
 - **Classic**: A4 landscape, everything on the hero (history, traits, descriptions); long heroes flow onto a second page.
-- **Form**: A4 portrait, one page, laid out like the printed One Ring character sheet; lists are cut to the fixed lines (4 war gear, 6 useful items), and traits other than distinctive features, flaws and history are left out.
+- **Portrait**: A4 portrait, one page, laid out like the printed One Ring character sheet; lists are cut to the fixed lines (4 war gear, 6 useful items), and traits other than distinctive features, flaws and history are left out.
 
 ## Requirements
 
