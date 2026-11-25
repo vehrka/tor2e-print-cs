@@ -1,11 +1,11 @@
 ---
 id: TASK-7
 title: 'Decide: add Load / Fatigue block'
-status: Hand check
+status: Done
 assignee:
   - '@claude'
 created_date: '2026-11-24T21:58:31Z'
-updated_date: '2026-11-25T21:41:37Z'
+updated_date: '2026-11-25T22:04:15Z'
 labels:
   - template
   - idea
@@ -31,7 +31,7 @@ Source: PRPs/improvements-from-tor2e-6.3.md U4. The print has no Load/Fatigue bl
 ## Definition of Done
 <!-- DOD:BEGIN -->
 - [x] #1 Check in tests/smoke.mjs; `npm run smoke` passes (skip until the smoke tooling exists)
-- [ ] #2 Hand check in a v14 + tor2e world if the change has UI: button shows, window opens and prints once, clean preview, no raw `tor2e.*` keys, no console errors
+- [x] #2 Hand check in a v14 + tor2e world if the change has UI: button shows, window opens and prints once, clean preview, no raw `tor2e.*` keys, no console errors
 - [x] #3 README.md and CLAUDE.md (Status, schema notes) updated in the same commit
 - [x] #4 module.json `compatibility` / `relationships` updated if the tested Foundry or tor2e build changed; release tag noted if it ships
 <!-- DOD:END -->
@@ -40,4 +40,6 @@ Source: PRPs/improvements-from-tor2e-6.3.md U4. The print has no Load/Fatigue bl
 
 <!-- SECTION:NOTES:BEGIN -->
 Classic Endurance cell now lists Current, Load (item load), Fatigue (travelLoad), Total Load (getLoad(), fallback items+fatigue) with tor2e.actors.stats.{current,load,travelLoad,totalLoad}. Sources per task-22. Values filled in (Hope's Shadow lines stay blank as before). Smoke T6 (Hakkon 27/20/0/22, matches sheet incl. load AE); fit checks unchanged (same page counts).
+
+Hand check passed in a v14 + tor2e world (user, 2026-11-25).
 <!-- SECTION:NOTES:END -->

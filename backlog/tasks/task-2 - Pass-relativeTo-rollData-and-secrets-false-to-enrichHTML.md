@@ -1,11 +1,11 @@
 ---
 id: TASK-2
 title: Pass relativeTo, rollData and secrets:false to enrichHTML
-status: Hand check
+status: Done
 assignee:
   - '@claude'
 created_date: '2026-11-24T21:58:30Z'
-updated_date: '2026-11-25T21:19:07Z'
+updated_date: '2026-11-25T22:04:07Z'
 labels:
   - code
   - bug
@@ -25,13 +25,13 @@ Source: PRPs/improvements-from-tor2e-6.3.md U2 (confirms DH-1 in PRPs/improvemen
 <!-- AC:BEGIN -->
 - [x] #1 History/biography enriched with { relativeTo: actor, rollData: actor.getRollData(), secrets: false }
 - [x] #2 Item descriptions enriched with { relativeTo: item, rollData: actor.getRollData(), secrets: false }
-- [ ] #3 Hand check: a secret section in history does not print when a GM prints a player-owned hero; a relative @UUID link and an @attr inline roll resolve
+- [x] #3 Hand check: a secret section in history does not print when a GM prints a player-owned hero; a relative @UUID link and an @attr inline roll resolve
 <!-- AC:END -->
 
 ## Definition of Done
 <!-- DOD:BEGIN -->
 - [x] #1 Check in tests/smoke.mjs; `npm run smoke` passes (skip until the smoke tooling exists)
-- [ ] #2 Hand check in a v14 + tor2e world if the change has UI: button shows, window opens and prints once, clean preview, no raw `tor2e.*` keys, no console errors
+- [x] #2 Hand check in a v14 + tor2e world if the change has UI: button shows, window opens and prints once, clean preview, no raw `tor2e.*` keys, no console errors
 - [x] #3 README.md and CLAUDE.md (Status, schema notes) updated in the same commit
 - [x] #4 module.json `compatibility` / `relationships` updated if the tested Foundry or tor2e build changed; release tag noted if it ships
 <!-- DOD:END -->
@@ -40,4 +40,6 @@ Source: PRPs/improvements-from-tor2e-6.3.md U2 (confirms DH-1 in PRPs/improvemen
 
 <!-- SECTION:NOTES:BEGIN -->
 Smoke E0 (temporarily writes Arvegil history.notes, restores in finally): secret hidden, [[/r 1d6 + @attributes.strength.value]] -> '1d6 + 8', @UUID[.Item.id] resolves (not .broken). Red without fix: roll unresolved, link broken. Secret already hidden without the fix: v14 enrichHTML defaults secrets:false; explicit false kept as guard. tor2e has no getRollData override (core returns actor.system). Item descriptions use relativeTo: item (code path, no dedicated check). AC3 left for real hand check. No doc change; DoD4 n/a.
+
+Hand check passed in a v14 + tor2e world (user, 2026-11-25).
 <!-- SECTION:NOTES:END -->

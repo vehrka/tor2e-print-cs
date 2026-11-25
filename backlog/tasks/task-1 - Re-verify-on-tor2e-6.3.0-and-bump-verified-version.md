@@ -1,11 +1,11 @@
 ---
 id: TASK-1
 title: Re-verify on tor2e 6.3.0 and bump verified version
-status: Hand check
+status: Done
 assignee:
   - '@claude'
 created_date: '2026-11-24T21:58:30Z'
-updated_date: '2026-11-25T21:13:15Z'
+updated_date: '2026-11-25T22:04:05Z'
 labels:
   - release
   - system-upgrade
@@ -25,7 +25,7 @@ Source: PRPs/improvements-from-tor2e-6.3.md, U1. Diff v6.1.0..v6.3.0 shows no br
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
 - [x] #1 ref/foundryvtt-tor2e is at tag v6.3.0 (git describe --tags prints v6.3.0)
-- [ ] #2 Hand check passes in v14 + tor2e 6.3.0: button shows, window opens, prints once, clean preview, no raw tor2e.* keys, no console errors
+- [x] #2 Hand check passes in v14 + tor2e 6.3.0: button shows, window opens, prints once, clean preview, no raw tor2e.* keys, no console errors
 - [x] #3 module.json tor2e compatibility.verified is 6.3.0
 - [x] #4 CLAUDE.md says verified 6.3.0 and documents pinning ref/foundryvtt-tor2e to a release tag
 <!-- AC:END -->
@@ -33,7 +33,7 @@ Source: PRPs/improvements-from-tor2e-6.3.md, U1. Diff v6.1.0..v6.3.0 shows no br
 ## Definition of Done
 <!-- DOD:BEGIN -->
 - [x] #1 Check in tests/smoke.mjs; `npm run smoke` passes (skip until the smoke tooling exists)
-- [ ] #2 Hand check in a v14 + tor2e world if the change has UI: button shows, window opens and prints once, clean preview, no raw `tor2e.*` keys, no console errors
+- [x] #2 Hand check in a v14 + tor2e world if the change has UI: button shows, window opens and prints once, clean preview, no raw `tor2e.*` keys, no console errors
 - [x] #3 README.md and CLAUDE.md (Status, schema notes) updated in the same commit
 - [x] #4 module.json `compatibility` / `relationships` updated if the tested Foundry or tor2e build changed; release tag noted if it ships
 <!-- DOD:END -->
@@ -42,4 +42,6 @@ Source: PRPs/improvements-from-tor2e-6.3.md, U1. Diff v6.1.0..v6.3.0 shows no br
 
 <!-- SECTION:NOTES:BEGIN -->
 ref at v6.3.0. Smoke on core 14.370 + tor2e 6.3.0: 32 pass (S2 version check now green after Foundry restart; manifest is cached server-side). Headless proxy for AC2: control present, window opens, print() once, no raw keys, no console errors except fixture image 404s. Waiting for real hand check.
+
+Hand check passed in a v14 + tor2e world (user, 2026-11-25).
 <!-- SECTION:NOTES:END -->
