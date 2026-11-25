@@ -1,4 +1,4 @@
-@page { margin: 8mm; }
+@page { size: A4 landscape; margin: 8mm; }
 
 /* Header button on legacy ActorSheet — tor2e header CSS makes link text huge.
    Force compact size + reset font. */
@@ -439,6 +439,14 @@
   /* v14 mounts ApplicationV2 windows deep inside #interface, so sibling-only
      hiding no longer reaches the chrome. Hide every element that neither
      contains nor is contained by the print window, then restore its ancestors. */
+  /* @page size applies only in block flow; Foundry's body is a fixed flex box
+     that would also clip the sheet to one page. */
+  body:has(.tor2e-print) {
+    display: block !important;
+    position: static !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
   body *:not(:has(.tor2e-print)):not(.tor2eprint-window):not(.tor2eprint-window *) {
     display: none !important;
   }
@@ -497,4 +505,22 @@
   .tor2e-print .tp-block,
   .tp-attr-cell,
   .tp-resource-cell { background: #fff !important; }
+
+  /* Density: a typical hero fits one A4 landscape page; long heroes flow to page 2. */
+  .tor2e-print { gap: 2mm; font-size: 8.5pt; line-height: 1.2; }
+  .tor2e-print .tp-block { padding: 1.5mm 2mm 1mm; }
+  .tor2e-print h2 { font-size: 10pt; margin-bottom: 1mm; padding-bottom: 0.5mm; }
+  .tor2e-print h3 { margin: 1mm 0 0.5mm; }
+  .tp-banner { padding: 0.5mm 0; }
+  .tp-banner-title { font-size: 9pt; }
+  .tp-banner-name { font-size: 15pt; }
+  .tp-emblem img { width: 22mm; height: 22mm; }
+  .tp-fellowship { margin-top: 2mm; }
+  .tp-dl dt, .tp-dl dd,
+  .tp-skill,
+  .tp-conditions,
+  .tp-gear .tp-list { font-size: 9pt; }
+  .tp-table { font-size: 8.5pt; }
+  .tp-table th, .tp-table td { padding: 0.3mm 1mm; }
+  .tp-attr-cell, .tp-resource-cell { padding: 1mm 2mm; }
 }

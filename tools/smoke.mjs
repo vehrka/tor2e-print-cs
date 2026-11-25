@@ -61,7 +61,9 @@ try {
     }, MODULE_ID);
 
     // Print fit: open each actor's print window, print it to PDF with the print CSS and count pages.
-    // pdfChecks: [{ id, what, actor, pages }]; pages: expected page count, or null to report only.
+    // pdfChecks: [{ id, what, actor, pages, allowTall, pageMm, pageWidthMm }]; pages: expected page count, or null
+// to report only; allowTall: a block taller than the page (it must split) is reported, not failed;
+// pageMm / pageWidthMm: printable area (default 194 x 281 = A4 landscape minus 8mm margins).
     for (const c of pdfChecks) {
         await page.evaluate(async name => {
             window.print = () => {};
@@ -72,24 +74,37 @@ try {
             await Promise.allSettled([...document.querySelectorAll('.tor2e-print img')].map(i => i.decode()));
         }, c.actor);
         await page.emulateMedia({ media: 'print' });
+        await page.setViewportSize({ width: Math.round((c.pageWidthMm ?? 281) * 96 / 25.4), height: 1000 });
         // A clipping ancestor (Foundry's fixed body/window) would cut the sheet and fake a one-page fit.
-        const clipped = await page.evaluate(() => {
+        // Blocks must not overlap, and none may be taller than the page (break-inside: avoid would then split it).
+        const { clipped, overlaps, tall } = await page.evaluate(pageMm => {
             const root = document.querySelector('.tor2e-print');
-            const out = [];
+            const clipped = [];
             for (let el = root.parentElement; el; el = el.parentElement)
                 if (getComputedStyle(el).overflowY !== 'visible' && el.scrollHeight > el.clientHeight + 1)
-                    out.push(el.tagName.toLowerCase() + (el.className ? '.' + [...el.classList].join('.') : ''));
-            return out;
-        });
+                    clipped.push(el.tagName.toLowerCase() + (el.className ? '.' + [...el.classList].join('.') : ''));
+            const rects = [...root.querySelectorAll('.tp-block')].map(b => b.getBoundingClientRect());
+            let overlaps = 0;
+            for (let i = 0; i < rects.length; i++)
+                for (let j = i + 1; j < rects.length; j++) {
+                    const a = rects[i], b = rects[j];
+                    if (Math.min(a.right, b.right) - Math.max(a.left, b.left) > 1 && Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > 1) overlaps++;
+                }
+            const tall = rects.filter(r => r.height > pageMm * 96 / 25.4).length;
+            return { clipped, overlaps, tall };
+        }, c.pageMm ?? 194);
         const pdf = await page.pdf({ preferCSSPageSize: true });
         await page.emulateMedia({ media: null });
+        await page.setViewportSize({ width: 1600, height: 1000 });
         await page.evaluate(async () => {
             for (const a of [...foundry.applications.instances.values()])
                 if (a.element?.querySelector('.tor2e-print')) await a.close();
         });
         const pages = (pdf.toString('latin1').match(/\/Type\s*\/Page(?!s)/g) ?? []).length;
-        const actual = clipped.length ? `${pages}, clipped by ${clipped.join(' < ')}` : pages;
-        results.push({ ...c, actual, expected: c.pages ?? 'not clipped', pass: clipped.length ? false : c.pages == null ? null : pages === c.pages });
+        const bad = [clipped.length && `clipped by ${clipped.join(' < ')}`, overlaps && `${overlaps} overlapping blocks`, !c.allowTall && tall && `${tall} blocks taller than the page`].filter(Boolean);
+        const note = c.allowTall && tall ? ` (${tall} blocks taller than the page, split)` : '';
+        const actual = bad.length ? `${pages}, ${bad.join(', ')}` : `${pages}${note}`;
+        results.push({ ...c, actual, expected: c.pages ?? 'no clipping, overlap or split block', pass: bad.length ? false : c.pages == null ? null : pages === c.pages });
     }
 
     for (const r of results) {
