@@ -17,9 +17,9 @@
         <dt>{{localize "tor2e.actors.biography.shadowPath"}}</dt><dd>{{biography.shadowPath.value}}</dd>
         <dt>{{localize "tor2e.actors.biography.fellowshipFocus"}}</dt><dd>{{biography.fellowshipFocus.value}}</dd>
         <dt>{{localize "tor2e.actors.biography.age"}}</dt><dd>{{biography.age.value}}</dd>
-        <dt>{{localize "TOR2EPRINT.Labels.Fellowship"}}</dt><dd></dd>
-        <dt>{{localize "TOR2EPRINT.Labels.SkillPoints"}}</dt><dd></dd>
-        <dt>{{localize "TOR2EPRINT.Labels.AdventurePoints"}}</dt><dd></dd>
+        <dt>{{localize "tor2e.actors.sections.fellowship"}}</dt><dd></dd>
+        <dt>{{localize "tor2e.actors.sections.skillPoints"}}</dt><dd></dd>
+        <dt>{{localize "tor2e.statureStats.adventurePoints"}}</dt><dd></dd>
       </dl>
     </section>
 
@@ -73,10 +73,18 @@
       <ul class="tp-list">
         {{#each virtues}}<li><strong>{{this.name}}</strong></li>{{else}}<li class="tp-muted">—</li>{{/each}}
       </ul>
-      <h2>{{localize "TOR2EPRINT.Sections.Traits"}}</h2>
+      {{#if traitGroups.features.length}}
+      <h2>{{localize "tor2e.actors.traits.distinctiveFeatures"}}</h2>
       <ul class="tp-list">
-        {{#each traits}}<li><strong>{{this.name}}</strong></li>{{else}}<li class="tp-muted">—</li>{{/each}}
+        {{#each traitGroups.features}}<li><strong>{{this.name}}</strong></li>{{/each}}
       </ul>
+      {{/if}}
+      {{#if traitGroups.flaws.length}}
+      <h2>{{localize "tor2e.actors.traits.flaws"}}</h2>
+      <ul class="tp-list">
+        {{#each traitGroups.flaws}}<li><strong>{{this.name}}</strong></li>{{/each}}
+      </ul>
+      {{/if}}
     </section>
 
     <div class="tp-attr-cell">
@@ -120,15 +128,21 @@
 
     <div class="tp-resource-col tp-span-rows">
       <div class="tp-resource-cell">
-        <h3>{{localize "TOR2EPRINT.Labels.Endurance"}}</h3>
+        <h3>{{localize "tor2e.actors.stats.endurance"}}</h3>
         <div class="tp-resource-big">{{resources.endurance.max}}</div>
+        <div class="tp-resource-sub tp-resource-sub-bottom">
+          <span>{{localize "tor2e.actors.stats.current"}}: {{endurance.value}}</span>
+          <span>{{localize "tor2e.actors.stats.load"}}: {{load.items}}</span>
+          <span>{{localize "tor2e.actors.stats.travelLoad"}}: {{load.fatigue}}</span>
+          <span>{{localize "tor2e.actors.stats.totalLoad"}}: {{load.total}}</span>
+        </div>
       </div>
       <div class="tp-resource-cell">
-        <h3>{{localize "TOR2EPRINT.Labels.Hope"}}</h3>
+        <h3>{{localize "tor2e.actors.stats.hope"}}</h3>
         <div class="tp-resource-big">{{resources.hope.max}}</div>
         <div class="tp-resource-sub tp-resource-sub-bottom">
-          <span>{{localize "TOR2EPRINT.Labels.ShadowPoints"}}:</span>
-          <span>{{localize "TOR2EPRINT.Labels.ShadowScars"}}:</span>
+          <span>{{localize "tor2e.actors.stats.shadowPoints"}}:</span>
+          <span>{{localize "tor2e.actors.stats.shadowScars"}}:</span>
         </div>
       </div>
     </div>
@@ -137,10 +151,10 @@
       <div class="tp-resource-cell">
         <h3>{{localize "TOR2EPRINT.Sections.Conditions"}}</h3>
         <ul class="tp-conditions">
-          <li><span class="tp-check"></span>{{localize "TOR2EPRINT.Labels.Miserable"}}</li>
-          <li><span class="tp-check"></span>{{localize "TOR2EPRINT.Labels.Wounded"}}</li>
-          <li><span class="tp-check"></span>{{localize "TOR2EPRINT.Labels.Poisoned"}}</li>
-          <li><span class="tp-check"></span>{{localize "TOR2EPRINT.Labels.Weary"}}</li>
+          <li><span class="tp-check"></span>{{localize "tor2e.effects.miserable"}}</li>
+          <li><span class="tp-check"></span>{{localize "tor2e.effects.wounded"}}</li>
+          <li><span class="tp-check"></span>{{localize "tor2e.effects.poisoned"}}</li>
+          <li><span class="tp-check"></span>{{localize "tor2e.effects.weary"}}</li>
         </ul>
       </div>
       <div class="tp-resource-cell">
@@ -213,7 +227,7 @@
           {{/each}}
         </tbody>
       </table>
-      <div class="tp-resource"><span class="tp-label">{{localize "TOR2EPRINT.Labels.Parry"}}</span><strong>{{combatAttributes.parry.value}}</strong></div>
+      <div class="tp-resource"><span class="tp-label">{{localize "tor2e.actors.stats.parry"}}</span><strong>{{combatAttributes.parry.value}}</strong></div>
     </section>
 
     <section class="tp-block tp-weapons">
@@ -222,10 +236,10 @@
         <thead>
           <tr>
             <th>Name</th>
-            <th>{{localize "TOR2EPRINT.Labels.Damage"}}</th>
-            <th>{{localize "TOR2EPRINT.Labels.Injury"}}</th>
-            <th>{{localize "TOR2EPRINT.Labels.Load"}}</th>
-            <th>{{localize "TOR2EPRINT.Labels.Notes"}}</th>
+            <th>{{localize "tor2e.weapons.details.damage"}}</th>
+            <th>{{localize "tor2e.weapons.details.injury"}}</th>
+            <th>{{localize "tor2e.items.common.load"}}</th>
+            <th>{{localize "tor2e.weapons.details.notes"}}</th>
           </tr>
         </thead>
         <tbody>
@@ -245,7 +259,7 @@
     <section class="tp-block tp-armour">
       <h2>{{localize "TOR2EPRINT.Sections.Armour"}}</h2>
       <table class="tp-table">
-        <thead><tr><th>Name</th><th>{{localize "TOR2EPRINT.Labels.Protection"}}</th><th>{{localize "TOR2EPRINT.Labels.Load"}}</th></tr></thead>
+        <thead><tr><th>Name</th><th>{{localize "tor2e.items.armours.protection"}}</th><th>{{localize "tor2e.items.common.load"}}</th></tr></thead>
         <tbody>
           {{#each armours}}
           <tr class="{{#if this.equipped}}tp-equipped{{/if}}">

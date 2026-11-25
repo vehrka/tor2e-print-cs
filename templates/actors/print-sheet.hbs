@@ -1,0 +1,7 @@
+<section class="tor2e-print-preview">
+  {{#if formatTemplate}}
+  {{> (lookup this "formatTemplate") }}
+  {{else}}
+  <p class="tor2e-print-hint">{{localize "TOR2EPRINT.ChooseFormat"}}</p>
+  {{/if}}
+</section>

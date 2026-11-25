@@ -1,4 +1,6 @@
 PRPs/
 ref/
-deploy.sh
+.env
 node_modules/
+# Local Foundry user data (FOUNDRY_DATA points here)
+.foundry-data/

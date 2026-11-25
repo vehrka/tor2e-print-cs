@@ -3,14 +3,14 @@
   "title": "TOR2e Print Sheets",
   "description": "Print-optimized character sheet for The One Ring 2e.",
   "version": "#{VERSION}#",
-  "compatibility": { "minimum": "14", "verified": "14" },
+  "compatibility": { "minimum": "14.364", "verified": "14.370", "maximum": "14" },
   "authors": [{ "name": "pedrof" }],
   "esmodules": ["tor2eprint.mjs"],
   "styles": ["styles/print.css"],
   "languages": [{ "lang": "en", "name": "English", "path": "lang/en.json" }],
   "relationships": {
     "systems": [
-      { "id": "tor2e", "type": "system", "compatibility": { "minimum": "6.0.0", "verified": "6.1.0" } }
+      { "id": "tor2e", "type": "system", "compatibility": { "minimum": "6.0.0", "verified": "6.3.0" } }
     ]
   },
   "url": "#{URL}#",

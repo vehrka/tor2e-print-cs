@@ -1,0 +1,2127 @@
+{
+  "folder": "Oopr9am2guVOdFWE",
+  "name": "Hakkon Finnsson",
+  "type": "character",
+  "img": "worlds/barrilungos-la-caza-del-ojo-rojo-2e/resources/img/characters/017_-_Hakkon_Finnsson/Hakkon_Finnsson.webp",
+  "system": {
+    "description": {
+      "value": "",
+      "type": "String",
+      "label": "tor2e.common.description"
+    },
+    "bonuses": {
+      "defense": {
+        "protection": 0,
+        "shieldParry": 0
+      },
+      "tn": {
+        "strength": 0,
+        "heart": 0,
+        "wits": 0
+      },
+      "combat": {
+        "injury": 0,
+        "piercingBlow": 10,
+        "heavyBlow": 0,
+        "pierce": 0,
+        "damage": {
+          "rangedCombat": 0,
+          "closedCombat": 0
+        }
+      },
+      "commonSkills": {
+        "awe": 0,
+        "athletics": 0,
+        "awareness": 0,
+        "hunting": 0,
+        "song": 0,
+        "craft": 0,
+        "enhearten": 0,
+        "travel": 0,
+        "insight": 0,
+        "healing": 0,
+        "courtesy": 0,
+        "battle": 0,
+        "persuade": 0,
+        "stealth": 0,
+        "scan": 0,
+        "explore": 0,
+        "riddle": 0,
+        "lore": 0
+      },
+      "stats": {
+        "load": 0
+      }
+    },
+    "penalties": {
+      "dice": {
+        "feat": 0,
+        "success": 0
+      }
+    },
+    "biography": {
+      "age": {
+        "value": 23,
+        "type": "Number",
+        "label": "tor2e.actors.biography.age"
+      },
+      "title": {
+        "value": "Thegn of Konungsveitir",
+        "type": "String",
+        "label": "tor2e.actors.biography.title"
+      },
+      "fellowshipFocus": {
+        "value": "Blain",
+        "type": "String",
+        "label": "tor2e.actors.biography.fellowshipFocus"
+      },
+      "culture": {
+        "value": "Bardings",
+        "type": "String",
+        "label": "tor2e.actors.biography.culture"
+      },
+      "standardOfLiving": {
+        "value": "prosperous",
+        "type": "String",
+        "label": "tor2e.actors.biography.standardOfLiving"
+      },
+      "culturalBlessing": {
+        "value": "Stout-hearted",
+        "type": "String",
+        "label": "tor2e.actors.biography.culturalBlessing"
+      },
+      "calling": {
+        "value": "captain",
+        "type": "String",
+        "label": "tor2e.actors.biography.calling"
+      },
+      "shadowPath": {
+        "value": "Lure of power",
+        "type": "String",
+        "label": "tor2e.actors.biography.shadowPath"
+      }
+    },
+    "attributes": {
+      "strength": {
+        "value": 5,
+        "type": "Number",
+        "label": "tor2e.stats.strength"
+      },
+      "heart": {
+        "value": 5,
+        "type": "Number",
+        "label": "tor2e.stats.heart"
+      },
+      "wits": {
+        "value": 4,
+        "type": "Number",
+        "label": "tor2e.stats.wits"
+      }
+    },
+    "stature": {
+      "valour": {
+        "value": 1,
+        "type": "Number",
+        "label": "tor2e.statureStats.valour",
+        "favoured": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "roll": {
+          "label": "tor2e.rolls.fear",
+          "associatedAttribute": "heart"
+        }
+      },
+      "wisdom": {
+        "value": 1,
+        "type": "Number",
+        "label": "tor2e.statureStats.wisdom",
+        "favoured": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "roll": {
+          "label": "tor2e.rolls.corruption",
+          "associatedAttribute": "wits"
+        }
+      }
+    },
+    "commonSkills": {
+      "awe": {
+        "value": 2,
+        "type": "Number",
+        "label": "tor2e.commonSkills.awe",
+        "favoured": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "magical": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "roll": {
+          "associatedAttribute": "strength"
+        }
+      },
+      "enhearten": {
+        "value": 2,
+        "type": "Number",
+        "label": "tor2e.commonSkills.enhearten",
+        "favoured": {
+          "value": true,
+          "type": "Boolean"
+        },
+        "magical": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "roll": {
+          "associatedAttribute": "heart"
+        }
+      },
+      "persuade": {
+        "value": 3,
+        "type": "Number",
+        "label": "tor2e.commonSkills.persuade",
+        "favoured": {
+          "value": true,
+          "type": "Boolean"
+        },
+        "magical": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "roll": {
+          "associatedAttribute": "wits"
+        }
+      },
+      "athletics": {
+        "value": 2,
+        "type": "Number",
+        "label": "tor2e.commonSkills.athletics",
+        "favoured": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "magical": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "roll": {
+          "associatedAttribute": "strength"
+        }
+      },
+      "travel": {
+        "value": 1,
+        "type": "Number",
+        "label": "tor2e.commonSkills.travel",
+        "favoured": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "magical": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "roll": {
+          "associatedAttribute": "heart"
+        }
+      },
+      "stealth": {
+        "value": 1,
+        "type": "Number",
+        "label": "tor2e.commonSkills.stealth",
+        "favoured": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "magical": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "roll": {
+          "associatedAttribute": "wits"
+        }
+      },
+      "awareness": {
+        "value": 1,
+        "type": "Number",
+        "label": "tor2e.commonSkills.awareness",
+        "favoured": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "magical": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "roll": {
+          "associatedAttribute": "strength"
+        }
+      },
+      "insight": {
+        "value": 2,
+        "type": "Number",
+        "label": "tor2e.commonSkills.insight",
+        "favoured": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "magical": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "roll": {
+          "associatedAttribute": "heart"
+        }
+      },
+      "scan": {
+        "value": 1,
+        "type": "Number",
+        "label": "tor2e.commonSkills.scan",
+        "favoured": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "magical": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "roll": {
+          "associatedAttribute": "wits"
+        }
+      },
+      "explore": {
+        "value": 2,
+        "type": "Number",
+        "label": "tor2e.commonSkills.explore",
+        "favoured": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "magical": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "roll": {
+          "associatedAttribute": "wits"
+        }
+      },
+      "healing": {
+        "value": 1,
+        "type": "Number",
+        "label": "tor2e.commonSkills.healing",
+        "favoured": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "magical": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "roll": {
+          "associatedAttribute": "heart"
+        }
+      },
+      "hunting": {
+        "value": 2,
+        "type": "Number",
+        "label": "tor2e.commonSkills.hunting",
+        "favoured": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "magical": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "roll": {
+          "associatedAttribute": "strength"
+        }
+      },
+      "song": {
+        "value": 1,
+        "type": "Number",
+        "label": "tor2e.commonSkills.song",
+        "favoured": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "magical": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "roll": {
+          "associatedAttribute": "strength"
+        }
+      },
+      "courtesy": {
+        "value": 2,
+        "type": "Number",
+        "label": "tor2e.commonSkills.courtesy",
+        "favoured": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "magical": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "roll": {
+          "associatedAttribute": "heart"
+        }
+      },
+      "riddle": {
+        "value": 1,
+        "type": "Number",
+        "label": "tor2e.commonSkills.riddle",
+        "favoured": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "magical": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "roll": {
+          "associatedAttribute": "wits"
+        }
+      },
+      "craft": {
+        "value": 1,
+        "type": "Number",
+        "label": "tor2e.commonSkills.craft",
+        "favoured": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "magical": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "roll": {
+          "associatedAttribute": "strength"
+        }
+      },
+      "battle": {
+        "value": 2,
+        "type": "Number",
+        "label": "tor2e.commonSkills.battle",
+        "favoured": {
+          "value": true,
+          "type": "Boolean"
+        },
+        "magical": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "roll": {
+          "associatedAttribute": "heart"
+        }
+      },
+      "lore": {
+        "value": 2,
+        "type": "Number",
+        "label": "tor2e.commonSkills.lore",
+        "favoured": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "magical": {
+          "value": false,
+          "type": "Boolean"
+        },
+        "roll": {
+          "associatedAttribute": "wits"
+        }
+      }
+    },
+    "skillGroups": {
+      "personality": {
+        "value": 0,
+        "type": "Number",
+        "label": "tor2e.skillGroups.personality"
+      },
+      "movement": {
+        "value": 0,
+        "type": "Number",
+        "label": "tor2e.skillGroups.movement"
+      },
+      "perception": {
+        "value": 0,
+        "type": "Number",
+        "label": "tor2e.skillGroups.perception"
+      },
+      "survival": {
+        "value": 0,
+        "type": "Number",
+        "label": "tor2e.skillGroups.survival"
+      },
+      "custom": {
+        "value": 0,
+        "type": "Number",
+        "label": "tor2e.skillGroups.custom"
+      },
+      "vocation": {
+        "value": 0,
+        "type": "Number",
+        "label": "tor2e.skillGroups.vocation"
+      }
+    },
+    "combatAttributes": {
+      "damage": {
+        "value": 0,
+        "type": "Number",
+        "label": "tor2e.actors.combatAttributes.damage",
+        "ranged": {
+          "value": 0,
+          "type": "Number",
+          "label": "tor2e.actors.combatAttributes.ranged"
+        }
+      },
+      "parry": {
+        "value": 16,
+        "type": "Number",
+        "label": "tor2e.actors.combatAttributes.parry"
+      },
+      "armour": {
+        "favoured": {
+          "value": false,
+          "type": "Boolean",
+          "label": "tor2e.stats.favoured"
+        }
+      }
+    },
+    "combatProficiencies": {
+      "axes": {
+        "value": 0,
+        "type": "Number",
+        "label": "tor2e.combatProficiencies.axes",
+        "icon": "systems/tor2e/assets/images/icons/weapons/axes.png",
+        "roll": {
+          "associatedAttribute": "strength"
+        }
+      },
+      "swords": {
+        "value": 3,
+        "type": "Number",
+        "label": "tor2e.combatProficiencies.swords",
+        "icon": "systems/tor2e/assets/images/icons/weapons/swords.png",
+        "roll": {
+          "associatedAttribute": "heart"
+        }
+      },
+      "spears": {
+        "value": 0,
+        "type": "Number",
+        "label": "tor2e.combatProficiencies.spears",
+        "icon": "systems/tor2e/assets/images/icons/weapons/spears.png",
+        "roll": {
+          "associatedAttribute": "wits"
+        }
+      },
+      "bows": {
+        "value": 1,
+        "type": "Number",
+        "label": "tor2e.combatProficiencies.bows",
+        "icon": "systems/tor2e/assets/images/icons/weapons/bows.png",
+        "roll": {
+          "associatedAttribute": "wits"
+        }
+      }
+    },
+    "resources": {
+      "endurance": {
+        "value": 27,
+        "max": 27,
+        "type": "Number",
+        "label": "tor2e.actors.stats.endurance"
+      },
+      "travelLoad": {
+        "value": 0,
+        "type": "Number",
+        "label": "tor2e.actors.stats.travelLoad"
+      },
+      "hope": {
+        "value": 5,
+        "max": 13,
+        "type": "Number",
+        "label": "tor2e.actors.stats.hope"
+      },
+      "shadow": {
+        "shadowScars": {
+          "value": 0,
+          "type": "Number",
+          "label": "tor2e.actors.stats.shadowScars"
+        },
+        "temporary": {
+          "value": 2,
+          "type": "Number",
+          "label": "tor2e.actors.stats.temporary"
+        },
+        "taint": {
+          "value": 0,
+          "type": "Number",
+          "label": "tor2e.actors.stats.shadowTaint"
+        }
+      }
+    },
+    "stateOfHealth": {
+      "miserable": {
+        "value": "0",
+        "type": "String",
+        "label": "tor2e.actors.stateOfHealth.miserable"
+      },
+      "wounded": {
+        "value": 0,
+        "type": "Number",
+        "label": "tor2e.actors.stateOfHealth.wounded"
+      },
+      "poisoned": {
+        "value": 0,
+        "type": "Number",
+        "label": "tor2e.actors.stateOfHealth.poisoned"
+      },
+      "weary": {
+        "value": 0,
+        "type": "Number",
+        "label": "tor2e.actors.stateOfHealth.weary"
+      }
+    },
+    "fellowship": {
+      "value": 0,
+      "type": "Number",
+      "label": "tor2e.actors.sections.fellowship"
+    },
+    "adventurePoints": {
+      "value": 6,
+      "type": "Number",
+      "label": "tor2e.statureStats.adventurePoints",
+      "total": {
+        "value": 6,
+        "type": "Number",
+        "label": "tor2e.statureStats.total"
+      }
+    },
+    "skillPoints": {
+      "value": 10,
+      "type": "Number",
+      "label": "tor2e.actors.sections.skillPoints",
+      "total": {
+        "value": 10,
+        "type": "Number",
+        "label": "tor2e.statureStats.total"
+      }
+    },
+    "reputationPoints": {
+      "value": 0,
+      "type": "Number",
+      "label": "tor2e.actors.sections.reputationPoints",
+      "total": {
+        "value": 0,
+        "type": "Number",
+        "label": "tor2e.statureStats.total"
+      },
+      "rating": {
+        "value": 0,
+        "type": "Number",
+        "label": "tor2e.actors.sections.rating"
+      }
+    },
+    "treasure": {
+      "value": 95,
+      "type": "Number",
+      "label": "tor2e.actors.sections.treasure"
+    },
+    "history": {
+      "background": {
+        "value": "",
+        "type": "String"
+      },
+      "company": {
+        "value": "",
+        "type": "String"
+      },
+      "fellowshipPhase": {
+        "value": "",
+        "type": "String"
+      },
+      "taleOfYears": {
+        "value": "",
+        "type": "String"
+      },
+      "notes": {
+        "value": "<p>Erod, light horse.</p>",
+        "type": "String"
+      }
+    }
+  },
+  "prototypeToken": {
+    "name": "Haakon Finnsson",
+    "displayName": 0,
+    "actorLink": true,
+    "appendNumber": false,
+    "prependAdjective": false,
+    "width": 1,
+    "height": 1,
+    "texture": {
+      "src": "worlds/barrilungos-la-caza-del-ojo-rojo-2e/resources/img/characters/017_-_Hakkon_Finnsson/Hakkon_Finnsson_Token.webp",
+      "anchorX": 0.5,
+      "anchorY": 0.5,
+      "fit": "contain",
+      "scaleX": 1,
+      "scaleY": 1,
+      "tint": "#ffffff",
+      "alphaThreshold": 0.75
+    },
+    "lockRotation": false,
+    "rotation": 0,
+    "alpha": 1,
+    "disposition": 1,
+    "displayBars": 0,
+    "bar1": {
+      "attribute": "resources.endurance"
+    },
+    "bar2": {
+      "attribute": "resources.hope"
+    },
+    "light": {
+      "negative": false,
+      "priority": 0,
+      "alpha": 0.5,
+      "angle": 360,
+      "bright": 0,
+      "color": null,
+      "coloration": 1,
+      "dim": 0,
+      "attenuation": 0.5,
+      "luminosity": 0.5,
+      "saturation": 0,
+      "contrast": 0,
+      "shadows": 0,
+      "animation": {
+        "type": null,
+        "speed": 5,
+        "intensity": 5,
+        "reverse": false
+      },
+      "darkness": {
+        "min": 0,
+        "max": 1
+      }
+    },
+    "sight": {
+      "enabled": true,
+      "range": 0,
+      "angle": 360,
+      "visionMode": "basic",
+      "color": null,
+      "attenuation": 0.1,
+      "brightness": 0,
+      "saturation": 0,
+      "contrast": 0
+    },
+    "detectionModes": {},
+    "occludable": {
+      "radius": 0
+    },
+    "ring": {
+      "enabled": false,
+      "colors": {
+        "ring": null,
+        "background": null
+      },
+      "effects": 0,
+      "subject": {
+        "scale": 1,
+        "texture": null
+      }
+    },
+    "flags": {},
+    "randomImg": false,
+    "turnMarker": {
+      "mode": 1,
+      "animation": null,
+      "src": null,
+      "disposition": false
+    },
+    "movementAction": null,
+    "depth": 1
+  },
+  "items": [
+    {
+      "_id": "isy7gSFemgRRDy3v",
+      "name": "Coat of Mail",
+      "type": "armour",
+      "img": "systems/tor2e/assets/images/icons/armour.png",
+      "effects": [
+        {
+          "img": "icons/svg/aura.svg",
+          "origin": "Actor.AXSPNqwUlKd9GrWq.Item.isy7gSFemgRRDy3v",
+          "disabled": false,
+          "name": "Cunning make",
+          "_id": "kMG0YVvGnDMzy1RM",
+          "type": "base",
+          "system": {
+            "changes": [
+              {
+                "key": "system.bonuses.stats.load",
+                "value": -2,
+                "priority": null,
+                "type": "downgrade",
+                "phase": "initial"
+              }
+            ]
+          },
+          "duration": {
+            "value": null,
+            "units": "seconds",
+            "expiry": null,
+            "expired": false
+          },
+          "description": "",
+          "tint": "#ffffff",
+          "transfer": true,
+          "statuses": [],
+          "sort": 0,
+          "flags": {},
+          "_stats": {
+            "compendiumSource": null,
+            "duplicateSource": null,
+            "coreVersion": "14.364",
+            "systemId": "tor2e",
+            "systemVersion": "4.5.3",
+            "createdTime": 1740330816635,
+            "modifiedTime": 1740331426850,
+            "lastModifiedBy": "fE5XBY3iDgAUc9cj",
+            "exportSource": null
+          },
+          "start": null,
+          "showIcon": 1,
+          "folder": null
+        }
+      ],
+      "folder": "BhC9bGj7zypbJYvi",
+      "sort": 0,
+      "flags": {
+        "core": {}
+      },
+      "system": {
+        "load": {
+          "value": 10,
+          "type": "Number",
+          "label": "tor2e.items.common.load"
+        },
+        "dropped": {
+          "value": false,
+          "type": "Boolean",
+          "label": "tor2e.items.common.dropped"
+        },
+        "equipped": {
+          "value": true,
+          "type": "Boolean",
+          "label": "tor2e.items.common.equipped"
+        },
+        "description": {
+          "value": "See Standard of Living requirements on page 100",
+          "type": "String",
+          "label": "tor2e.common.description"
+        },
+        "protection": {
+          "value": 4,
+          "type": "Number",
+          "label": "tor2e.items.armours.protection"
+        },
+        "group": {
+          "value": "mail",
+          "type": "String",
+          "label": "tor2e.armour.title.group"
+        }
+      },
+      "ownership": {
+        "default": 3
+      },
+      "_stats": {
+        "compendiumSource": "Compendium.tor2ecomp-module.tor2e_armour.BZZRSKHB97DNCNUR",
+        "duplicateSource": null,
+        "coreVersion": "14.364",
+        "systemId": "tor2e",
+        "systemVersion": "4.5.3",
+        "createdTime": 1739997141407,
+        "modifiedTime": 1740331388899,
+        "lastModifiedBy": "fE5XBY3iDgAUc9cj",
+        "exportSource": null
+      }
+    },
+    {
+      "_id": "gJNv7GXKmLneHVlr",
+      "name": "CUNNING MAKE (Coat of mail)",
+      "type": "reward",
+      "img": "systems/tor2e/assets/images/icons/reward.png",
+      "effects": [],
+      "folder": "VhWmQnOg6KThKchF",
+      "sort": 300000,
+      "flags": {
+        "core": {}
+      },
+      "system": {
+        "description": {
+          "value": "<p>A skilled craftsman has made this piece of equipment lighter or less cumbersome than its lesser counterparts.</p><p><i>Reduce the Load rating of the selected item by 2 (to a minimum of 0 Load).</i></p></br><p>&nbsp;</p>",
+          "type": "String",
+          "label": "tor2e.common.description"
+        }
+      },
+      "ownership": {
+        "default": 3
+      },
+      "_stats": {
+        "compendiumSource": "Compendium.tor2ecomp-module.tor2e_rewards.9JW1294788X38KVW",
+        "duplicateSource": null,
+        "coreVersion": "14.364",
+        "systemId": "tor2e",
+        "systemVersion": "4.5.3",
+        "createdTime": 1739997215616,
+        "modifiedTime": 1739997236102,
+        "lastModifiedBy": "fE5XBY3iDgAUc9cj",
+        "exportSource": null
+      }
+    },
+    {
+      "_id": "L4wLMRO61vptSYtj",
+      "name": "Gusisnautar (K) [Great Bow]",
+      "type": "weapon",
+      "img": "systems/tor2e/assets/images/icons/weapon_bows.png",
+      "effects": [
+        {
+          "img": "icons/svg/sword.svg",
+          "origin": "Actor.AXSPNqwUlKd9GrWq.Item.L4wLMRO61vptSYtj",
+          "disabled": false,
+          "name": "Keen",
+          "_id": "GILjuioEHryOCrG0",
+          "type": "base",
+          "system": {
+            "changes": [
+              {
+                "key": "system.bonuses.combat.piercingBlow",
+                "value": 9,
+                "priority": null,
+                "type": "downgrade",
+                "phase": "initial"
+              }
+            ]
+          },
+          "duration": {
+            "value": null,
+            "units": "seconds",
+            "expiry": null,
+            "expired": false
+          },
+          "description": "",
+          "tint": "#ffffff",
+          "transfer": true,
+          "statuses": [],
+          "sort": 0,
+          "flags": {},
+          "_stats": {
+            "compendiumSource": null,
+            "duplicateSource": null,
+            "coreVersion": "14.364",
+            "systemId": "tor2e",
+            "systemVersion": "4.5.3",
+            "createdTime": 1740330640693,
+            "modifiedTime": 1740333080754,
+            "lastModifiedBy": "fE5XBY3iDgAUc9cj",
+            "exportSource": null
+          },
+          "start": null,
+          "showIcon": 1,
+          "folder": null
+        }
+      ],
+      "folder": "k8Hb3UtC0YsxEEPy",
+      "sort": 0,
+      "flags": {
+        "core": {}
+      },
+      "system": {
+        "description": {
+          "value": "Ranged weapon",
+          "type": "String",
+          "label": "tor2e.common.description"
+        },
+        "load": {
+          "value": 4,
+          "type": "Number",
+          "label": "tor2e.items.common.load"
+        },
+        "dropped": {
+          "value": false,
+          "type": "Boolean",
+          "label": "tor2e.items.common.dropped"
+        },
+        "equipped": {
+          "value": true,
+          "type": "Boolean",
+          "label": "tor2e.items.common.equipped"
+        },
+        "damage": {
+          "value": 4,
+          "type": "Number",
+          "label": "tor2e.weapons.details.damage"
+        },
+        "injury": {
+          "value": 16,
+          "type": "Number",
+          "label": "tor2e.weapons.details.injury"
+        },
+        "group": {
+          "value": "bows",
+          "type": "String",
+          "label": "tor2e.weapons.details.group"
+        },
+        "skill": {
+          "name": "",
+          "value": 0,
+          "type": "Number",
+          "label": "tor2e.weapons.details.skill",
+          "favoured": {
+            "value": false,
+            "type": "Boolean",
+            "label": "tor2e.stats.favoured"
+          },
+          "roll": {
+            "associatedAttribute": "strength"
+          }
+        },
+        "ranged": {
+          "value": true,
+          "type": "Boolean",
+          "label": "tor2e.weapons.details.ranged",
+          "short": {
+            "value": 5,
+            "type": "Number",
+            "label": "tor2e.weapons.details.short"
+          },
+          "medium": {
+            "value": 10,
+            "type": "Number",
+            "label": "tor2e.weapons.details.medium"
+          },
+          "long": {
+            "value": 20,
+            "type": "Number",
+            "label": "tor2e.weapons.details.long"
+          }
+        },
+        "twoHandWeapon": {
+          "value": false,
+          "type": "Boolean",
+          "label": "tor2e.weapons.details.twoHandWeapon"
+        },
+        "notes": {
+          "value": "Ranged weapon",
+          "type": "String",
+          "label": "tor2e.weapons.details.notes"
+        }
+      },
+      "ownership": {
+        "default": 3
+      },
+      "_stats": {
+        "compendiumSource": "Compendium.tor2ecomp-module.tor2e_weapons.6GUF6DJLUCLFYAP4",
+        "duplicateSource": null,
+        "coreVersion": "14.364",
+        "systemId": "tor2e",
+        "systemVersion": "4.5.3",
+        "createdTime": 1739997267024,
+        "modifiedTime": 1740330345972,
+        "lastModifiedBy": "fE5XBY3iDgAUc9cj",
+        "exportSource": null
+      }
+    },
+    {
+      "_id": "CP2BKi1qnx7nIM43",
+      "name": "Helm",
+      "type": "armour",
+      "img": "systems/tor2e/assets/images/icons/headgear.png",
+      "effects": [],
+      "folder": "BhC9bGj7zypbJYvi",
+      "sort": 0,
+      "flags": {
+        "core": {}
+      },
+      "system": {
+        "load": {
+          "value": 4,
+          "type": "Number",
+          "label": "tor2e.items.common.load"
+        },
+        "dropped": {
+          "value": false,
+          "type": "Boolean",
+          "label": "tor2e.items.common.dropped"
+        },
+        "equipped": {
+          "value": true,
+          "type": "Boolean",
+          "label": "tor2e.items.common.equipped"
+        },
+        "description": {
+          "value": "May be removed in combat to lower Load",
+          "type": "String",
+          "label": "tor2e.common.description"
+        },
+        "protection": {
+          "value": 1,
+          "type": "Number",
+          "label": "tor2e.items.armours.protection"
+        },
+        "group": {
+          "value": "head",
+          "type": "String",
+          "label": "tor2e.armour.title.group"
+        }
+      },
+      "ownership": {
+        "default": 3
+      },
+      "_stats": {
+        "compendiumSource": "Compendium.tor2ecomp-module.tor2e_armour.SF1GFRYZ5U9XGZJG",
+        "duplicateSource": null,
+        "coreVersion": "14.364",
+        "systemId": "tor2e",
+        "systemVersion": "4.7.13",
+        "createdTime": 1739997337617,
+        "modifiedTime": 1748194706597,
+        "lastModifiedBy": "fE5XBY3iDgAUc9cj",
+        "exportSource": null
+      }
+    },
+    {
+      "_id": "hAbIjcohHLN5aJim",
+      "name": "HARDINESS",
+      "type": "virtues",
+      "img": "systems/tor2e/assets/images/icons/virtue.png",
+      "effects": [],
+      "folder": "UZACDivtYgEz23C9",
+      "sort": 3500000,
+      "flags": {
+        "core": {}
+      },
+      "system": {
+        "description": {
+          "value": "<p><b>(General)</b></p><p>Your determination and stamina have improved through hardship and toil.</p><p><i>Raise your maximum Endurance rating by 2 points.</i></p><p><blockquote></blockquote></p></br><p>&nbsp;</p>",
+          "type": "String",
+          "label": "tor2e.common.description"
+        },
+        "type": {
+          "value": "tor2e.virtues.groups.cultural",
+          "type": "String",
+          "label": "tor2e.virtues.details.type"
+        }
+      },
+      "ownership": {
+        "default": 3
+      },
+      "_stats": {
+        "compendiumSource": "Compendium.tor2ecomp-module.tor2e_virtues.AVXUMD7OE6L0MGTV",
+        "duplicateSource": null,
+        "coreVersion": "14.364",
+        "systemId": "tor2e",
+        "systemVersion": "4.5.3",
+        "createdTime": 1739997454494,
+        "modifiedTime": 1739997454494,
+        "lastModifiedBy": "fE5XBY3iDgAUc9cj",
+        "exportSource": null
+      }
+    },
+    {
+      "_id": "54yt8OARzXOUFLYt",
+      "name": "STOUT-HEARTED (Bardings)",
+      "type": "trait",
+      "img": "systems/tor2e/assets/images/icons/cultural-blessing.png",
+      "effects": [],
+      "folder": "UZACDivtYgEz23C9",
+      "sort": 125000,
+      "flags": {
+        "core": {}
+      },
+      "system": {
+        "description": {
+          "value": "<p>Stories tell that the Bardings lived under the shadow of a great Dragon for decades.</p><p><i>Your VALOUR rolls are Favoured.</i></p><p><blockquote>To the lineage of Gondor he added the fearless spirit of the Northmen...</blockquote></p></br><p>&nbsp;</p>",
+          "type": "String",
+          "label": "tor2e.common.description"
+        },
+        "group": {
+          "value": "distinctiveFeature",
+          "type": "String",
+          "label": "tor2e.traits.details.traitGroup"
+        }
+      },
+      "ownership": {
+        "default": 3
+      },
+      "_stats": {
+        "compendiumSource": "Compendium.tor2ecomp-module.tor2e_cultural_blessings.LEV9GWC0JXJN9U2S",
+        "duplicateSource": null,
+        "coreVersion": "14.364",
+        "systemId": "tor2e",
+        "systemVersion": "4.5.3",
+        "createdTime": 1739997491184,
+        "modifiedTime": 1739997491184,
+        "lastModifiedBy": "fE5XBY3iDgAUc9cj",
+        "exportSource": null
+      }
+    },
+    {
+      "_id": "lciHdg7dfflPZ2ST",
+      "name": "BOLD",
+      "type": "trait",
+      "img": "systems/tor2e/assets/images/icons/distinctive_feature.png",
+      "effects": [],
+      "folder": "hVGLBs5UcUGbU9oT",
+      "sort": 0,
+      "flags": {
+        "core": {}
+      },
+      "system": {
+        "description": {
+          "value": "<p>You trust your capabilities to the point that you are not easily daunted, readily placing yourself in danger.</p></br><p>&nbsp;</p>",
+          "type": "String",
+          "label": "tor2e.common.description"
+        },
+        "group": {
+          "value": "distinctiveFeature",
+          "type": "String",
+          "label": "tor2e.traits.details.traitGroup"
+        }
+      },
+      "ownership": {
+        "default": 3
+      },
+      "_stats": {
+        "compendiumSource": "Compendium.tor2ecomp-module.tor2e_distinctive_features.79R9D8DIMKKKSGTN",
+        "duplicateSource": null,
+        "coreVersion": "14.364",
+        "systemId": "tor2e",
+        "systemVersion": "4.5.3",
+        "createdTime": 1740326742063,
+        "modifiedTime": 1740326742063,
+        "lastModifiedBy": "fE5XBY3iDgAUc9cj",
+        "exportSource": null
+      }
+    },
+    {
+      "_id": "r8qziK1QfgdiR73w",
+      "name": "GENEROUS",
+      "type": "trait",
+      "img": "systems/tor2e/assets/images/icons/distinctive_feature.png",
+      "effects": [],
+      "folder": "hVGLBs5UcUGbU9oT",
+      "sort": 0,
+      "flags": {
+        "core": {}
+      },
+      "system": {
+        "description": {
+          "value": "<p>You give with open hands and heart, always mindful of the needs of others.</p></br><p>&nbsp;</p>",
+          "type": "String",
+          "label": "tor2e.common.description"
+        },
+        "group": {
+          "value": "distinctiveFeature",
+          "type": "String",
+          "label": "tor2e.traits.details.traitGroup"
+        }
+      },
+      "ownership": {
+        "default": 3
+      },
+      "_stats": {
+        "compendiumSource": "Compendium.tor2ecomp-module.tor2e_distinctive_features.TPMTZZG84P1DAOK4",
+        "duplicateSource": null,
+        "coreVersion": "14.364",
+        "systemId": "tor2e",
+        "systemVersion": "4.5.3",
+        "createdTime": 1740326753452,
+        "modifiedTime": 1740326753452,
+        "lastModifiedBy": "fE5XBY3iDgAUc9cj",
+        "exportSource": null
+      }
+    },
+    {
+      "name": "Dragonslayer Sword",
+      "type": "weapon",
+      "img": "systems/tor2e/assets/images/icons/weapon_swords.png",
+      "effects": [
+        {
+          "origin": "Item.9DT3pUWmejx0jhNa",
+          "disabled": false,
+          "_id": "i7VmzBM9uYlUIDVX",
+          "duration": {
+            "value": null,
+            "units": "seconds",
+            "expiry": null,
+            "expired": false
+          },
+          "tint": "#ffffff",
+          "transfer": true,
+          "flags": {},
+          "name": "Keen",
+          "description": "",
+          "statuses": [],
+          "_stats": {
+            "compendiumSource": null,
+            "duplicateSource": null,
+            "coreVersion": "14.364",
+            "systemId": "tor2e",
+            "systemVersion": "4.5.3",
+            "createdTime": null,
+            "modifiedTime": 1740333039781,
+            "lastModifiedBy": "fE5XBY3iDgAUc9cj",
+            "exportSource": null
+          },
+          "img": "icons/svg/sword.svg",
+          "type": "base",
+          "system": {
+            "changes": [
+              {
+                "key": "system.bonuses.combat.piercingBlow",
+                "value": 9,
+                "priority": null,
+                "type": "downgrade",
+                "phase": "initial"
+              }
+            ]
+          },
+          "sort": 0,
+          "start": null,
+          "showIcon": 1,
+          "folder": null
+        }
+      ],
+      "folder": "k8Hb3UtC0YsxEEPy",
+      "sort": 0,
+      "flags": {
+        "core": {}
+      },
+      "system": {
+        "description": {
+          "value": "<p>Dwarven made short sword with the <strong>Bane against Dragons</strong> property, also Keen [9 in feat dice to injury] and Superior Griveous[+2 Damage rating].</p>\n<p>Given by @UUID[Actor.AcAG9HmpowIzRJMD]{Bardo} to the Caballeros de la Desolaci&oacute;n</p>",
+          "type": "String",
+          "label": "tor2e.common.description"
+        },
+        "load": {
+          "value": 1,
+          "type": "Number",
+          "label": "tor2e.items.common.load"
+        },
+        "dropped": {
+          "value": false,
+          "type": "Boolean",
+          "label": "tor2e.items.common.dropped"
+        },
+        "equipped": {
+          "value": true,
+          "type": "Boolean",
+          "label": "tor2e.items.common.equipped"
+        },
+        "damage": {
+          "value": 5,
+          "type": "Number",
+          "label": "tor2e.weapons.details.damage"
+        },
+        "injury": {
+          "value": 16,
+          "type": "Number",
+          "label": "tor2e.weapons.details.injury"
+        },
+        "group": {
+          "value": "swords",
+          "type": "String",
+          "label": "tor2e.weapons.details.group"
+        },
+        "skill": {
+          "name": "",
+          "value": 0,
+          "type": "Number",
+          "label": "tor2e.weapons.details.skill",
+          "favoured": {
+            "value": false,
+            "type": "Boolean",
+            "label": "tor2e.stats.favoured"
+          },
+          "roll": {
+            "associatedAttribute": "strength"
+          }
+        },
+        "ranged": {
+          "value": false,
+          "type": "Boolean",
+          "label": "tor2e.weapons.details.ranged",
+          "short": {
+            "value": 5,
+            "type": "Number",
+            "label": "tor2e.weapons.details.short"
+          },
+          "medium": {
+            "value": 10,
+            "type": "Number",
+            "label": "tor2e.weapons.details.medium"
+          },
+          "long": {
+            "value": 20,
+            "type": "Number",
+            "label": "tor2e.weapons.details.long"
+          }
+        },
+        "twoHandWeapon": {
+          "value": false,
+          "type": "Boolean",
+          "label": "tor2e.weapons.details.twoHandWeapon"
+        },
+        "notes": {
+          "value": "Short Sword",
+          "type": "String",
+          "label": "tor2e.weapons.details.notes"
+        }
+      },
+      "ownership": {
+        "default": 3
+      },
+      "_stats": {
+        "compendiumSource": "Compendium.tor2ecomp-module.tor2e_weapons.AVX6YC8KZ0VMMCQ5",
+        "duplicateSource": null,
+        "coreVersion": "14.364",
+        "systemId": "tor2e",
+        "systemVersion": "4.7.13",
+        "createdTime": 1740330745225,
+        "modifiedTime": 1748191341574,
+        "lastModifiedBy": "fE5XBY3iDgAUc9cj",
+        "exportSource": null
+      },
+      "_id": "6S8hkUKeMulOLxOi"
+    },
+    {
+      "_id": "vRsogiqju2anSccQ",
+      "name": "Dagger",
+      "type": "weapon",
+      "img": "systems/tor2e/assets/images/icons/weapon_dagger.png",
+      "effects": [],
+      "folder": "k8Hb3UtC0YsxEEPy",
+      "sort": 0,
+      "flags": {
+        "core": {}
+      },
+      "system": {
+        "description": {
+          "value": "Dagger",
+          "type": "String",
+          "label": "tor2e.common.description"
+        },
+        "load": {
+          "value": 0,
+          "type": "Number",
+          "label": "tor2e.items.common.load"
+        },
+        "dropped": {
+          "value": false,
+          "type": "Boolean",
+          "label": "tor2e.items.common.dropped"
+        },
+        "equipped": {
+          "value": true,
+          "type": "Boolean",
+          "label": "tor2e.items.common.equipped"
+        },
+        "damage": {
+          "value": 2,
+          "type": "Number",
+          "label": "tor2e.weapons.details.damage"
+        },
+        "injury": {
+          "value": 14,
+          "type": "Number",
+          "label": "tor2e.weapons.details.injury"
+        },
+        "group": {
+          "value": "brawling",
+          "type": "String",
+          "label": "tor2e.weapons.details.group"
+        },
+        "skill": {
+          "name": "",
+          "value": 0,
+          "type": "Number",
+          "label": "tor2e.weapons.details.skill",
+          "favoured": {
+            "value": false,
+            "type": "Boolean",
+            "label": "tor2e.stats.favoured"
+          },
+          "roll": {
+            "associatedAttribute": "strength"
+          }
+        },
+        "ranged": {
+          "value": false,
+          "type": "Boolean",
+          "label": "tor2e.weapons.details.ranged",
+          "short": {
+            "value": 5,
+            "type": "Number",
+            "label": "tor2e.weapons.details.short"
+          },
+          "medium": {
+            "value": 10,
+            "type": "Number",
+            "label": "tor2e.weapons.details.medium"
+          },
+          "long": {
+            "value": 20,
+            "type": "Number",
+            "label": "tor2e.weapons.details.long"
+          }
+        },
+        "twoHandWeapon": {
+          "value": false,
+          "type": "Boolean",
+          "label": "tor2e.weapons.details.twoHandWeapon"
+        },
+        "notes": {
+          "value": "Dagger",
+          "type": "String",
+          "label": "tor2e.weapons.details.notes"
+        }
+      },
+      "ownership": {
+        "default": 3
+      },
+      "_stats": {
+        "compendiumSource": "Compendium.tor2ecomp-module.tor2e_weapons.H5Q2M29JJDZBR2OB",
+        "duplicateSource": null,
+        "coreVersion": "14.364",
+        "systemId": "tor2e",
+        "systemVersion": "4.5.3",
+        "createdTime": 1740331002035,
+        "modifiedTime": 1740331004289,
+        "lastModifiedBy": "fE5XBY3iDgAUc9cj",
+        "exportSource": null
+      }
+    },
+    {
+      "_id": "USfaQrSNVV605UtZ",
+      "name": "LEADERSHIP",
+      "type": "trait",
+      "img": "systems/tor2e/assets/images/icons/distinctive_feature.png",
+      "effects": [],
+      "folder": "hVGLBs5UcUGbU9oT",
+      "sort": 0,
+      "flags": {
+        "core": {}
+      },
+      "system": {
+        "description": {
+          "value": "<p>You possess the ability to direct others to action. When under pressure, other people naturally turn to you for guidance.</p></br><p>&nbsp;</p>",
+          "type": "String",
+          "label": "tor2e.common.description"
+        },
+        "group": {
+          "value": "distinctiveFeature",
+          "type": "String",
+          "label": "tor2e.traits.details.traitGroup"
+        }
+      },
+      "ownership": {
+        "default": 3
+      },
+      "_stats": {
+        "compendiumSource": "Compendium.tor2ecomp-module.tor2e_distinctive_features.CT21CJM06SI3NF5W",
+        "duplicateSource": null,
+        "coreVersion": "14.364",
+        "systemId": "tor2e",
+        "systemVersion": "4.5.3",
+        "createdTime": 1740331691500,
+        "modifiedTime": 1740331691500,
+        "lastModifiedBy": "fE5XBY3iDgAUc9cj",
+        "exportSource": null
+      }
+    },
+    {
+      "_id": "LScVgTM8e6Yr7p87",
+      "name": "Banner of Dale",
+      "type": "miscellaneous",
+      "img": "modules/tor2ecomp-module/assets/images/objects/item_145013.webp",
+      "effects": [
+        {
+          "img": "icons/svg/aura.svg",
+          "origin": "Actor.AXSPNqwUlKd9GrWq.Item.LScVgTM8e6Yr7p87",
+          "disabled": false,
+          "name": "Rally",
+          "_id": "lJpbGgoeDxfcM9yX",
+          "type": "base",
+          "system": {
+            "changes": [
+              {
+                "key": "system.bonuses.commonSkills.battle",
+                "value": 1,
+                "priority": null,
+                "type": "add",
+                "phase": "initial"
+              }
+            ]
+          },
+          "duration": {
+            "value": null,
+            "units": "seconds",
+            "expiry": null,
+            "expired": false
+          },
+          "description": "",
+          "tint": "#ffffff",
+          "transfer": true,
+          "statuses": [],
+          "sort": 0,
+          "flags": {},
+          "_stats": {
+            "compendiumSource": null,
+            "duplicateSource": null,
+            "coreVersion": "14.364",
+            "systemId": "tor2e",
+            "systemVersion": "4.5.3",
+            "createdTime": 1740338468068,
+            "modifiedTime": 1740338487465,
+            "lastModifiedBy": "fE5XBY3iDgAUc9cj",
+            "exportSource": null
+          },
+          "start": null,
+          "showIcon": 1,
+          "folder": null
+        }
+      ],
+      "folder": "nsPPlKvYiAJAtCfs",
+      "sort": 0,
+      "flags": {
+        "cf": {},
+        "core": {}
+      },
+      "system": {
+        "description": {
+          "value": "<p><strong>You may add +1 on Battle related rolls.</strong></p>",
+          "type": "String",
+          "label": "tor2e.common.description"
+        },
+        "load": {
+          "value": 0,
+          "type": "Number",
+          "label": "tor2e.items.common.load"
+        },
+        "dropped": {
+          "value": false,
+          "type": "Boolean",
+          "label": "tor2e.items.common.dropped"
+        },
+        "equipped": {
+          "value": false,
+          "type": "Boolean",
+          "label": "tor2e.items.common.equipped"
+        },
+        "quantity": 1
+      },
+      "ownership": {
+        "default": 0
+      },
+      "_stats": {
+        "compendiumSource": "Compendium.tor2ecomp-module.tor2e_gear.yxLSVHhZqTcdhnIS",
+        "duplicateSource": null,
+        "coreVersion": "14.364",
+        "systemId": "tor2e",
+        "systemVersion": "4.5.3",
+        "createdTime": 1740338035240,
+        "modifiedTime": 1740338814972,
+        "lastModifiedBy": "fE5XBY3iDgAUc9cj",
+        "exportSource": null
+      }
+    },
+    {
+      "_id": "WFptePtwbB9Pwp9N",
+      "name": "Horn of the Dale",
+      "type": "miscellaneous",
+      "img": "modules/tor2ecomp-module/assets/images/objects/item_22035.webp",
+      "effects": [
+        {
+          "img": "icons/svg/aura.svg",
+          "origin": "Actor.AXSPNqwUlKd9GrWq.Item.WFptePtwbB9Pwp9N",
+          "disabled": false,
+          "name": "Reassemble",
+          "_id": "jW5YsYQQAErivKdJ",
+          "type": "base",
+          "system": {
+            "changes": [
+              {
+                "key": "system.bonuses.commonSkills.enhearten",
+                "value": 1,
+                "priority": null,
+                "type": "add",
+                "phase": "initial"
+              }
+            ]
+          },
+          "duration": {
+            "value": null,
+            "units": "seconds",
+            "expiry": null,
+            "expired": false
+          },
+          "description": "",
+          "tint": "#ffffff",
+          "transfer": true,
+          "statuses": [],
+          "sort": 0,
+          "flags": {},
+          "_stats": {
+            "compendiumSource": null,
+            "duplicateSource": null,
+            "coreVersion": "14.364",
+            "systemId": "tor2e",
+            "systemVersion": "4.5.3",
+            "createdTime": 1740338633545,
+            "modifiedTime": 1740338733874,
+            "lastModifiedBy": "fE5XBY3iDgAUc9cj",
+            "exportSource": null
+          },
+          "start": null,
+          "showIcon": 1,
+          "folder": null
+        }
+      ],
+      "folder": "nsPPlKvYiAJAtCfs",
+      "sort": 0,
+      "flags": {
+        "cf": {},
+        "core": {}
+      },
+      "system": {
+        "description": {
+          "value": "<p><strong><span style=\"color: #191813;\">Add +1 to Enhearten related check.</span></strong></p>",
+          "type": "String",
+          "label": "tor2e.common.description"
+        },
+        "load": {
+          "value": 0,
+          "type": "Number",
+          "label": "tor2e.items.common.load"
+        },
+        "dropped": {
+          "value": false,
+          "type": "Boolean",
+          "label": "tor2e.items.common.dropped"
+        },
+        "equipped": {
+          "value": false,
+          "type": "Boolean",
+          "label": "tor2e.items.common.equipped"
+        },
+        "quantity": 1
+      },
+      "ownership": {
+        "default": 0
+      },
+      "_stats": {
+        "compendiumSource": "Compendium.tor2ecomp-module.tor2e_gear.OZflaa1QzcjBNrQr",
+        "duplicateSource": null,
+        "coreVersion": "14.364",
+        "systemId": "tor2e",
+        "systemVersion": "4.5.3",
+        "createdTime": 1740338084524,
+        "modifiedTime": 1740338690093,
+        "lastModifiedBy": "fE5XBY3iDgAUc9cj",
+        "exportSource": null
+      }
+    },
+    {
+      "_id": "dcVEFpqGpOXgm1f2",
+      "name": "Silk Cloak",
+      "type": "miscellaneous",
+      "img": "modules/tor2ecomp-module/assets/images/objects/item_19009.webp",
+      "effects": [
+        {
+          "img": "icons/svg/aura.svg",
+          "origin": "Actor.AXSPNqwUlKd9GrWq.Item.dcVEFpqGpOXgm1f2",
+          "disabled": false,
+          "name": "Silk fabric",
+          "_id": "Wpr7S0FLYEpPZabo",
+          "type": "base",
+          "system": {
+            "changes": [
+              {
+                "key": "system.bonuses.commonSkills.courtesy",
+                "value": 1,
+                "priority": null,
+                "type": "add",
+                "phase": "initial"
+              }
+            ]
+          },
+          "duration": {
+            "value": null,
+            "units": "seconds",
+            "expiry": null,
+            "expired": false
+          },
+          "description": "",
+          "tint": "#ffffff",
+          "transfer": true,
+          "statuses": [],
+          "sort": 0,
+          "flags": {},
+          "_stats": {
+            "compendiumSource": null,
+            "duplicateSource": null,
+            "coreVersion": "14.364",
+            "systemId": "tor2e",
+            "systemVersion": "4.5.3",
+            "createdTime": 1740338545794,
+            "modifiedTime": 1740338572514,
+            "lastModifiedBy": "fE5XBY3iDgAUc9cj",
+            "exportSource": null
+          },
+          "start": null,
+          "showIcon": 1,
+          "folder": null
+        }
+      ],
+      "folder": "FIVdMgwW9oerzudq",
+      "sort": 0,
+      "flags": {
+        "cf": {},
+        "core": {}
+      },
+      "system": {
+        "description": {
+          "value": "<p><strong>You may add a +1 to Courtesy rolls.</strong></p>",
+          "type": "String",
+          "label": "tor2e.common.description"
+        },
+        "load": {
+          "value": 0,
+          "type": "Number",
+          "label": "tor2e.items.common.load"
+        },
+        "dropped": {
+          "value": false,
+          "type": "Boolean",
+          "label": "tor2e.items.common.dropped"
+        },
+        "equipped": {
+          "value": false,
+          "type": "Boolean",
+          "label": "tor2e.items.common.equipped"
+        },
+        "quantity": 1
+      },
+      "ownership": {
+        "default": 0
+      },
+      "_stats": {
+        "compendiumSource": "Compendium.tor2ecomp-module.tor2e_gear.HYh9iETHsoZ9X7wd",
+        "duplicateSource": null,
+        "coreVersion": "14.364",
+        "systemId": "tor2e",
+        "systemVersion": "4.5.3",
+        "createdTime": 1740338368825,
+        "modifiedTime": 1740338770970,
+        "lastModifiedBy": "fE5XBY3iDgAUc9cj",
+        "exportSource": null
+      }
+    },
+    {
+      "name": "Golden Shield of Eregion",
+      "type": "armour",
+      "_id": "MGprHHtx71DQAV0a",
+      "img": "systems/tor2e/assets/images/icons/shield.png",
+      "system": {
+        "load": {
+          "value": 1,
+          "type": "Number",
+          "label": "tor2e.items.common.load"
+        },
+        "dropped": {
+          "value": false,
+          "type": "Boolean",
+          "label": "tor2e.items.common.dropped"
+        },
+        "equipped": {
+          "value": true,
+          "type": "Boolean",
+          "label": "tor2e.items.common.equipped"
+        },
+        "description": {
+          "value": "<p>This shield was forged in the ancient smithies of <strong>Eregion</strong> by the people of <strong>Celebrimbor</strong> before that land was laid waste by the Enemy. It is crafted from the wood of a <strong>thindolvorn</strong> tree—a rare cedar native to Lindon and Beleriand known for its resilience—and is reinforced with hair-thin veins of <strong>Mithril-steel</strong>. The face of the shield is inlaid with <strong>Ithildin</strong>, depicting a host of stars that remain dormant until touched by starlight or the proper Elvish words.</p><ul><li><strong>Item Type:</strong> Shield</li><li><strong>Craftsmanship:</strong> Elven (Eregion)</li><li><strong>Bane:</strong> Orcs</li></ul><p><strong>Qualities</strong></p><p>As a Famous piece of war gear, its qualities are unlocked as the hero’s <strong>VALOUR</strong> increases or by visiting a treasury.</p><ol><li><strong>Ancient Cunning Make (Enchanted Reward):</strong> The shield is preternaturally light. Its <strong>Load</strong> rating is lowered by 3 points, or by the wielder's <strong>VALOUR</strong> rating, whichever is higher (to a minimum of 0 Load).</li><li><strong>Reinforced (Standard Reward):</strong> The Mithril reinforcement makes the structure incredibly sturdy, adding <strong>+1</strong> to the shield’s <strong>Parry</strong> bonus.</li><li><strong>Superior Reinforced (Enchanted Reward):</strong> The shield seems to move of its own accord to intercept blows. This adds an additional <strong>+2</strong> to the Parry bonus. Because it is a weapon of Elven craftsmanship, when the bearer is fighting their <strong>Bane (Orcs)</strong>, this quality instead adds a bonus equal to <strong>1 plus the bearer's VALOUR rank</strong>.</li></ol><p><strong>Combined Combat Stats</strong></p><ul><li><strong>Load:</strong> 1 (or 0 if the bearer has VALOUR 4+).</li><li><strong>Parry Bonus:</strong> <strong>+5</strong> (+2 base, +1 Reinforced, +2 Superior Reinforced).</li><li><strong>Parry Bonus vs. Orcs:</strong> <strong>+3 + (1 + VALOUR)</strong>. For a hero with VALOUR 3, this shield provides a massive <strong>+7</strong> bonus to Parry against Orcs.</li></ul>",
+          "type": "String",
+          "label": "tor2e.common.description"
+        },
+        "protection": {
+          "value": 5,
+          "type": "Number",
+          "label": "tor2e.items.armours.protection"
+        },
+        "group": {
+          "value": "shield",
+          "type": "String",
+          "label": "tor2e.armour.title.group"
+        }
+      },
+      "effects": [
+        {
+          "name": "Ancient Cunning Make (Enchanted Reward)",
+          "img": "icons/svg/aura.svg",
+          "origin": "Item.mzlNS1WiMy5GDXMc",
+          "disabled": false,
+          "_id": "Lwcko5MeN5VQuyHA",
+          "type": "base",
+          "system": {
+            "changes": [
+              {
+                "key": "system.bonuses.stats.load",
+                "value": 3,
+                "priority": null,
+                "type": "downgrade",
+                "phase": "initial"
+              }
+            ]
+          },
+          "duration": {
+            "value": null,
+            "units": "seconds",
+            "expiry": null,
+            "expired": false
+          },
+          "description": "<p>The shield is preternaturally light. Its Load rating is lowered by 3 points, or by the wielder's VALOUR rating, whichever is higher (to a minimum of 0 Load).</p>",
+          "tint": "#ffffff",
+          "transfer": true,
+          "statuses": [],
+          "sort": 0,
+          "flags": {},
+          "_stats": {
+            "compendiumSource": null,
+            "duplicateSource": null,
+            "exportSource": null,
+            "coreVersion": "14.364",
+            "systemId": "tor2e",
+            "systemVersion": "5.5.3",
+            "lastModifiedBy": "3qjgGkREQJR8vZw5",
+            "modifiedTime": 1774808782871,
+            "createdTime": null
+          },
+          "start": {
+            "combat": null,
+            "round": null,
+            "time": 93323404938,
+            "turn": null,
+            "combatant": null,
+            "initiative": null
+          },
+          "showIcon": 1,
+          "folder": null
+        },
+        {
+          "name": "Reinforced (Standard Reward)",
+          "img": "icons/svg/aura.svg",
+          "origin": "Item.mzlNS1WiMy5GDXMc",
+          "disabled": false,
+          "_id": "E5Xui5qKMk57bLfK",
+          "type": "base",
+          "system": {
+            "changes": [
+              {
+                "key": "system.bonuses.defense.shieldParry",
+                "value": 1,
+                "priority": null,
+                "type": "add",
+                "phase": "initial"
+              }
+            ]
+          },
+          "duration": {
+            "value": null,
+            "units": "seconds",
+            "expiry": null,
+            "expired": false
+          },
+          "description": "",
+          "tint": "#ffffff",
+          "transfer": true,
+          "statuses": [],
+          "sort": 0,
+          "flags": {},
+          "_stats": {
+            "compendiumSource": null,
+            "duplicateSource": null,
+            "exportSource": null,
+            "coreVersion": "14.364",
+            "systemId": "tor2e",
+            "systemVersion": "5.5.3",
+            "lastModifiedBy": "3qjgGkREQJR8vZw5",
+            "modifiedTime": 1774808782871,
+            "createdTime": null
+          },
+          "start": {
+            "combat": null,
+            "round": null,
+            "time": 93323404938,
+            "turn": null,
+            "combatant": null,
+            "initiative": null
+          },
+          "showIcon": 1,
+          "folder": null
+        },
+        {
+          "name": "Superior Reinforced (Enchanted Reward)",
+          "img": "icons/svg/aura.svg",
+          "origin": "Item.mzlNS1WiMy5GDXMc",
+          "disabled": false,
+          "_id": "hn9tHaTdFReaoHzO",
+          "type": "base",
+          "system": {
+            "changes": [
+              {
+                "key": "system.bonuses.defense.shieldParry",
+                "value": 2,
+                "priority": null,
+                "type": "add",
+                "phase": "initial"
+              }
+            ]
+          },
+          "duration": {
+            "value": null,
+            "units": "seconds",
+            "expiry": null,
+            "expired": false
+          },
+          "description": "<p>The shield seems to move of its own accord to intercept blows. This adds an additional +2 to the Parry bonus. Because it is a weapon of Elven craftsmanship, when the bearer is fighting their Bane (Orcs), this quality instead adds a bonus equal to 1 plus the bearer's VALOUR rank.</p>",
+          "tint": "#ffffff",
+          "transfer": true,
+          "statuses": [],
+          "sort": 0,
+          "flags": {},
+          "_stats": {
+            "compendiumSource": null,
+            "duplicateSource": null,
+            "exportSource": null,
+            "coreVersion": "14.364",
+            "systemId": "tor2e",
+            "systemVersion": "5.5.3",
+            "lastModifiedBy": "3qjgGkREQJR8vZw5",
+            "modifiedTime": 1774808782871,
+            "createdTime": null
+          },
+          "start": {
+            "combat": null,
+            "round": null,
+            "time": 93323404938,
+            "turn": null,
+            "combatant": null,
+            "initiative": null
+          },
+          "showIcon": 1,
+          "folder": null
+        }
+      ],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": "Item.mzlNS1WiMy5GDXMc",
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.364",
+        "systemId": "tor2e",
+        "systemVersion": "5.5.3",
+        "createdTime": 1774808770993,
+        "modifiedTime": 1774808782835,
+        "lastModifiedBy": "3qjgGkREQJR8vZw5"
+      }
+    }
+  ],
+  "effects": [
+    {
+      "origin": "Actor.AXSPNqwUlKd9GrWq.Item.6S8hkUKeMulOLxOi",
+      "disabled": false,
+      "_id": "rOuVmLw77bdwJHl3",
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "tint": "#ffffff",
+      "transfer": false,
+      "flags": {},
+      "name": "Keen",
+      "description": "",
+      "statuses": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "14.364",
+        "systemId": "tor2e",
+        "systemVersion": "4.5.3",
+        "createdTime": 1740330745322,
+        "modifiedTime": 1740330745322,
+        "lastModifiedBy": "fE5XBY3iDgAUc9cj",
+        "exportSource": null
+      },
+      "img": "icons/svg/sword.svg",
+      "type": "base",
+      "system": {
+        "changes": [
+          {
+            "key": "system.bonuses.combat.pierce",
+            "value": 1,
+            "priority": null,
+            "type": "add",
+            "phase": "initial"
+          }
+        ]
+      },
+      "sort": 0,
+      "start": {
+        "combat": null,
+        "round": null,
+        "time": 93306816138,
+        "turn": null,
+        "combatant": null,
+        "initiative": null
+      },
+      "showIcon": 1,
+      "folder": null
+    }
+  ],
+  "ownership": {
+    "default": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "14.364",
+    "systemId": "tor2e",
+    "systemVersion": "5.5.3",
+    "createdTime": 1739996777821,
+    "modifiedTime": 1774802367862,
+    "lastModifiedBy": "fE5XBY3iDgAUc9cj",
+    "exportSource": {
+      "worldId": "barrilungos-la-caza-del-ojo-rojo-2e",
+      "uuid": "Actor.AXSPNqwUlKd9GrWq",
+      "coreVersion": "14.370",
+      "systemId": "tor2e",
+      "systemVersion": "6.3.0"
+    }
+  }
+}

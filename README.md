@@ -2,12 +2,15 @@
 
 Foundry VTT v14 module. Adds a print-optimized character sheet for **The One Ring 2nd Edition** (`tor2e`) system.
 
-Click the **print** icon in any character sheet's window header → opens a print-friendly window → native `window.print()` dialog fires automatically.
+Click the **print** icon in any character sheet's window header → opens a print window with a format toolbar → pick a format → native `window.print()` dialog opens. Pick again to reprint.
+
+- **Classic**: A4 landscape, everything on the hero (history, traits, descriptions); long heroes flow onto a second page.
+- **Portrait**: A4 portrait, one page, laid out like the printed One Ring character sheet; lists are cut to the fixed lines (4 war gear, 6 useful items), and traits other than distinctive features, flaws and history are left out.
 
 ## Requirements
 
-- Foundry VTT **v14**
-- `tor2e` system **≥ 6.0.0** (verified 6.1.0)
+- Foundry VTT **v14** (≥ 14.364, verified 14.370)
+- `tor2e` system **≥ 6.0.0** (verified 6.3.0)
 
 ## Install
 
@@ -38,6 +41,14 @@ ln -s "$(pwd)" "$FOUNDRY_DATA/Data/modules/tor2eprint"
 Copy the entire `tor2eprint/` folder into `$FOUNDRY_DATA/Data/modules/`.
 
 Folder name must be exactly `tor2eprint`.
+
+### Local Foundry and smoke tests (development)
+
+Copy `.env.example` to `.env` and fill in the paths, then: `npm install`, `npm run link` (symlink into `$FOUNDRY_DATA/modules`), `npm run foundry` (local server on `$FOUNDRY_PORT`, launches `$FOUNDRY_WORLD`), `npm run smoke` (headless login, seeds the `fixtures/` heroes into the world if missing, runs `tests/smoke.mjs` in the page, exits 1 on failure). The dev world needs the `tor2e` system and this module enabled; see CLAUDE.md for the one-time setup.
+
+### Deploy to a remote server (development)
+
+Set `DEPLOY_TARGET=host:path/Data/modules/tor2eprint` in `.env` (or the environment), then `./deploy.sh -n` to preview and `npm run deploy` to sync. Only runtime files are sent; files removed locally are removed remotely. The deployed `module.json` shows `#{VERSION}#` as its version, since only the release workflow fills in the tokens.
 
 ### Enable
 

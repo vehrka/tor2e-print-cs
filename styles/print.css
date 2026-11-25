@@ -1,27 +1,20 @@
-@page { margin: 8mm; }
+@page { size: A4 landscape; margin: 8mm; }
 
-/* Header button on legacy ActorSheet — tor2e header CSS makes link text huge.
-   Force compact size + reset font. */
-.window-app .window-header a.tor2eprint-btn,
-.window-app .window-header .tor2eprint-btn {
-  font-family: inherit !important;
-  font-size: 12px !important;
-  font-weight: normal !important;
-  font-variant: normal !important;
-  text-transform: none !important;
-  letter-spacing: 0 !important;
-  line-height: 1.2 !important;
-  color: inherit !important;
-  padding: 0 4px !important;
-  margin: 0 !important;
+/* Bundled (SIL OFL 1.1, fonts/cinzel/OFL.txt) so the hero name prints the same on every client. */
+@font-face {
+  font-family: "Cinzel";
+  src: url("../fonts/cinzel/Cinzel-wght.ttf") format("truetype");
+  font-weight: 400 900;
+  font-display: block;
 }
-.tor2eprint-btn {
-  background: transparent;
-  border: 0;
-  cursor: pointer;
-  color: inherit;
-  font-size: 12px;
-}
+
+/* Print window: format toolbar above a scrolling preview */
+.tor2eprint-window .window-content { padding: 0; display: flex; flex-direction: column; }
+.tor2e-print-toolbar { display: flex; gap: 0.5rem; padding: 0.5rem; flex: none; }
+.tor2e-print-toolbar button { flex: none; width: auto; }
+.tor2e-print-toolbar button.active { font-weight: bold; }
+.tor2e-print-preview { flex: 1; overflow: auto; }
+.tor2e-print-hint { text-align: center; padding: 1rem; }
 
 .tor2e-print {
   font-family: "Book Antiqua", "Palatino Linotype", Palatino, Georgia, serif;
@@ -36,6 +29,9 @@
 }
 
 .tor2e-print h1, .tor2e-print h2, .tor2e-print h3 { color: #8b1a1a; }
+/* tor2e heading font (Aniron, loaded by the system); the window no longer carries the .tor2e class. */
+.tor2e-print h2 { font-family: var(--tor2e-font-h2, "Aniron"), serif; }
+.tor2e-print h3 { font-family: var(--tor2e-font-h3, "Aniron"), serif; }
 
 .tor2e-print h2 {
   font-size: 11pt;
@@ -90,7 +86,7 @@
   font-size: 11pt;
 }
 .tp-banner-name {
-  font-family: "Trajan Pro", "Cinzel", "Book Antiqua", serif;
+  font-family: "Cinzel", "Trajan Pro", "Book Antiqua", serif;
   font-size: 18pt;
   color: #2a1810;
   letter-spacing: 0.05em;
@@ -382,6 +378,18 @@
 .tp-flag.tp-fav { background: #8b1a1a; color: #fff; }
 .tp-flag.tp-mag { background: #f5ecd6; color: #8b1a1a; }
 
+/* Enriched content links and inline rolls print as bold plain text, not Foundry pills */
+.tor2e-print :is(a.inline-roll, a.content-link) {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  font-weight: 700;
+  white-space: normal;
+  box-shadow: none;
+}
+.tor2e-print :is(a.inline-roll, a.content-link) > i { display: none; }
+
 /* Generic lists */
 .tp-list {
   list-style: none;
@@ -434,11 +442,231 @@
   border-top: 1px dotted #c5a677;
 }
 
+/* ===== Form layout (.tp-form): A4 portrait, one page, white page, red ink ===== */
+/* Bundled (SIL OFL 1.1, fonts/uncial-antiqua/OFL.txt): no remote font, Foundry may run offline. */
+@font-face {
+  font-family: "Uncial Antiqua";
+  src: url("../fonts/uncial-antiqua/UncialAntiqua-Regular.ttf") format("truetype");
+  font-display: block;
+}
+@page tor2e-portrait { size: A4 portrait; margin: 8mm; }
+
+.tor2e-print.tp-form {
+  page: tor2e-portrait;
+  --tf-red: #8b1a1a;
+  --tf-ink: #2a1810;
+  box-sizing: border-box;
+  width: 210mm;
+  height: 297mm;
+  margin: 0 auto;
+  padding: 8mm;
+  overflow: hidden;
+  background: #fff;
+  color: var(--tf-red);
+  font-size: 8.5pt;
+  line-height: 1.2;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5mm;
+}
+.tp-form * { box-sizing: border-box; }
+.tp-form b, .tp-form .tf-line, .tp-form .tf-names, .tp-form .tf-lines, .tp-form .tf-gear td { color: var(--tf-ink); }
+.tp-form ul { list-style: none; margin: 0; padding: 0; }
+.tp-form > * { break-inside: avoid; }
+
+/* Headings with side rules */
+.tp-form .tf-h {
+  display: flex;
+  align-items: center;
+  gap: 2mm;
+  margin: 0 0 1mm;
+  padding: 0;
+  border: 0;
+  color: var(--tf-red);
+  font-family: "Uncial Antiqua", var(--tor2e-font-h3, "Aniron"), serif;
+  font-size: 9pt;
+  font-weight: normal;
+  letter-spacing: 0.06em;
+  text-align: center;
+  white-space: nowrap;
+}
+.tp-form .tf-h::before, .tp-form .tf-h::after { content: ""; flex: 1; border-top: 1px solid var(--tf-red); }
+.tp-form .tf-h > span { display: inline-flex; align-items: center; gap: 3mm; }
+.tp-form .tf-h--big { font-size: 13pt; }
+.tp-form .tf-cap { font-size: 6.5pt; font-variant: small-caps; font-weight: bold; letter-spacing: 0.04em; }
+
+/* Diamonds: rotated bordered square, value counter-rotated */
+.tp-form .tf-dia {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  border: 1.2px solid var(--tf-red);
+  background: #fff;
+  transform: rotate(45deg);
+}
+.tp-form .tf-dia > b { transform: rotate(-45deg); line-height: 1; }
+.tp-form .tf-dia--pip { width: 2.3mm; height: 2.3mm; border-width: 1px; margin: 0 0.55mm; }
+.tp-form .tf-dia--sm { width: 5mm; height: 5mm; font-size: 8pt; }
+.tp-form .tf-dia--md { width: 7mm; height: 7mm; font-size: 10pt; }
+.tp-form .tf-dia--lg { width: 11mm; height: 11mm; font-size: 14pt; border-width: 1.6px; }
+.tp-form .tf-dia--pip.is-on,
+.tp-form .tf-box.is-on {
+  background: var(--tf-red);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.tp-form .tf-box { display: inline-block; flex: none; width: 3mm; height: 3mm; border: 1px solid var(--tf-red); background: #fff; }
+
+/* Header */
+.tp-form .tf-header { display: grid; grid-template-columns: 24mm 1fr 24mm; align-items: center; }
+.tp-form .tf-point { display: flex; flex-direction: column; align-items: center; gap: 1.5mm; text-align: center; }
+.tp-form .tf-name {
+  margin: 0 6mm;
+  padding: 1mm 4mm;
+  border: 3px double var(--tf-red);
+  color: var(--tf-ink);
+  font-family: "Cinzel", "Trajan Pro", "Book Antiqua", serif;
+  font-size: 15pt;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Character / portrait / conditions */
+.tp-form .tf-top { display: grid; grid-template-columns: 1fr 40mm 44mm; gap: 3mm; align-items: stretch; }
+.tp-form .tf-row { display: flex; align-items: baseline; gap: 1.5mm; height: 5mm; }
+.tp-form .tf-lbl { flex: none; white-space: nowrap; }
+.tp-form .tf-line {
+  flex: 1;
+  min-width: 0;
+  border-bottom: 1px solid var(--tf-red);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tp-form .tf-line--short { flex: 0 0 14mm; }
+.tp-form .tf-row--features { height: 10mm; }
+.tp-form .tf-line--two {
+  height: 10mm;
+  line-height: 5mm;
+  white-space: normal;
+  border: 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  background: repeating-linear-gradient(transparent 0 calc(5mm - 1px), var(--tf-red) calc(5mm - 1px) 5mm);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.tp-form .tf-portrait { border: 1px solid var(--tf-red); overflow: hidden; }
+.tp-form .tf-portrait img { display: block; width: 100%; height: 100%; object-fit: cover; border: 0; }
+.tp-form .tf-checks { display: grid; grid-template-columns: 1fr 1fr; gap: 1mm 2mm; margin-bottom: 2mm; }
+.tp-form .tf-checks li { display: flex; align-items: center; gap: 1.5mm; }
+.tp-form .tf-injury { border: 1px solid var(--tf-red); height: 11mm; padding: 0.5mm 1.5mm; display: flex; justify-content: space-between; align-items: flex-start; }
+.tp-form .tf-injury b { align-self: center; font-size: 11pt; }
+
+/* Body: 3 columns separated by vertical rules */
+.tp-form .tf-body {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 6mm;
+  row-gap: 1.5mm;
+  flex: 1;
+  min-height: 0;
+  grid-template-rows: auto auto auto 1fr auto;
+  border-top: 1px solid var(--tf-red);
+  padding-top: 1mm;
+  background:
+    /* rules in the middle of each 6mm column gap */
+    linear-gradient(var(--tf-red), var(--tf-red)) calc(33.333% - 1mm) 0 / 1px 100% no-repeat,
+    linear-gradient(var(--tf-red), var(--tf-red)) calc(66.667% + 1mm) 0 / 1px 100% no-repeat;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.tp-form .tf-attr-dias {
+  display: grid;
+  grid-template-columns: 1fr auto auto 1fr;
+  grid-template-areas: ". rcap . ." ". rdia tdia ." ". . tcap .";
+  align-items: center;
+  justify-items: center;
+  column-gap: 3mm;
+  row-gap: 1mm;
+}
+.tp-form .tf-attr-dias > :nth-child(1) { grid-area: rcap; }
+.tp-form .tf-attr-dias > :nth-child(2) { grid-area: rdia; }
+.tp-form .tf-attr-dias > :nth-child(3) { grid-area: tdia; margin: 2mm; }
+.tp-form .tf-attr-dias > :nth-child(4) { grid-area: tcap; }
+
+.tp-form .tf-body > .tf-skills { margin-top: 5mm; }
+.tp-form .tf-skill { display: flex; align-items: center; gap: 1.5mm; height: 5.2mm; }
+.tp-form .tf-skill-name { flex: 1; min-width: 0; color: var(--tf-ink); border-bottom: 1px solid var(--tf-red); white-space: nowrap; }
+.tp-form .tf-mag { color: var(--tf-red); font-size: 6pt; font-weight: bold; }
+.tp-form .tf-pips { display: inline-flex; align-items: center; flex: none; }
+
+.tp-form .tf-useful { grid-column: 1 / -1; }
+.tp-form .tf-useful .tf-h { margin: 0 33.333% 0; }
+.tp-form .tf-lines { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 6mm; }
+.tp-form .tf-lines li { height: 5mm; line-height: 5mm; border-bottom: 1px solid var(--tf-red); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.tp-form .tf-prof, .tp-form .tf-stature { display: flex; flex-direction: column; min-height: 0; }
+.tp-form .tf-stature-body { display: flex; gap: 2mm; flex: 1; min-height: 24mm; overflow: hidden; }
+.tp-form .tf-names { flex: 1; min-width: 0; overflow: hidden; }
+.tp-form .tf-names li { line-height: 4.2mm; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tp-form .tf-stat { display: flex; flex-direction: column; align-items: center; gap: 2mm; }
+.tp-form .tf-stature .tf-stat { align-self: center; }
+
+.tp-form .tf-res-row { display: flex; justify-content: center; align-items: flex-start; gap: 3mm; padding-top: 1.5mm; }
+.tp-form .tf-plus { font-weight: bold; font-size: 12pt; margin: 1mm -1mm 0; }
+
+/* Footer: war gear | armour + protection */
+.tp-form .tf-foot {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 4mm;
+  border-top: 3px double var(--tf-red);
+  padding-top: 1.5mm;
+}
+.tp-form .tf-gear :is(thead, tbody, tr) { border: 0; background: none; }
+.tp-form .tf-gear { width: 100%; border: 0; background: none; border-collapse: collapse; table-layout: fixed; font-size: 8pt; }
+.tp-form .tf-gear th {
+  padding: 0 1mm 0.5mm;
+  border: 0;
+  background: none;
+  color: var(--tf-red);
+  font-size: 7pt;
+  font-weight: normal;
+  text-align: left;
+}
+.tp-form .tf-gear th:first-child { font-size: 9pt; font-weight: bold; font-variant: small-caps; width: 40%; }
+.tp-form .tf-gear td {
+  height: 5.5mm;
+  padding: 0 1mm;
+  border: 0;
+  border-bottom: 1px solid var(--tf-red);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tp-form .tf-gear td + td { border-left: 2mm solid #fff; }
+.tp-form .tf-sub { color: var(--tf-red); font-size: 7pt; }
+.tp-form .tf-armour { display: grid; grid-template-columns: 1fr 22mm; align-items: center; gap: 2mm; }
+.tp-form .tf-armour .tf-gear th:first-child { width: 55%; }
+
 /* Print rules: kill chrome, fill page */
 @media print {
   /* v14 mounts ApplicationV2 windows deep inside #interface, so sibling-only
      hiding no longer reaches the chrome. Hide every element that neither
      contains nor is contained by the print window, then restore its ancestors. */
+  /* @page size applies only in block flow; Foundry's body is a fixed flex box
+     that would also clip the sheet to one page. */
+  body:has(.tor2e-print) {
+    display: block !important;
+    position: static !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
   body *:not(:has(.tor2e-print)):not(.tor2eprint-window):not(.tor2eprint-window *) {
     display: none !important;
   }
@@ -478,6 +706,7 @@
     transform: none !important;
     overflow: visible !important;
   }
+  .tor2e-print-toolbar,
   .tor2eprint-window > .window-header,
   .tor2eprint-window .window-resize-handle,
   .application:has(.tor2e-print) > .window-header,
@@ -497,4 +726,25 @@
   .tor2e-print .tp-block,
   .tp-attr-cell,
   .tp-resource-cell { background: #fff !important; }
+
+  /* Form: exactly the printable area of its A4 portrait page (297mm - 2 x 8mm margin). */
+  .tor2e-print.tp-form { height: 280mm; }
+
+  /* Density: a typical hero fits one A4 landscape page; long heroes flow to page 2. */
+  .tor2e-print { gap: 2mm; font-size: 8.5pt; line-height: 1.2; }
+  .tor2e-print .tp-block { padding: 1.5mm 2mm 1mm; }
+  .tor2e-print h2 { font-size: 10pt; margin-bottom: 1mm; padding-bottom: 0.5mm; }
+  .tor2e-print h3 { margin: 1mm 0 0.5mm; }
+  .tp-banner { padding: 0.5mm 0; }
+  .tp-banner-title { font-size: 9pt; }
+  .tp-banner-name { font-size: 15pt; }
+  .tp-emblem img { width: 22mm; height: 22mm; }
+  .tp-fellowship { margin-top: 2mm; }
+  .tp-dl dt, .tp-dl dd,
+  .tp-skill,
+  .tp-conditions,
+  .tp-gear .tp-list { font-size: 9pt; }
+  .tp-table { font-size: 8.5pt; }
+  .tp-table th, .tp-table td { padding: 0.3mm 1mm; }
+  .tp-attr-cell, .tp-resource-cell { padding: 1mm 2mm; }
 }

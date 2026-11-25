@@ -2,11 +2,11 @@
 
 ## Project Overview
 
-Foundry VTT v14 **module** that adds a print-optimized character-sheet layout for the **The One Ring 2nd edition** system (`tor2e`). Adds a "Print" button to the existing actor sheet; clicking opens a separate ApplicationV2 window rendering a print-friendly Handlebars template, then auto-triggers `window.print()`.
+Foundry VTT v14 **module** that adds a print-optimized character-sheet layout for the **The One Ring 2nd edition** system (`tor2e`). Adds a "Print" button to the existing actor sheet; clicking opens a separate ApplicationV2 window with a format toolbar; each format pick renders that print-friendly Handlebars template and calls `window.print()` once.
 
 - **Module id:** `tor2eprint` (folder name must match)
-- **Target:** Foundry VTT v14 (minimum 14)
-- **Depends on system:** `tor2e` (>= 6.0.0, verified 6.1.0)
+- **Target:** Foundry VTT v14 (minimum 14.364, verified 14.370, maximum 14)
+- **Depends on system:** `tor2e` (>= 6.0.0, verified 6.3.0)
 - **Language:** Plain JavaScript ESM (`.mjs`) — no TypeScript, no bundler, no build step
 - **Type:** Foundry **module** (not a system) — installs alongside the `tor2e` system
 
@@ -14,7 +14,7 @@ Foundry VTT v14 **module** that adds a print-optimized character-sheet layout fo
 
 | Path | Purpose |
 |------|---------|
-| `ref/foundryvtt-tor2e/` | **Authoritative** TOR2e system source — actor models, sheets, templates, `src/system.json`, `src/template.json` are the schema reference |
+| `ref/foundryvtt-tor2e/` | **Authoritative** TOR2e system source — actor models, sheets, templates, `src/system.json`, `src/template.json` are the schema reference. Keep it pinned to the verified release tag, not `develop`: `git -C ref/foundryvtt-tor2e fetch --tags && git -C ref/foundryvtt-tor2e checkout vX.Y.Z` (check with `git -C ref/foundryvtt-tor2e describe --tags`) |
 | `ref/starwarsd6/modules/apps/character-print.mjs` | **Primary print-pattern reference** — ApplicationV2 + HandlebarsApplicationMixin, auto `window.print()` on first render |
 | `ref/starwarsd6/modules/apps/npc-print.mjs` | NPC print variant reference |
 | `ref/starwarsd6/templates/actors/` | Print Handlebars template reference (`character-sheet-print.hbs`, `npc-sheet-print.hbs`) |
@@ -26,7 +26,7 @@ Foundry VTT v14 **module** that adds a print-optimized character-sheet layout fo
 
 ## Status
 
-- **v0.2 implemented:** `character` actor type only; targets Foundry v14 + tor2e 6.x. Files in repo root: `module.json`, `tor2eprint.mjs`, `modules/apps/character-print.mjs`, `templates/actors/character-print.hbs`, `styles/print.css`, `lang/en.json`, `README.md`, `deploy.sh`. Print context covers attributes, stature, resources, conditions, common skills (by attribute, with pips/favoured/magical), combat proficiencies, weapons, armour, equipment (`miscellaneous` items), virtues, rewards, traits, biography, history.
+- **v0.3 implemented:** `character` actor type only; targets Foundry v14 + tor2e 6.x. Files in repo root: `module.json`, `tor2eprint.mjs`, `modules/apps/character-print.mjs`, `templates/actors/character-print.hbs`, `styles/print.css`, `lang/en.json`, `README.md`, `deploy.sh`. Print window has a format toolbar and prints once per pick. Formats: `classic` (`character-print.hbs`, A4 landscape) and `form` (`character-print-form.hbs` + `form-skill.hbs` partial, A4 portrait single page after `ref/img/new_cs_v1.jpg`). Print context covers attributes, stature, resources, conditions, common skills (by attribute, with pips/favoured/magical), combat proficiencies, weapons, armour, equipment (`miscellaneous` items), virtues, rewards, traits, biography, history; plus form-layout fields (`buildFormFields`: points, treasure, distinctive features, conditions from `actor.statuses`, injury, load, shadow, gear, parry, protection, fixed slots).
 - **Not implemented:** `adversary`, `npc`, `community`, `lore` print variants. Defer until requested.
 - Open work lives in `backlog/`, not here. Keep this section to what is built.
 
@@ -36,11 +36,11 @@ Open work is tracked as Markdown tasks in `backlog/tasks/`, managed with the `ba
 
 - Read: `npx backlog task list --plain`, `npx backlog task <id> --plain`, `npm run board` (TUI), `npm run board:web` (web kanban).
 - Write through the CLI, not by hand: `npx backlog task create "…" -m "<milestone>" -l <labels> --priority … --ac "…"`, `npx backlog task edit <id> -s "In Progress"` / `--check-ac 1` / `--check-dod 1` / `--notes "…"`, then `-s Done`.
-- Milestones: *TOR system update* (detail in `PRPs/improvements-from-tor2e-6.3.md`), *DH Print parity* (detail in `PRPs/improvements-from-dh-print.md`), *New layouts* (adversary/npc/community/lore). `PRPs/` is git-ignored: quote what a task needs into its description.
+- Milestones: *TOR system update* (detail in `PRPs/improvements-from-tor2e-6.3.md`), *DH Print parity* (detail in `PRPs/improvements-from-dh-print.md`), *New layouts* (character form layout, detail in `PRPs/new-layout-cs-v1.md`; adversary/npc/community/lore). `PRPs/` is git-ignored: quote what a task needs into its description.
 - Labels are in `backlog/config.yml`. The default Definition of Done (smoke check, hand check, README/CLAUDE.md, `module.json` compatibility) is added to every task; tick a DoD item that doesn't apply and say why in `--notes`.
 - Columns follow the dev cycle: **To Do → In Progress → Needs smoke → Hand check → Done**, plus **Blocked**. Skip a step that doesn't apply.
   - *In Progress*: being built. Set it when you start.
-  - *Needs smoke*: built and the smoke check is written, but `npm run smoke` hasn't run yet. Unused until the smoke tooling exists (*DH Print parity*). A failed run goes back to *In Progress* with a note.
+  - *Needs smoke*: built and the smoke check is written, but `npm run smoke` hasn't run yet. Needs the local dev server (`npm run foundry`). A failed run goes back to *In Progress* with a note.
   - *Hand check*: waiting for a check in a v14 + tor2e world (see the verification checklist below).
   - *Done*: AC/DoD ticked, docs updated, in the same commit as the work.
   - *Blocked*: waiting on a decision (e.g. layout tradeoffs, Engineering Principle 4). Say what in `--notes`.
@@ -64,11 +64,20 @@ tor2eprint/
 ├── modules/apps/
 │   └── character-print.mjs  # Tor2eCharacterPrint (ApplicationV2 + HandlebarsApplicationMixin)
 ├── templates/actors/
-│   └── character-print.hbs
+│   ├── character-print.hbs  # Classic format
+│   ├── character-print-form.hbs # Form format (+ form-skill.hbs partial)
+│   ├── print-toolbar.hbs    # Format buttons (hidden on print)
+│   └── print-sheet.hbs      # Wrapper: chosen format partial or hint
+├── fonts/uncial-antiqua/     # Bundled form-layout heading font + OFL.txt (SIL OFL 1.1)
+├── fonts/cinzel/            # Bundled hero-name font (both layouts) + OFL.txt (SIL OFL 1.1)
 ├── styles/print.css         # Layout + @media print rules; A4 landscape
 ├── lang/en.json             # TOR2EPRINT.* strings
-├── deploy.sh                # rsync deploy to remote Foundry data dir (excludes ref/, node_modules/, backlog/)
-├── package.json             # Dev tooling only (backlog.md); runtime has no build step
+├── deploy.sh                # rsync runtime files (allow-list, --delete) to $DEPLOY_TARGET
+├── package.json             # Dev tooling only (backlog.md, playwright-core); runtime has no build step
+├── tools/                   # Dev: env.mjs (.env loader), link.mjs, foundry.mjs, smoke.mjs (Playwright runner)
+├── tests/smoke.mjs          # In-page smoke checks, imported by tools/smoke.mjs
+├── fixtures/                # Smoke heroes: exported (fvtt-Actor-*.json) + synthetic (smoke-effect: actor AE, smoke-overlong)
+├── .foundry-data/           # Git-ignored local Foundry user data (Config/, Data/, Logs/)
 ├── backlog/                 # Backlog.md tasks, milestones, config
 ├── README.md
 └── CLAUDE.md                # This file
@@ -81,9 +90,9 @@ Future actor-type variants (adversary/npc/community/lore) follow the same `*-pri
 - **Print window:** `ApplicationV2` + `HandlebarsApplicationMixin` only — no `Application`/`FormApplication`.
 - **Pattern (mirror `ref/starwarsd6/modules/apps/character-print.mjs`):**
   - `static DEFAULT_OPTIONS` with `classes`, `position`, `window`
-  - `static PARTS` mapping `sheet` → template path under `modules/tor2eprint/templates/...`
-  - `_prepareContext(options)` builds the Handlebars context from `actor.system` + `actor.items`
-  - `_onRender(context, options)` triggers `window.print()` on `options.isFirstRender`
+  - `static PARTS` = `{ toolbar, sheet }` (`print-toolbar.hbs`, `print-sheet.hbs` under `modules/tor2eprint/templates/actors/`); the sheet part includes the chosen format template as a partial. `FORMATS` (id → template) in `character-print.mjs`; `static TEMPLATES` preloaded at init.
+  - `_prepareContext(options)` returns `format`, `formatTemplate`, `formats`, and the actor context (from `actor.system` + `actor.items`) only once a format is picked
+  - `actions.format` → `printFormat(id)` sets `#printPending` and renders; `_onRender` calls `window.print()` once when pending. No print on open or on a plain re-render.
 - **Button injection (ApplicationV2 only):**
   - Primary: `Hooks.on("getHeaderControlsApplicationV2", (app, controls) => …)`. Push `{icon, label, action: "tor2eprint-btn", onClick}`. Foundry places it in the window header or its overflow menu.
   - Fallback: `Hooks.on("renderActorSheetV2", (app, html) => …)`. If a `[data-action="tor2eprint-btn"]` control was rendered, bind its click directly (guarded by `dataset.tor2eprintBound`); otherwise inject a `.header-control` button after `.window-header .window-title`.
@@ -112,14 +121,14 @@ Current shape (keep authors + `flags.hotReload` block when editing):
   "title": "TOR2e Print Sheets",
   "description": "Print-optimized character sheet for The One Ring 2e.",
   "version": "0.2.0",
-  "compatibility": { "minimum": "14", "verified": "14" },
+  "compatibility": { "minimum": "14.364", "verified": "14.370", "maximum": "14" },
   "authors": [{ "name": "pedrof" }],
   "esmodules": ["tor2eprint.mjs"],
   "styles": ["styles/print.css"],
   "languages": [{ "lang": "en", "name": "English", "path": "lang/en.json" }],
   "relationships": {
     "systems": [
-      { "id": "tor2e", "type": "system", "compatibility": { "minimum": "6.0.0", "verified": "6.1.0" } }
+      { "id": "tor2e", "type": "system", "compatibility": { "minimum": "6.0.0", "verified": "6.3.0" } }
     ]
   },
   "flags": {
@@ -133,11 +142,13 @@ Current shape (keep authors + `flags.hotReload` block when editing):
 
 ## Print Layout Rules
 
-- One actor = one logical page. `@page { size: A4 landscape; margin: 10mm; }` (matches `ref/img/tor2e_img_example.png`).
+- Two layouts, one actor per print. Both rely on `@media print` putting `body:has(.tor2e-print)` in block flow.
+- **Classic** (`.tor2e-print`, no extra root class): flows and may spill onto a second page (no shrink-to-fit or truncation, decided in task-19). `@page { size: A4 landscape; margin: 8mm; }` (matches `ref/img/tor2e_img_example.png`). `@media print` puts `body:has(.tor2e-print)` in block flow (`@page` size needs it; Foundry's fixed body otherwise clips the sheet to one page) and tightens spacing/fonts so a typical hero fits one page; `npm run smoke` prints every fixture to PDF and checks the page count (Hans Grimald, 14 rewards/virtues/traits, takes 2).
+- **Form** (`.tor2e-print.tp-form`): named page `@page tor2e-portrait { size: A4 portrait; margin: 8mm; }`, fixed 194 × 280 mm sheet, exactly one page; lists are cut to fixed slots/boxes (`overflow: hidden`, no "+N more", task-25 D3). White page, `#8b1a1a` ink, values in `#2a1810`. Every form rule is scoped under `.tp-form`. Smoke H-checks print each fixture (and the overlong hero) to PDF: 1 portrait page, nothing cut at the sheet bottom.
 - Hide Foundry chrome on print using `:has()` selector: `body > *:not(:has(.tor2e-print)) { display: none !important; }` and strip header/resize-handle on the print window.
 - `break-inside: avoid` on each `.tp-block`.
 - No interactive controls in print template — read-only HTML.
-- Color tokens: cream `#f5ecd6` background, dark red `#8b1a1a` accents. Use `print-color-adjust: exact` on filled pips, table headers, flag chips so they survive print without "Background graphics" being toggled.
+- Color tokens (classic): cream `#f5ecd6` background on screen (white on paper), dark red `#8b1a1a` accents. Use `print-color-adjust: exact` on filled pips, table headers, flag chips so they survive print without "Background graphics" being toggled.
 
 ## Coding Standards
 
@@ -157,41 +168,65 @@ Current shape (keep authors + `flags.hotReload` block when editing):
 
 1. Don't assume schema — confirm field paths against `ref/foundryvtt-tor2e/src/modules/models/actors/*.model.mjs` before reading them.
 2. Minimum code. No drive-by refactors of reference dirs (`ref/` is read-only).
-3. Define acceptance: button renders on actor sheet → click opens print window → window auto-prints → layout fits one A4. Verify in a running v14 instance before reporting done.
+3. Define acceptance: button renders on actor sheet → click opens print window with format toolbar → each format pick prints once → typical hero fits one A4 landscape page (long heroes may flow onto page 2). Verify in a running v14 instance before reporting done.
 4. Surface tradeoffs when picking layout (single-page squeeze vs multi-page) — ask before deciding.
 
 ## Development Workflow
 
-### Local install / test
-
-Symlink (or copy) the project into Foundry's user data:
+### Local dev loop
 
 ```bash
-ln -s "$(pwd)" "$FOUNDRY_DATA/Data/modules/tor2eprint"
+npm install                 # backlog.md + playwright-core (dev only)
+cp .env.example .env        # FOUNDRY_APP, FOUNDRY_DATA, FOUNDRY_PORT, FOUNDRY_WORLD, SMOKE_*, DEPLOY_TARGET
+npm run link                # symlink repo into $FOUNDRY_DATA/modules/tor2eprint
+npm run foundry             # local Foundry (--noupdate --noupnp), launches $FOUNDRY_WORLD
+npm run smoke               # headless login, runs tests/smoke.mjs in the page, PASS/FAIL, exit 1 on failure
 ```
 
-Then enable in **Configuration → Manage Modules** in a world running the `tor2e` system.
+`tools/env.mjs` takes everything after `=` as the value: put `.env` comments on their own line. Real env vars win over `.env`.
+
+Local data (`.foundry-data/`, git-ignored), one-time setup:
+- `Config/license.json` copied from another local Foundry data dir (same licence).
+- `Data/systems/tor2e` pulled read-only from the server: `bash -c 'set -a; . ./.env; rsync -a "${DEPLOY_TARGET%/modules/*}/systems/tor2e/" .foundry-data/Data/systems/tor2e/'`.
+- World `tor2eprint-test` (system tor2e, user Gamemaster, no password). v14 has no `createWorld` setup action: start Foundry without `--world`, then from `/setup` POST `/create` with `{action: "createWorld", id, title, system: "tor2e"}`. Enable the module once as GM: `game.settings.set("core", "moduleConfiguration", {tor2eprint: true})`.
+- Playwright browser, once: `npx -y playwright-core@1.65.0 install chromium-headless-shell`.
+
+Port 30001 (DH dev uses 30002). Smoke results are `{id, what, actual, expected, pass}`; `pass: null` prints as info and doesn't fail.
+
+`npm run smoke` first imports any `fixtures/` hero missing from the world (by name, ids kept), resets `tor2e.systemMigrationVersion` and reloads, so tor2e world migrations run on them. Fixture portraits/item images point at another world and 404; that is expected. Checks: environment (incl. running tor2e == `verified`), print control on character vs adversary, header button, print window opens and prints once, no raw keys, print CSS loaded. In v14 the `getHeaderControlsApplicationV2` entry lives in the collapsed overflow menu, so the header button the smoke clicks is the `renderActorSheetV2` fallback.
+
+### On a system upgrade (new tor2e release)
+
+The print reads legacy `{value}` schema blocks and a few tor2e internals (`extendedData._getItemLoad/getLoad/getParryBonus`, status ids, `CONFIG.tor2e.constants`), so check every release before bumping `verified`:
+
+1. Read the release notes and any new `src/modules/migration/Tor2eMigration-X.Y.Z.js` in the tor2e repo.
+2. Pin the reference to the new tag: `git -C ref/foundryvtt-tor2e fetch --tags && git -C ref/foundryvtt-tor2e checkout vX.Y.Z`; `git -C ref/foundryvtt-tor2e describe --tags` must print it. From scratch: `git clone https://gitlab.com/herve.darritchon/foundryvtt-tor2e.git ref/foundryvtt-tor2e && git -C ref/foundryvtt-tor2e checkout vX.Y.Z`.
+3. Diff the paths the module reads: `git -C ref/foundryvtt-tor2e diff vOLD..vX.Y.Z -- src/modules/models src/modules/documents/actor-document.mjs src/modules/applications/sheets/character-sheet.mjs src/modules/effects/status-effects.js src/modules/config.js src/modules/utilities.js src/lang/en.json`, then grep each `system.*` path and `tor2e.*` key used in `modules/`, `templates/` against the new source.
+4. Update the local system (`.foundry-data/Data/systems/tor2e`, see one-time setup), restart `npm run foundry` (migrations run on launch), then `npm run smoke`: S2 fails until `verified` is bumped; every other check must pass. Print both formats to PDF for one hero and look at them.
+5. Bump `relationships.systems[0].compatibility.verified` in `module.json`, the *Depends on system* line here and README, restart Foundry (the manifest is cached) and rerun the smoke.
 
 ### Deploy to remote
 
-`deploy.sh` (git-ignored) rsyncs the module to a remote Foundry data dir, excluding dev-only dirs:
+`deploy.sh` (tracked) rsyncs only the runtime files (`module.json`, `tor2eprint.mjs`, `modules/`, `fonts/`, `templates/`, `styles/`, `lang/`) with `--delete`, so nothing else (`fixtures/`, `backlog/`, `.git/`, docs) reaches the server and removed files don't linger. Target comes from `DEPLOY_TARGET` (env or `.env`, git-ignored); the script fails if unset. Add a runtime folder (e.g. `fonts/`) to the `--include` list and to the `release.yml` zip together.
 
 ```bash
-rsync -azP --exclude ref/ --exclude node_modules/ --exclude backlog/ . vehrka:share/foundrydata_14/Data/modules/tor2eprint/
+DEPLOY_TARGET=host:path/Data/modules/tor2eprint   # in .env
+./deploy.sh -n        # dry run: lists what would be sent/deleted
+npm run deploy
 ```
 
-Edit host/path to match target.
+Deployed `module.json` keeps the `#{VERSION}#` tokens (the release workflow fills them), so a dev deploy shows that as its version.
 
 ### Hot reload
 
-`module.json` declares `flags.hotReload` for `hbs`, `css`, `json` under `templates/`, `styles/`, `lang/`. Edits propagate live without restarting Foundry.
+`module.json` declares `flags.hotReload` for `hbs`, `css`, `json` under `templates/`, `styles/`, `lang/`. Edits propagate live without restarting Foundry. `module.json` changes (e.g. `verified`) need a Foundry restart: the server caches the manifest.
 
 ### Verification checklist (run before "done")
 
 - [ ] Module enables without console errors on v14 + tor2e 6.x
 - [ ] Print button visible on each supported actor sheet type
 - [ ] Click opens ApplicationV2 print window with actor data
-- [ ] `window.print()` fires once on first render only
+- [ ] Window opens without printing; `window.print()` fires once per format pick
 - [ ] Print preview shows clean layout, no Foundry chrome
 - [ ] All labels resolve (no `tor2e.…` raw keys leaking through)
 

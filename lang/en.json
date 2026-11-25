@@ -1,6 +1,11 @@
 {
   "TOR2EPRINT": {
     "PrintSheet": "Print Sheet",
+    "ChooseFormat": "Choose a format to print.",
+    "Format": {
+      "classic": "Classic",
+      "form": "Portrait"
+    },
     "Sections": {
       "Attributes": "Attributes",
       "Skills": "Common Skills",
@@ -9,39 +14,25 @@
       "Armour": "Armour",
       "Rewards": "Rewards",
       "Virtues": "Virtues",
-      "Traits": "Traits",
       "History": "History",
       "Biography": "Biography",
       "Resources": "Resources",
       "Conditions": "Conditions",
       "Injury": "Injury",
-      "Stature": "Stature"
+      "Stature": "Stature",
+      "UsefulItems": "Useful Items"
     },
     "Labels": {
-      "Favoured": "F",
       "Magical": "M",
       "TargetNumber": "TN",
-      "Damage": "Damage",
-      "Injury": "Injury",
-      "Load": "Load",
-      "Protection": "Protection",
-      "Notes": "Notes",
-      "Name": "Name",
-      "Endurance": "Endurance",
-      "Hope": "Hope",
-      "Shadow": "Shadow",
-      "ShadowPoints": "Shadow Points",
-      "ShadowScars": "Shadow Scars",
-      "Temporary": "Temporary",
-      "Parry": "Parry",
-      "Fellowship": "Fellowship",
       "Patron": "Patron",
-      "SkillPoints": "Skill Points",
-      "AdventurePoints": "Adventure Points",
-      "Miserable": "Miserable",
-      "Wounded": "Wounded",
-      "Poisoned": "Poisoned",
-      "Weary": "Weary"
+      "Character": "Character",
+      "HeroicCulture": "Heroic Culture",
+      "Rating": "Rating",
+      "TargetNumberLong": "Target Number",
+      "Scars": "Scars",
+      "Helm": "Helm",
+      "Anguished": "Anguished"
     }
   }
 }
