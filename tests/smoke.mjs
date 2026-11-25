@@ -150,6 +150,17 @@ check('C18', 'slots(): weapons 4, useful items 6, short and long lists padded/cu
         `${Object.entries(c.conditions).filter(([, v]) => v).map(([k]) => k).join(',')} ${c.injury}`, 'weary,wounded 3');
 }
 
+// Classic traits split (task-6): Distinctive Features / Flaws lists, empty group hidden.
+{
+    const CLASSIC = `modules/${MODULE_ID}/templates/actors/character-print.hbs`;
+    const heads = async ctx => [...Object.assign(document.createElement('div'), { innerHTML: await foundry.applications.handlebars.renderTemplate(CLASSIC, ctx) })
+        .querySelectorAll('.tp-rewards-virtues h2')].map(h => h.textContent.trim()).join(',');
+    const withFlaw = { ...ca, traitGroups: { features: ca.traitGroups.features.slice(1), flaws: ca.traitGroups.features.slice(0, 1) } };
+    check('T5', 'classic traits: features only (fixtures have no flaw) / features + flaws',
+        `${ca.traitGroups.features.length}:${ca.traitGroups.flaws.length} ${await heads(ca)} / ${await heads(withFlaw)}`,
+        '3:0 Rewards,Virtues,Distinctive Features / Rewards,Virtues,Distinctive Features,Flaws');
+}
+
 // Form layout template (task-24), Arvegil plus a magical skill and a Poisoned/Wounded state.
 {
     const FORM = `modules/${MODULE_ID}/templates/actors/character-print-form.hbs`;

@@ -73,10 +73,18 @@
       <ul class="tp-list">
         {{#each virtues}}<li><strong>{{this.name}}</strong></li>{{else}}<li class="tp-muted">—</li>{{/each}}
       </ul>
-      <h2>{{localize "TOR2EPRINT.Sections.Traits"}}</h2>
+      {{#if traitGroups.features.length}}
+      <h2>{{localize "tor2e.actors.traits.distinctiveFeatures"}}</h2>
       <ul class="tp-list">
-        {{#each traits}}<li><strong>{{this.name}}</strong></li>{{else}}<li class="tp-muted">—</li>{{/each}}
+        {{#each traitGroups.features}}<li><strong>{{this.name}}</strong></li>{{/each}}
       </ul>
+      {{/if}}
+      {{#if traitGroups.flaws.length}}
+      <h2>{{localize "tor2e.actors.traits.flaws"}}</h2>
+      <ul class="tp-list">
+        {{#each traitGroups.flaws}}<li><strong>{{this.name}}</strong></li>{{/each}}
+      </ul>
+      {{/if}}
     </section>
 
     <div class="tp-attr-cell">

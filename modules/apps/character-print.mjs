@@ -194,6 +194,7 @@ async function buildCharacterContext(actor) {
       id: i.id,
       name: i.name,
       img: i.img,
+      group: i.system.group?.value,
       description: await itemDescription(i, rollData)
     }))
   );
@@ -239,7 +240,12 @@ async function buildCharacterContext(actor) {
     equipment,
     virtues,
     rewards,
-    traits
+    traits,
+    // Classic prints traits as two lists; anything not a flaw counts as a distinctive feature.
+    traitGroups: {
+      features: traits.filter((t) => t.group !== "flaw"),
+      flaws: traits.filter((t) => t.group === "flaw")
+    }
   };
   return Object.assign(base, buildFormFields(actor, base));
 }
