@@ -67,7 +67,7 @@ tor2eprint/
 │   └── character-print.hbs
 ├── styles/print.css         # Layout + @media print rules; A4 landscape
 ├── lang/en.json             # TOR2EPRINT.* strings
-├── deploy.sh                # rsync deploy to remote Foundry data dir (excludes ref/, node_modules/, backlog/)
+├── deploy.sh                # rsync runtime files (allow-list, --delete) to $DEPLOY_TARGET
 ├── package.json             # Dev tooling only (backlog.md); runtime has no build step
 ├── backlog/                 # Backlog.md tasks, milestones, config
 ├── README.md
@@ -174,13 +174,15 @@ Then enable in **Configuration → Manage Modules** in a world running the `tor2
 
 ### Deploy to remote
 
-`deploy.sh` (git-ignored) rsyncs the module to a remote Foundry data dir, excluding dev-only dirs:
+`deploy.sh` (tracked) rsyncs only the runtime files (`module.json`, `tor2eprint.mjs`, `modules/`, `templates/`, `styles/`, `lang/`) with `--delete`, so nothing else (`fixtures/`, `backlog/`, `.git/`, docs) reaches the server and removed files don't linger. Target comes from `DEPLOY_TARGET` (env or `.env`, git-ignored); the script fails if unset. Add a runtime folder (e.g. `fonts/`) to the `--include` list and to the `release.yml` zip together.
 
 ```bash
-rsync -azP --exclude ref/ --exclude node_modules/ --exclude backlog/ . vehrka:share/foundrydata_14/Data/modules/tor2eprint/
+DEPLOY_TARGET=host:path/Data/modules/tor2eprint   # in .env
+./deploy.sh -n        # dry run: lists what would be sent/deleted
+npm run deploy
 ```
 
-Edit host/path to match target.
+Deployed `module.json` keeps the `#{VERSION}#` tokens (the release workflow fills them), so a dev deploy shows that as its version.
 
 ### Hot reload
 

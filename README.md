@@ -39,6 +39,10 @@ Copy the entire `tor2eprint/` folder into `$FOUNDRY_DATA/Data/modules/`.
 
 Folder name must be exactly `tor2eprint`.
 
+### Deploy to a remote server (development)
+
+Set `DEPLOY_TARGET=host:path/Data/modules/tor2eprint` in `.env` (or the environment), then `./deploy.sh -n` to preview and `npm run deploy` to sync. Only runtime files are sent; files removed locally are removed remotely. The deployed `module.json` shows `#{VERSION}#` as its version, since only the release workflow fills in the tokens.
+
 ### Enable
 
 Launch a world running the `tor2e` system → **Game Settings → Manage Modules** → tick **TOR2e Print Sheets** → save.

@@ -1,4 +1,4 @@
 PRPs/
 ref/
-deploy.sh
+.env
 node_modules/
