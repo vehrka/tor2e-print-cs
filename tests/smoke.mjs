@@ -47,6 +47,14 @@ try {
     await wait(500);
     check('P5', 'no print on re-render', prints, 1);
     check('P6', 'no raw i18n keys in print window', /TOR2EPRINT\.|tor2e\./.test(win?.element.textContent ?? 'TOR2EPRINT.'), false);
+    // Enriched links/rolls print as bold plain text (no pill, no icon).
+    const probe = win.element.querySelector('.tor2e-print').appendChild(Object.assign(document.createElement('p'), {
+        innerHTML: '<a class="content-link"><i class="fas fa-book"></i>Link</a><a class="inline-roll"><i class="fas fa-dice-d20"></i>1d6</a>'
+    }));
+    check('P7', 'content links and inline rolls: no background, no icon, bold',
+        [...probe.querySelectorAll('a')].map(a => [getComputedStyle(a).backgroundColor, getComputedStyle(a.querySelector('i')).display, getComputedStyle(a).fontWeight].join(' ')).join(' | '),
+        'rgba(0, 0, 0, 0) none 700 | rgba(0, 0, 0, 0) none 700');
+    probe.remove();
 } finally {
     window.print = realPrint;
     for (const w of printWindows()) await w.close();
