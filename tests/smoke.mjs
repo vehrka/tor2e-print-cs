@@ -87,6 +87,7 @@ const names = list => (list ?? []).map(x => x.name).join(', ');
 const attrs = c => Object.entries(c.attributes).map(([k, v]) => `${k}:${v.value}/${v.tn}`).join(' ');
 const skills = c => c.skills.map(s => `${s.key}:${s.value}${s.favoured ? '*' : ''}${s.magical ? 'M' : ''}`).join(' ');
 const ca = await contextOf('Arvegil');
+const arvegilSrc = game.actors.getName('Arvegil')._source;
 check('C0', 'Arvegil identity', [ca.name, ca.callingLabel, ca.standardOfLivingLabel].join('|'), 'Arvegil|Messenger|Frugal');
 check('C1', 'Arvegil attributes (rating/TN)', attrs(ca), 'strength:8/12 heart:5/15 wits:2/18');
 check('C2', 'Arvegil skills (pips, *favoured)', skills(ca),
@@ -108,6 +109,42 @@ check('C10', 'Adelbard item AE: Hope max prepared (16), not _source (15)', cad.r
 const ce = await contextOf('Smoke Effect');
 check('C11', 'actor AE on attribute + skill: print shows prepared value (Wits 3/TN 17, Lore 3)',
     `${ce.attributes.wits.value}/${ce.attributes.wits.tn} ${ce.skills.find(s => s.key === 'lore').value}`, '3/17 3');
+
+// Form layout context (task-23). Expected values: task-22 notes (tor2e sheet on the same heroes).
+const fa = ca, fh = await contextOf('Hakkon Finnsson'), fd = await contextOf('Adelbard Tuck-Baggings');
+const gear = c => ['armour', 'helm', 'shield'].map(k => c.gear[k].empty ? '-' : `${c.gear[k].name}:${c.gear[k].protection}/${c.gear[k].load}`).join(', ');
+check('C12', 'form: points, treasure, distinctive features (Arvegil)',
+    [fa.points.adventure, fa.points.skill, fa.treasure, fa.distinctiveFeatures.join(', ')].join('|'),
+    [arvegilSrc.system.adventurePoints.value, arvegilSrc.system.skillPoints.value, arvegilSrc.system.treasure.value, 'BOLD, SUBTLE, FOLK-LORE'].join('|'));
+check('C13', 'form: load / parry / protection (Arvegil)', `${fa.load.items}+${fa.load.fatigue} ${fa.parry.base}/${fa.parry.shield}/${fa.parry.total} ${fa.protection}`, '13+5 16/0/16 3');
+check('C14', 'form: AE shield parry + shield (Hakkon)', `${fh.parry.base}/${fh.parry.shield}/${fh.parry.total} ${fh.protection} ${fh.load.items}`, '16/5/24 5 20');
+check('C15', 'form: gear rows (Hakkon / Adelbard)', `${gear(fh)} | ${gear(fd)}`,
+    'Coat of Mail:4/10, Helm:1/4, Golden Shield of Eregion:5/1 | Leather Corslet:2/6, -, Buckler (SMALL FOLK):4/2');
+check('C16', 'form: stale stateOfHealth.wounded ignored without Wounded status (Adelbard)',
+    `${JSON.stringify(fd.conditions)} ${fd.injury}`, '{"weary":false,"miserable":false,"wounded":false,"poisoned":false} null');
+check('C17', 'form: proficiencies in order axes, bows, spears, swords', fa.formProficiencies.map(p => p.key).join(','), 'axes,bows,spears,swords');
+const fo = await contextOf(OVERLONG);
+check('C18', 'slots(): weapons 4, useful items 6, short and long lists padded/cut',
+    [fa.weaponSlots.length, fa.weaponSlots.filter(w => w.empty).length, fa.usefulItems.length, fo.weaponSlots.length, fo.weaponSlots.some(w => w.empty), fo.usefulItems.length].join('|'),
+    `4|1|6|4|false|6`);
+
+{
+    const a = game.actors.getName('Arvegil');
+    const woundedBefore = a._source.system.stateOfHealth.wounded.value;
+    let c;
+    try {
+        await a.addStatusEffectById('weary');
+        await a.addStatusEffectById('wounded');
+        await a.update({ 'system.stateOfHealth.wounded.value': 3 });
+        c = await contextOf('Arvegil');
+    } finally {
+        await a.deleteStatusEffectById('weary');
+        await a.deleteStatusEffectById('wounded');
+        await a.update({ 'system.stateOfHealth.wounded.value': woundedBefore });
+    }
+    check('C19', 'form: conditions follow token statuses; injury printed while wounded',
+        `${Object.entries(c.conditions).filter(([, v]) => v).map(([k]) => k).join(',')} ${c.injury}`, 'weary,wounded 3');
+}
 
 // Enrichment (task-2): GM (owner) printing never shows secrets; relative @UUID and @attr inline rolls resolve.
 const arvegil = game.actors.getName('Arvegil');

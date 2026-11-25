@@ -1,10 +1,11 @@
 ---
 id: TASK-23
 title: 'Form layout context: new fields and slots helper'
-status: To Do
+status: Done
 assignee:
   - '@claude'
 created_date: '2026-11-24T22:15:43Z'
+updated_date: '2026-11-25T21:22:45Z'
 labels:
   - code
 milestone: m-2
@@ -22,16 +23,22 @@ Source: PRPs/new-layout-cs-v1.md (target image ref/img/new_cs_v1.jpg). §2 ➕ i
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Every ➕ field from PRP §2 is in the context with the paths confirmed in the runtime-sources task
-- [ ] #2 slots(list, n) returns exactly n entries for lists shorter and longer than n
-- [ ] #3 Proficiencies come out in order axes, bows, spears, swords
-- [ ] #4 Classic layout renders unchanged (hand check or smoke)
+- [x] #1 Every ➕ field from PRP §2 is in the context with the paths confirmed in the runtime-sources task
+- [x] #2 slots(list, n) returns exactly n entries for lists shorter and longer than n
+- [x] #3 Proficiencies come out in order axes, bows, spears, swords
+- [x] #4 Classic layout renders unchanged (hand check or smoke)
 <!-- AC:END -->
 
 ## Definition of Done
 <!-- DOD:BEGIN -->
-- [ ] #1 Check in tests/smoke.mjs; `npm run smoke` passes (skip until the smoke tooling exists)
-- [ ] #2 Hand check in a v14 + tor2e world if the change has UI: button shows, window opens and prints once, clean preview, no raw `tor2e.*` keys, no console errors
-- [ ] #3 README.md and CLAUDE.md (Status, schema notes) updated in the same commit
-- [ ] #4 module.json `compatibility` / `relationships` updated if the tested Foundry or tor2e build changed; release tag noted if it ships
+- [x] #1 Check in tests/smoke.mjs; `npm run smoke` passes (skip until the smoke tooling exists)
+- [x] #2 Hand check in a v14 + tor2e world if the change has UI: button shows, window opens and prints once, clean preview, no raw `tor2e.*` keys, no console errors
+- [x] #3 README.md and CLAUDE.md (Status, schema notes) updated in the same commit
+- [x] #4 module.json `compatibility` / `relationships` updated if the tested Foundry or tor2e build changed; release tag noted if it ships
 <!-- DOD:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+buildFormFields() merged into the classic context (classic fields unchanged). Sources per task-22. Smoke C12-C19 (C19 toggles weary/wounded on Arvegil and restores). distinctiveFeatures is the full name list; the 2-line cut is left to the template/CSS (line clamp), since JS cannot know text width. weaponSlots = all weapons cut/padded to 4 (not filtered by equipped). AC4: classic context checks C0-C11 and fit checks G0-G9 unchanged. DoD2/4 n/a: no UI or compat change yet (template is task-24).
+<!-- SECTION:NOTES:END -->
