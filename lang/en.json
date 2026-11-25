@@ -4,7 +4,7 @@
     "ChooseFormat": "Choose a format to print.",
     "Format": {
       "classic": "Classic",
-      "form": "Form"
+      "form": "Portrait"
     },
     "Sections": {
       "Attributes": "Attributes",
