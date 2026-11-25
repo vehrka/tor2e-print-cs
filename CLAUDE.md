@@ -186,6 +186,8 @@ Local data (`.foundry-data/`, git-ignored), one-time setup:
 
 Port 30001 (DH dev uses 30002). Smoke results are `{id, what, actual, expected, pass}`; `pass: null` prints as info and doesn't fail.
 
+`npm run smoke` first imports any `fixtures/` hero missing from the world (by name, ids kept), resets `tor2e.systemMigrationVersion` and reloads, so tor2e world migrations run on them. Fixture portraits/item images point at another world and 404; that is expected. Checks: environment (incl. running tor2e == `verified`), print control on character vs adversary, header button, print window opens and prints once, no raw keys, print CSS loaded. In v14 the `getHeaderControlsApplicationV2` entry lives in the collapsed overflow menu, so the header button the smoke clicks is the `renderActorSheetV2` fallback.
+
 ### Deploy to remote
 
 `deploy.sh` (tracked) rsyncs only the runtime files (`module.json`, `tor2eprint.mjs`, `modules/`, `templates/`, `styles/`, `lang/`) with `--delete`, so nothing else (`fixtures/`, `backlog/`, `.git/`, docs) reaches the server and removed files don't linger. Target comes from `DEPLOY_TARGET` (env or `.env`, git-ignored); the script fails if unset. Add a runtime folder (e.g. `fonts/`) to the `--include` list and to the `release.yml` zip together.

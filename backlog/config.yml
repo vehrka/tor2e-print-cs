@@ -16,7 +16,7 @@ check_active_branches: false
 active_branch_days: 30
 task_prefix: "task"
 definition_of_done:
-  - "Check in tests/smoke.mjs; `npm run smoke` passes (skip until the smoke tooling exists)"
+  - "Check in tests/smoke.mjs; `npm run smoke` passes"
   - "Hand check in a v14 + tor2e world if the change has UI: button shows, window opens and prints once, clean preview, no raw `tor2e.*` keys, no console errors"
   - "README.md and CLAUDE.md (Status, schema notes) updated in the same commit"
   - "module.json `compatibility` / `relationships` updated if the tested Foundry or tor2e build changed; release tag noted if it ships"

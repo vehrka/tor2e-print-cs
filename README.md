@@ -41,7 +41,7 @@ Folder name must be exactly `tor2eprint`.
 
 ### Local Foundry and smoke tests (development)
 
-Copy `.env.example` to `.env` and fill in the paths, then: `npm install`, `npm run link` (symlink into `$FOUNDRY_DATA/modules`), `npm run foundry` (local server on `$FOUNDRY_PORT`, launches `$FOUNDRY_WORLD`), `npm run smoke` (headless login, runs `tests/smoke.mjs` in the page, exits 1 on failure). The dev world needs the `tor2e` system and this module enabled; see CLAUDE.md for the one-time setup.
+Copy `.env.example` to `.env` and fill in the paths, then: `npm install`, `npm run link` (symlink into `$FOUNDRY_DATA/modules`), `npm run foundry` (local server on `$FOUNDRY_PORT`, launches `$FOUNDRY_WORLD`), `npm run smoke` (headless login, seeds the `fixtures/` heroes into the world if missing, runs `tests/smoke.mjs` in the page, exits 1 on failure). The dev world needs the `tor2e` system and this module enabled; see CLAUDE.md for the one-time setup.
 
 ### Deploy to a remote server (development)
 
