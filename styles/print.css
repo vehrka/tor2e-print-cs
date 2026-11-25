@@ -382,6 +382,18 @@
 .tp-flag.tp-fav { background: #8b1a1a; color: #fff; }
 .tp-flag.tp-mag { background: #f5ecd6; color: #8b1a1a; }
 
+/* Enriched content links and inline rolls print as bold plain text, not Foundry pills */
+.tor2e-print :is(a.inline-roll, a.content-link) {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  font-weight: 700;
+  white-space: normal;
+  box-shadow: none;
+}
+.tor2e-print :is(a.inline-roll, a.content-link) > i { display: none; }
+
 /* Generic lists */
 .tp-list {
   list-style: none;
