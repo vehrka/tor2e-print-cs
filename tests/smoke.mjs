@@ -229,9 +229,11 @@ check('K1', 'print CSS hides the format toolbar', printRules.some(s => s?.includ
 // Hans Grimald (14 rewards/virtues/traits) is a long hero: 2 pages.
 const LONG = { 'Hans Grimald': 2 };
 export const pdfChecks = [
-    ...FIXTURES.map((actor, i) => ({ id: `G${i}`, what: `${actor} prints on ${LONG[actor] ?? 1} page(s)`, actor, format: 'classic', pages: LONG[actor] ?? 1 })),
+    ...FIXTURES.map((actor, i) => ({ id: `G${i}`, what: `${actor} prints on ${LONG[actor] ?? 1} page(s)`, actor, format: 'classic', pages: LONG[actor] ?? 1, orient: 'landscape' })),
     // 20 rewards make the rewards/virtues/traits block taller than a page: it has to split.
-    { id: 'G9', what: 'overlong hero flows: page count', actor: OVERLONG, format: 'classic', pages: null, allowTall: true }
+    { id: 'G9', what: 'overlong hero flows: page count', actor: OVERLONG, format: 'classic', pages: null, orient: 'landscape', allowTall: true },
+    // Form: one A4 portrait page for everyone, overlong lists cut (D3).
+    ...[...FIXTURES, OVERLONG].map((actor, i) => ({ id: `H${i}`, what: `form: ${actor.slice(0, 24)} on one A4 portrait page`, actor, format: 'form', pages: 1, orient: 'portrait', pageMm: 281, pageWidthMm: 194 }))
 ];
 
 export default results;

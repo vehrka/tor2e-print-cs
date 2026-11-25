@@ -1,10 +1,11 @@
 ---
 id: TASK-25
 title: 'Form layout CSS: A4 portrait, single page, white/red'
-status: To Do
+status: Hand check
 assignee:
   - '@claude'
 created_date: '2026-11-24T22:15:44Z'
+updated_date: '2026-11-25T21:31:33Z'
 labels:
   - css
   - docs
@@ -24,17 +25,23 @@ Source: PRPs/new-layout-cs-v1.md (target image ref/img/new_cs_v1.jpg). §6, D1/D
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Form layout fits one A4 portrait page in Chrome/Electron print preview for a hero with 4 weapons, 6 items, 3 rewards, 3 virtues
-- [ ] #2 Overlong hero (10 weapons, 15 items, 10 rewards) still prints on one page, extra entries cut
-- [ ] #3 Classic layout still prints A4 landscape, cream, unchanged
-- [ ] #4 Filled pips, diamonds and lines print without 'Background graphics' enabled
-- [ ] #5 CLAUDE.md Print Layout Rules list both layouts
+- [x] #1 Form layout fits one A4 portrait page in Chrome/Electron print preview for a hero with 4 weapons, 6 items, 3 rewards, 3 virtues
+- [x] #2 Overlong hero (10 weapons, 15 items, 10 rewards) still prints on one page, extra entries cut
+- [x] #3 Classic layout still prints A4 landscape, cream, unchanged
+- [x] #4 Filled pips, diamonds and lines print without 'Background graphics' enabled
+- [x] #5 CLAUDE.md Print Layout Rules list both layouts
 <!-- AC:END -->
 
 ## Definition of Done
 <!-- DOD:BEGIN -->
-- [ ] #1 Check in tests/smoke.mjs; `npm run smoke` passes (skip until the smoke tooling exists)
+- [x] #1 Check in tests/smoke.mjs; `npm run smoke` passes (skip until the smoke tooling exists)
 - [ ] #2 Hand check in a v14 + tor2e world if the change has UI: button shows, window opens and prints once, clean preview, no raw `tor2e.*` keys, no console errors
-- [ ] #3 README.md and CLAUDE.md (Status, schema notes) updated in the same commit
-- [ ] #4 module.json `compatibility` / `relationships` updated if the tested Foundry or tor2e build changed; release tag noted if it ships
+- [x] #3 README.md and CLAUDE.md (Status, schema notes) updated in the same commit
+- [x] #4 module.json `compatibility` / `relationships` updated if the tested Foundry or tor2e build changed; release tag noted if it ships
 <!-- DOD:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Form CSS scoped under .tor2e-print.tp-form; named page tor2e-portrait; fixed 210x297mm sheet on screen, 280mm high on print (overflow hidden = cut to fit, D3). Body = 3-col grid, rules drawn as background gradients in the column gaps (print-color-adjust: exact), stature row takes the free height so more rewards/virtues fit. Smoke runner now reports PDF orientation (MediaBox) and flags content cut at the sheet bottom. H0-H7: every fixture + overlong hero = 1 portrait page, nothing cut; G-checks: classic still landscape with same page counts. AC4 proxy: page.pdf with printBackground false still shows filled pips/boxes/lines. Visual review done on headless PDFs (Hakkon, Adelbard, overlong). Toolbar style was done in task-21. Fonts: headings use the system fallbacks until task-26.
+<!-- SECTION:NOTES:END -->
