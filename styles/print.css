@@ -1,28 +1,5 @@
 @page { size: A4 landscape; margin: 8mm; }
 
-/* Header button on legacy ActorSheet — tor2e header CSS makes link text huge.
-   Force compact size + reset font. */
-.window-app .window-header a.tor2eprint-btn,
-.window-app .window-header .tor2eprint-btn {
-  font-family: inherit !important;
-  font-size: 12px !important;
-  font-weight: normal !important;
-  font-variant: normal !important;
-  text-transform: none !important;
-  letter-spacing: 0 !important;
-  line-height: 1.2 !important;
-  color: inherit !important;
-  padding: 0 4px !important;
-  margin: 0 !important;
-}
-.tor2eprint-btn {
-  background: transparent;
-  border: 0;
-  cursor: pointer;
-  color: inherit;
-  font-size: 12px;
-}
-
 /* Print window: format toolbar above a scrolling preview */
 .tor2eprint-window .window-content { padding: 0; display: flex; flex-direction: column; }
 .tor2e-print-toolbar { display: flex; gap: 0.5rem; padding: 0.5rem; flex: none; }

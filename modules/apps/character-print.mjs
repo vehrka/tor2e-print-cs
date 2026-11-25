@@ -305,7 +305,7 @@ export class Tor2eCharacterPrint extends HandlebarsApplicationMixin(ApplicationV
   }
 
   _onRender(context, options) {
-    super._onRender?.(context, options);
+    super._onRender(context, options);
     if (!this.#printPending) return;
     this.#printPending = false;
     this.#printWhenReady();
