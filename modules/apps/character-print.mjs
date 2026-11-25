@@ -29,6 +29,27 @@ async function enrich(html, relativeTo, rollData) {
   return foundry.applications.ux.TextEditor.implementation.enrichHTML(String(html), { relativeTo, rollData, secrets: false });
 }
 
+/** A description that is only a journal link: tor2e inlines the page text (utilities.js buildDescription). */
+const JOURNAL_ONLY_DESCRIPTION = /^<p>@UUID\[(JournalEntry.*)](\{(.*)})?<\/p>$/;
+
+/**
+ * Enrich an item description like the tor2e sheet: with the system setting
+ * inlineElementFromUuidInDescription on, a description that is only a JournalEntry @UUID
+ * prints the linked page text. Anything else, or an unresolvable link, enriches as is.
+ * @param {Item} item
+ * @param {object} rollData
+ */
+async function itemDescription(item, rollData) {
+  const html = item.system.description?.value ?? "";
+  const link = game.settings.get("tor2e", "inlineElementFromUuidInDescription") && html.match(JOURNAL_ONLY_DESCRIPTION)?.[1];
+  if (link) {
+    const page = await fromUuid(link).catch(() => null);
+    const text = page?.text?.content;
+    if (text) return enrich(text, page, rollData);
+  }
+  return enrich(html, item, rollData);
+}
+
 /** Fixed combat proficiency order on the form layout (alphabetical, as on the printed sheet). */
 const FORM_PROFICIENCIES = ["axes", "bows", "spears", "swords"];
 
@@ -173,7 +194,7 @@ async function buildCharacterContext(actor) {
       id: i.id,
       name: i.name,
       img: i.img,
-      description: await enrich(i.system.description?.value ?? "", i, rollData)
+      description: await itemDescription(i, rollData)
     }))
   );
 
