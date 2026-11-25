@@ -1,5 +1,13 @@
 @page { size: A4 landscape; margin: 8mm; }
 
+/* Bundled (SIL OFL 1.1, fonts/cinzel/OFL.txt) so the hero name prints the same on every client. */
+@font-face {
+  font-family: "Cinzel";
+  src: url("../fonts/cinzel/Cinzel-wght.ttf") format("truetype");
+  font-weight: 400 900;
+  font-display: block;
+}
+
 /* Print window: format toolbar above a scrolling preview */
 .tor2eprint-window .window-content { padding: 0; display: flex; flex-direction: column; }
 .tor2e-print-toolbar { display: flex; gap: 0.5rem; padding: 0.5rem; flex: none; }
@@ -78,7 +86,7 @@
   font-size: 11pt;
 }
 .tp-banner-name {
-  font-family: "Trajan Pro", "Cinzel", "Book Antiqua", serif;
+  font-family: "Cinzel", "Trajan Pro", "Book Antiqua", serif;
   font-size: 18pt;
   color: #2a1810;
   letter-spacing: 0.05em;
@@ -518,7 +526,7 @@
   padding: 1mm 4mm;
   border: 3px double var(--tf-red);
   color: var(--tf-ink);
-  font-family: "Trajan Pro", "Cinzel", "Book Antiqua", serif;
+  font-family: "Cinzel", "Trajan Pro", "Book Antiqua", serif;
   font-size: 15pt;
   text-align: center;
   white-space: nowrap;

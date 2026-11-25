@@ -249,6 +249,9 @@ const uncial = await document.fonts.load('10px "Uncial Antiqua"');
 const uncialFace = [...document.fonts].find(f => f.family.replace(/"/g, '') === 'Uncial Antiqua');
 check('K2', 'Uncial Antiqua bundled: @font-face loaded, file served by the module',
     `${uncial.length > 0}|${uncialFace?.status}|${(await fetch(`/modules/${MODULE_ID}/fonts/uncial-antiqua/UncialAntiqua-Regular.ttf`, { method: 'HEAD' })).ok}`, 'true|loaded|true');
+const cinzel = await document.fonts.load('10px "Cinzel"');
+check('K3', 'Cinzel bundled: loads, file served by the module',
+    `${cinzel.length > 0}|${(await fetch(`/modules/${MODULE_ID}/fonts/cinzel/Cinzel-wght.ttf`, { method: 'HEAD' })).ok}`, 'true|true');
 check('K1', 'print CSS hides the format toolbar', printRules.some(s => s?.includes('.tor2e-print-toolbar')), true);
 
 // Fit (tools/smoke.mjs prints each to PDF): typical heroes fit one page; long ones may flow (task-19), reported only.
