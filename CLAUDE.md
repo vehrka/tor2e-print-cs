@@ -71,7 +71,7 @@ tor2eprint/
 ├── package.json             # Dev tooling only (backlog.md, playwright-core); runtime has no build step
 ├── tools/                   # Dev: env.mjs (.env loader), link.mjs, foundry.mjs, smoke.mjs (Playwright runner)
 ├── tests/smoke.mjs          # In-page smoke checks, imported by tools/smoke.mjs
-├── fixtures/                # Exported tor2e heroes (fvtt-Actor-*.json) for smoke tests
+├── fixtures/                # Smoke heroes: exported (fvtt-Actor-*.json) + synthetic (smoke-effect: actor AE, smoke-overlong)
 ├── .foundry-data/           # Git-ignored local Foundry user data (Config/, Data/, Logs/)
 ├── backlog/                 # Backlog.md tasks, milestones, config
 ├── README.md
