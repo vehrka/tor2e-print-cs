@@ -30,6 +30,7 @@ await sheet.render({ force: true });
 // Header controls sit in the collapsed overflow menu; the renderActorSheetV2 fallback injects a header button.
 const control = sheet.element.querySelector(`.window-header .${ACTION}, .window-header [data-action="${ACTION}"]`);
 check('P2', 'print control rendered in character sheet header', !!control, true);
+check('P10', 'header button uses the Foundry tooltip (data-tooltip, no title)', `${control?.dataset.tooltip}|${control?.hasAttribute('title')}`, 'Print Sheet|false');
 
 // Print window: click the control, window opens for the actor, print() runs once.
 const printWindows = () => [...foundry.applications.instances.values()]
