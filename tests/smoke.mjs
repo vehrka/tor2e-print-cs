@@ -42,10 +42,21 @@ try {
     await wait(800);
     const win = printWindows()[0];
     check('P3', 'click opens print window for the actor', !!win?.rendered, true);
-    check('P4', 'window.print() runs exactly once', prints, 1);
-    await win?.render();
+    const formats = [...(win?.element.querySelectorAll('[data-action="format"]') ?? [])].map(b => b.dataset.format);
+    check('P4', 'window opens with format toolbar + hint, no sheet, no print',
+        [formats.join(','), !!win?.element.querySelector('.tor2e-print-hint'), !!win?.element.querySelector('.tor2e-print'), prints].join('|'), 'classic|true|false|0');
+    const shown = [];
+    for (const f of formats) {
+        win.element.querySelector(`[data-action="format"][data-format="${f}"]`).click();
+        await wait(600);
+        if (win.element.querySelector('.tor2e-print') && win.element.querySelector(`[data-format="${f}"].active`)) shown.push(f);
+    }
+    check('P5', 'each format renders, marked active, prints once per pick', `${shown.join(',')}|${prints}`, `${formats.join(',')}|${formats.length}`);
+    win.element.querySelector('[data-action="format"]').click();
+    await wait(600);
+    await win.render();
     await wait(500);
-    check('P5', 'no print on re-render', prints, 1);
+    check('P8', 'picking again reprints once; plain re-render does not print', prints, formats.length + 1);
     check('P6', 'no raw i18n keys in print window', /TOR2EPRINT\.|tor2e\./.test(win?.element.textContent ?? 'TOR2EPRINT.'), false);
     // Enriched links/rolls print as bold plain text (no pill, no icon).
     const probe = win.element.querySelector('.tor2e-print').appendChild(Object.assign(document.createElement('p'), {
@@ -67,7 +78,11 @@ const OVERLONG = game.actors.find(a => a.name.startsWith('Smoke Overlong'))?.nam
 const missing = [...FIXTURES, OVERLONG].filter(n => game.actors.getName(n ?? '')?.type !== 'character');
 check('F1', 'all fixture heroes present', missing.join(', ') || 'all', 'all');
 const { Tor2eCharacterPrint } = await import(`/modules/${MODULE_ID}/modules/apps/character-print.mjs?${Date.now()}`);
-const contextOf = async name => new Tor2eCharacterPrint({ document: game.actors.getName(name) })._prepareContext({});
+const contextOf = async name => {
+    const app = new Tor2eCharacterPrint({ document: game.actors.getName(name) });
+    app.format = 'classic';
+    return app._prepareContext({});
+};
 const names = list => (list ?? []).map(x => x.name).join(', ');
 const attrs = c => Object.entries(c.attributes).map(([k, v]) => `${k}:${v.value}/${v.tn}`).join(' ');
 const skills = c => c.skills.map(s => `${s.key}:${s.value}${s.favoured ? '*' : ''}${s.magical ? 'M' : ''}`).join(' ');
@@ -103,14 +118,15 @@ const walk = (rules, inPrint = false) => [...rules].flatMap(r => {
 });
 const printRules = [...document.styleSheets].flatMap(s => { try { return walk(s.cssRules); } catch { return []; } });
 check('K0', 'print CSS hides Foundry chrome', printRules.some(s => s?.includes(':not(:has(.tor2e-print))')), true);
+check('K1', 'print CSS hides the format toolbar', printRules.some(s => s?.includes('.tor2e-print-toolbar')), true);
 
 // Fit (tools/smoke.mjs prints each to PDF): typical heroes fit one page; long ones may flow (task-19), reported only.
 // Hans Grimald (14 rewards/virtues/traits) is a long hero: 2 pages.
 const LONG = { 'Hans Grimald': 2 };
 export const pdfChecks = [
-    ...FIXTURES.map((actor, i) => ({ id: `G${i}`, what: `${actor} prints on ${LONG[actor] ?? 1} page(s)`, actor, pages: LONG[actor] ?? 1 })),
+    ...FIXTURES.map((actor, i) => ({ id: `G${i}`, what: `${actor} prints on ${LONG[actor] ?? 1} page(s)`, actor, format: 'classic', pages: LONG[actor] ?? 1 })),
     // 20 rewards make the rewards/virtues/traits block taller than a page: it has to split.
-    { id: 'G9', what: 'overlong hero flows: page count', actor: OVERLONG, pages: null, allowTall: true }
+    { id: 'G9', what: 'overlong hero flows: page count', actor: OVERLONG, format: 'classic', pages: null, allowTall: true }
 ];
 
 export default results;

@@ -2,9 +2,7 @@ import { Tor2eCharacterPrint } from "./modules/apps/character-print.mjs";
 
 const MODULE_ID = "tor2eprint";
 const BUTTON_CLASS = "tor2eprint-btn";
-const TEMPLATE_PATHS = [
-  `modules/${MODULE_ID}/templates/actors/character-print.hbs`
-];
+const TEMPLATE_PATHS = Tor2eCharacterPrint.TEMPLATES;
 
 Hooks.once("init", () => {
   foundry.applications.handlebars.loadTemplates(TEMPLATE_PATHS);

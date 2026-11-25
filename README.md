@@ -2,7 +2,7 @@
 
 Foundry VTT v14 module. Adds a print-optimized character sheet for **The One Ring 2nd Edition** (`tor2e`) system.
 
-Click the **print** icon in any character sheet's window header → opens a print-friendly window → native `window.print()` dialog fires automatically.
+Click the **print** icon in any character sheet's window header → opens a print window with a format toolbar → pick a format (**Classic**: A4 landscape) → native `window.print()` dialog opens. Pick again to reprint.
 
 ## Requirements
 

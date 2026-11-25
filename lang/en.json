@@ -1,6 +1,10 @@
 {
   "TOR2EPRINT": {
     "PrintSheet": "Print Sheet",
+    "ChooseFormat": "Choose a format to print.",
+    "Format": {
+      "classic": "Classic"
+    },
     "Sections": {
       "Attributes": "Attributes",
       "Skills": "Common Skills",
