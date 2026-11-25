@@ -36,7 +36,7 @@ Open work is tracked as Markdown tasks in `backlog/tasks/`, managed with the `ba
 
 - Read: `npx backlog task list --plain`, `npx backlog task <id> --plain`, `npm run board` (TUI), `npm run board:web` (web kanban).
 - Write through the CLI, not by hand: `npx backlog task create "…" -m "<milestone>" -l <labels> --priority … --ac "…"`, `npx backlog task edit <id> -s "In Progress"` / `--check-ac 1` / `--check-dod 1` / `--notes "…"`, then `-s Done`.
-- Milestones: *TOR system update* (detail in `PRPs/improvements-from-tor2e-6.3.md`), *DH Print parity* (detail in `PRPs/improvements-from-dh-print.md`), *New layouts* (adversary/npc/community/lore). `PRPs/` is git-ignored: quote what a task needs into its description.
+- Milestones: *TOR system update* (detail in `PRPs/improvements-from-tor2e-6.3.md`), *DH Print parity* (detail in `PRPs/improvements-from-dh-print.md`), *New layouts* (character form layout, detail in `PRPs/new-layout-cs-v1.md`; adversary/npc/community/lore). `PRPs/` is git-ignored: quote what a task needs into its description.
 - Labels are in `backlog/config.yml`. The default Definition of Done (smoke check, hand check, README/CLAUDE.md, `module.json` compatibility) is added to every task; tick a DoD item that doesn't apply and say why in `--notes`.
 - Columns follow the dev cycle: **To Do → In Progress → Needs smoke → Hand check → Done**, plus **Blocked**. Skip a step that doesn't apply.
   - *In Progress*: being built. Set it when you start.
@@ -67,7 +67,7 @@ tor2eprint/
 │   └── character-print.hbs
 ├── styles/print.css         # Layout + @media print rules; A4 landscape
 ├── lang/en.json             # TOR2EPRINT.* strings
-├── deploy.sh                # rsync deploy to remote Foundry data dir (excludes ref/, node_modules/, backlog/)
+├── deploy.sh                # rsync runtime files (allow-list, --delete) to $DEPLOY_TARGET
 ├── package.json             # Dev tooling only (backlog.md); runtime has no build step
 ├── backlog/                 # Backlog.md tasks, milestones, config
 ├── README.md
@@ -133,7 +133,7 @@ Current shape (keep authors + `flags.hotReload` block when editing):
 
 ## Print Layout Rules
 
-- One actor = one logical page. `@page { size: A4 landscape; margin: 10mm; }` (matches `ref/img/tor2e_img_example.png`).
+- One actor per print; the layout flows and may spill onto a second page (no shrink-to-fit or truncation, decided in task-19). `@page { size: A4 landscape; margin: 10mm; }` (matches `ref/img/tor2e_img_example.png`).
 - Hide Foundry chrome on print using `:has()` selector: `body > *:not(:has(.tor2e-print)) { display: none !important; }` and strip header/resize-handle on the print window.
 - `break-inside: avoid` on each `.tp-block`.
 - No interactive controls in print template — read-only HTML.
@@ -157,7 +157,7 @@ Current shape (keep authors + `flags.hotReload` block when editing):
 
 1. Don't assume schema — confirm field paths against `ref/foundryvtt-tor2e/src/modules/models/actors/*.model.mjs` before reading them.
 2. Minimum code. No drive-by refactors of reference dirs (`ref/` is read-only).
-3. Define acceptance: button renders on actor sheet → click opens print window → window auto-prints → layout fits one A4. Verify in a running v14 instance before reporting done.
+3. Define acceptance: button renders on actor sheet → click opens print window → window auto-prints → typical hero fits one A4 landscape page (long heroes may flow onto page 2). Verify in a running v14 instance before reporting done.
 4. Surface tradeoffs when picking layout (single-page squeeze vs multi-page) — ask before deciding.
 
 ## Development Workflow
@@ -174,13 +174,15 @@ Then enable in **Configuration → Manage Modules** in a world running the `tor2
 
 ### Deploy to remote
 
-`deploy.sh` (git-ignored) rsyncs the module to a remote Foundry data dir, excluding dev-only dirs:
+`deploy.sh` (tracked) rsyncs only the runtime files (`module.json`, `tor2eprint.mjs`, `modules/`, `templates/`, `styles/`, `lang/`) with `--delete`, so nothing else (`fixtures/`, `backlog/`, `.git/`, docs) reaches the server and removed files don't linger. Target comes from `DEPLOY_TARGET` (env or `.env`, git-ignored); the script fails if unset. Add a runtime folder (e.g. `fonts/`) to the `--include` list and to the `release.yml` zip together.
 
 ```bash
-rsync -azP --exclude ref/ --exclude node_modules/ --exclude backlog/ . vehrka:share/foundrydata_14/Data/modules/tor2eprint/
+DEPLOY_TARGET=host:path/Data/modules/tor2eprint   # in .env
+./deploy.sh -n        # dry run: lists what would be sent/deleted
+npm run deploy
 ```
 
-Edit host/path to match target.
+Deployed `module.json` keeps the `#{VERSION}#` tokens (the release workflow fills them), so a dev deploy shows that as its version.
 
 ### Hot reload
 

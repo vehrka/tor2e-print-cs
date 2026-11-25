@@ -5,7 +5,8 @@
   "description": "Dev tooling for the tor2eprint Foundry VTT module. The module itself has no build step.",
   "scripts": {
     "board": "backlog board",
-    "board:web": "backlog browser"
+    "board:web": "backlog browser",
+    "deploy": "./deploy.sh"
   },
   "devDependencies": {
     "backlog.md": "1.57.4"

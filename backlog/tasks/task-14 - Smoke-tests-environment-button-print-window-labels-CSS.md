@@ -1,0 +1,36 @@
+---
+id: TASK-14
+title: 'Smoke tests: environment, button, print window, labels, CSS'
+status: To Do
+assignee:
+  - '@claude'
+created_date: '2026-11-24T22:13:04Z'
+labels:
+  - tooling
+milestone: m-1
+dependencies:
+  - TASK-13
+priority: high
+ordinal: 7000
+---
+
+## Description
+
+<!-- SECTION:DESCRIPTION:BEGIN -->
+Source: PRPs/improvements-from-dh-print.md DH-6 (part 1). In tests/smoke.mjs, port DH checks (~/1_projects/101_dev/101.33_fvtt-dh-print-ch/tests/smoke.mjs) that map onto TOR: Environment: module active; game.system.id === 'tor2e'; running system version === module.json relationships.systems[0].compatibility.verified (catches unverified system upgrades). Button: Hooks.callAll('getHeaderControlsApplicationV2', { document }, controls) with a character (control present) and an adversary (absent); render the real sheet and confirm [data-action="tor2eprint-btn"] is in the header. Print window: stub window.print with a counter, click the control, confirm the window opens for that actor and print() runs exactly once. No raw keys: /TOR2EPRINT\.|tor2e\./.test(win.element.textContent) === false. Print CSS loaded: walk document.styleSheets incl. @layer/@import grouping rules and assert the @media print chrome-hiding selector exists (DH check K10). Once this lands, the 'Needs smoke' column and DoD item 1 become active; update CLAUDE.md to say so.
+<!-- SECTION:DESCRIPTION:END -->
+
+## Acceptance Criteria
+<!-- AC:BEGIN -->
+- [ ] #1 Each listed check exists in tests/smoke.mjs and passes via npm run smoke
+- [ ] #2 Version check fails when running tor2e != verified (shown once by temporarily editing verified)
+- [ ] #3 CLAUDE.md Tasks section no longer says smoke tooling is missing
+<!-- AC:END -->
+
+## Definition of Done
+<!-- DOD:BEGIN -->
+- [ ] #1 Check in tests/smoke.mjs; `npm run smoke` passes (skip until the smoke tooling exists)
+- [ ] #2 Hand check in a v14 + tor2e world if the change has UI: button shows, window opens and prints once, clean preview, no raw `tor2e.*` keys, no console errors
+- [ ] #3 README.md and CLAUDE.md (Status, schema notes) updated in the same commit
+- [ ] #4 module.json `compatibility` / `relationships` updated if the tested Foundry or tor2e build changed; release tag noted if it ships
+<!-- DOD:END -->
