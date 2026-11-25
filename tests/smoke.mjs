@@ -36,7 +36,8 @@ const printWindows = () => [...foundry.applications.instances.values()]
     .filter(a => a.constructor.name === 'Tor2eCharacterPrint' && a.actor === hero);
 const realPrint = window.print;
 let prints = 0;
-window.print = () => { prints++; };
+let imagesSettled = null;
+window.print = () => { prints++; imagesSettled = [...document.querySelectorAll('.tor2e-print img')].every(i => i.complete); };
 try {
     control?.click();
     await wait(800);
@@ -52,6 +53,7 @@ try {
         if (win.element.querySelector('.tor2e-print') && win.element.querySelector(`[data-format="${f}"].active`)) shown.push(f);
     }
     check('P5', 'each format renders, marked active, prints once per pick', `${shown.join(',')}|${prints}`, `${formats.join(',')}|${formats.length}`);
+    check('P9', 'print waits until every image settled (Arvegil portrait 404s: decode fails, print still runs)', imagesSettled, true);
     win.element.querySelector('[data-action="format"]').click();
     await wait(600);
     await win.render();
