@@ -109,7 +109,12 @@ function buildFormFields(actor, { weapons, equipment, proficiencies }) {
     injury: wounded && num(s.stateOfHealth?.wounded?.value) > 0 ? num(s.stateOfHealth.wounded.value) : null,
     endurance: { value: num(s.resources?.endurance?.value), max: num(s.resources?.endurance?.max) },
     hope: { value: num(s.resources?.hope?.value), max: num(s.resources?.hope?.max) },
-    load: { items: itemLoad, fatigue: num(s.resources?.travelLoad?.value) },
+    // Total = sheet's Load badge: fatigue + item load, minus the load setting and Active Effect bonus.
+    load: {
+      items: itemLoad,
+      fatigue: num(s.resources?.travelLoad?.value),
+      total: actor.extendedData?.getLoad?.() ?? itemLoad + num(s.resources?.travelLoad?.value)
+    },
     shadow: { temporary: num(s.resources?.shadow?.temporary?.value), scars: num(s.resources?.shadow?.shadowScars?.value) },
     gear: { armour: gearRow(armour), helm: gearRow(helm), shield: gearRow(shield) },
     parry: { base: parryBase, shield: shieldValue, total: parryBonus + shieldValue },

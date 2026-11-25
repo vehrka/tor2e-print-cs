@@ -130,6 +130,12 @@
       <div class="tp-resource-cell">
         <h3>{{localize "tor2e.actors.stats.endurance"}}</h3>
         <div class="tp-resource-big">{{resources.endurance.max}}</div>
+        <div class="tp-resource-sub tp-resource-sub-bottom">
+          <span>{{localize "tor2e.actors.stats.current"}}: {{endurance.value}}</span>
+          <span>{{localize "tor2e.actors.stats.load"}}: {{load.items}}</span>
+          <span>{{localize "tor2e.actors.stats.travelLoad"}}: {{load.fatigue}}</span>
+          <span>{{localize "tor2e.actors.stats.totalLoad"}}: {{load.total}}</span>
+        </div>
       </div>
       <div class="tp-resource-cell">
         <h3>{{localize "tor2e.actors.stats.hope"}}</h3>

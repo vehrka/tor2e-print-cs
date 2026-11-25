@@ -161,6 +161,16 @@ check('C18', 'slots(): weapons 4, useful items 6, short and long lists padded/cu
         '3:0 Rewards,Virtues,Distinctive Features / Rewards,Virtues,Distinctive Features,Flaws');
 }
 
+// Classic endurance block (task-7): current, item load, fatigue, total load (sheet values, task-22 notes).
+{
+    const CLASSIC = `modules/${MODULE_ID}/templates/actors/character-print.hbs`;
+    const el = Object.assign(document.createElement('div'), { innerHTML: await foundry.applications.handlebars.renderTemplate(CLASSIC, fh) });
+    const cell = [...el.querySelectorAll('.tp-resource-cell')].find(c => c.querySelector('h3')?.textContent.trim() === 'Endurance');
+    check('T6', 'classic endurance: max, current, load, fatigue, total load (Hakkon)',
+        [...cell.querySelectorAll('.tp-resource-big, .tp-resource-sub span')].map(e => e.textContent.trim()).join(' | '),
+        '27 | Current: 27 | Load: 20 | Fatigue: 0 | Total Load: 22');
+}
+
 // Form layout template (task-24), Arvegil plus a magical skill and a Poisoned/Wounded state.
 {
     const FORM = `modules/${MODULE_ID}/templates/actors/character-print-form.hbs`;
