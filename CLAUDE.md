@@ -194,6 +194,16 @@ Port 30001 (DH dev uses 30002). Smoke results are `{id, what, actual, expected, 
 
 `npm run smoke` first imports any `fixtures/` hero missing from the world (by name, ids kept), resets `tor2e.systemMigrationVersion` and reloads, so tor2e world migrations run on them. Fixture portraits/item images point at another world and 404; that is expected. Checks: environment (incl. running tor2e == `verified`), print control on character vs adversary, header button, print window opens and prints once, no raw keys, print CSS loaded. In v14 the `getHeaderControlsApplicationV2` entry lives in the collapsed overflow menu, so the header button the smoke clicks is the `renderActorSheetV2` fallback.
 
+### On a system upgrade (new tor2e release)
+
+The print reads legacy `{value}` schema blocks and a few tor2e internals (`extendedData._getItemLoad/getLoad/getParryBonus`, status ids, `CONFIG.tor2e.constants`), so check every release before bumping `verified`:
+
+1. Read the release notes and any new `src/modules/migration/Tor2eMigration-X.Y.Z.js` in the tor2e repo.
+2. Pin the reference to the new tag: `git -C ref/foundryvtt-tor2e fetch --tags && git -C ref/foundryvtt-tor2e checkout vX.Y.Z`; `git -C ref/foundryvtt-tor2e describe --tags` must print it. From scratch: `git clone https://gitlab.com/herve.darritchon/foundryvtt-tor2e.git ref/foundryvtt-tor2e && git -C ref/foundryvtt-tor2e checkout vX.Y.Z`.
+3. Diff the paths the module reads: `git -C ref/foundryvtt-tor2e diff vOLD..vX.Y.Z -- src/modules/models src/modules/documents/actor-document.mjs src/modules/applications/sheets/character-sheet.mjs src/modules/effects/status-effects.js src/modules/config.js src/modules/utilities.js src/lang/en.json`, then grep each `system.*` path and `tor2e.*` key used in `modules/`, `templates/` against the new source.
+4. Update the local system (`.foundry-data/Data/systems/tor2e`, see one-time setup), restart `npm run foundry` (migrations run on launch), then `npm run smoke`: S2 fails until `verified` is bumped; every other check must pass. Print both formats to PDF for one hero and look at them.
+5. Bump `relationships.systems[0].compatibility.verified` in `module.json`, the *Depends on system* line here and README, restart Foundry (the manifest is cached) and rerun the smoke.
+
 ### Deploy to remote
 
 `deploy.sh` (tracked) rsyncs only the runtime files (`module.json`, `tor2eprint.mjs`, `modules/`, `fonts/`, `templates/`, `styles/`, `lang/`) with `--delete`, so nothing else (`fixtures/`, `backlog/`, `.git/`, docs) reaches the server and removed files don't linger. Target comes from `DEPLOY_TARGET` (env or `.env`, git-ignored); the script fails if unset. Add a runtime folder (e.g. `fonts/`) to the `--include` list and to the `release.yml` zip together.
