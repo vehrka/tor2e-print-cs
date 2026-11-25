@@ -10,7 +10,7 @@
   "languages": [{ "lang": "en", "name": "English", "path": "lang/en.json" }],
   "relationships": {
     "systems": [
-      { "id": "tor2e", "type": "system", "compatibility": { "minimum": "6.0.0", "verified": "6.1.0" } }
+      { "id": "tor2e", "type": "system", "compatibility": { "minimum": "6.0.0", "verified": "6.3.0" } }
     ]
   },
   "url": "#{URL}#",

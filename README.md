@@ -7,7 +7,7 @@ Click the **print** icon in any character sheet's window header → opens a prin
 ## Requirements
 
 - Foundry VTT **v14**
-- `tor2e` system **≥ 6.0.0** (verified 6.1.0)
+- `tor2e` system **≥ 6.0.0** (verified 6.3.0)
 
 ## Install
 

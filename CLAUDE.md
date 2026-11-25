@@ -6,7 +6,7 @@ Foundry VTT v14 **module** that adds a print-optimized character-sheet layout fo
 
 - **Module id:** `tor2eprint` (folder name must match)
 - **Target:** Foundry VTT v14 (minimum 14)
-- **Depends on system:** `tor2e` (>= 6.0.0, verified 6.1.0)
+- **Depends on system:** `tor2e` (>= 6.0.0, verified 6.3.0)
 - **Language:** Plain JavaScript ESM (`.mjs`) — no TypeScript, no bundler, no build step
 - **Type:** Foundry **module** (not a system) — installs alongside the `tor2e` system
 
@@ -14,7 +14,7 @@ Foundry VTT v14 **module** that adds a print-optimized character-sheet layout fo
 
 | Path | Purpose |
 |------|---------|
-| `ref/foundryvtt-tor2e/` | **Authoritative** TOR2e system source — actor models, sheets, templates, `src/system.json`, `src/template.json` are the schema reference |
+| `ref/foundryvtt-tor2e/` | **Authoritative** TOR2e system source — actor models, sheets, templates, `src/system.json`, `src/template.json` are the schema reference. Keep it pinned to the verified release tag, not `develop`: `git -C ref/foundryvtt-tor2e fetch --tags && git -C ref/foundryvtt-tor2e checkout vX.Y.Z` (check with `git -C ref/foundryvtt-tor2e describe --tags`) |
 | `ref/starwarsd6/modules/apps/character-print.mjs` | **Primary print-pattern reference** — ApplicationV2 + HandlebarsApplicationMixin, auto `window.print()` on first render |
 | `ref/starwarsd6/modules/apps/npc-print.mjs` | NPC print variant reference |
 | `ref/starwarsd6/templates/actors/` | Print Handlebars template reference (`character-sheet-print.hbs`, `npc-sheet-print.hbs`) |
@@ -123,7 +123,7 @@ Current shape (keep authors + `flags.hotReload` block when editing):
   "languages": [{ "lang": "en", "name": "English", "path": "lang/en.json" }],
   "relationships": {
     "systems": [
-      { "id": "tor2e", "type": "system", "compatibility": { "minimum": "6.0.0", "verified": "6.1.0" } }
+      { "id": "tor2e", "type": "system", "compatibility": { "minimum": "6.0.0", "verified": "6.3.0" } }
     ]
   },
   "flags": {
@@ -202,7 +202,7 @@ Deployed `module.json` keeps the `#{VERSION}#` tokens (the release workflow fill
 
 ### Hot reload
 
-`module.json` declares `flags.hotReload` for `hbs`, `css`, `json` under `templates/`, `styles/`, `lang/`. Edits propagate live without restarting Foundry.
+`module.json` declares `flags.hotReload` for `hbs`, `css`, `json` under `templates/`, `styles/`, `lang/`. Edits propagate live without restarting Foundry. `module.json` changes (e.g. `verified`) need a Foundry restart: the server caches the manifest.
 
 ### Verification checklist (run before "done")
 
