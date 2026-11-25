@@ -308,9 +308,17 @@ export class Tor2eCharacterPrint extends HandlebarsApplicationMixin(ApplicationV
     super._onRender?.(context, options);
     if (!this.#printPending) return;
     this.#printPending = false;
-    const win = this.element?.ownerDocument?.defaultView ?? window;
+    this.#printWhenReady();
+  }
+
+  /** Print once fonts are loaded and every image has decoded (or failed), so the portrait makes it to paper. */
+  async #printWhenReady() {
+    const doc = this.element?.ownerDocument ?? document;
+    const images = [...(this.element?.querySelectorAll("img") ?? [])];
+    await Promise.all([doc.fonts.ready, Promise.allSettled(images.map((img) => img.decode()))]);
     // Let the browser lay out the new part before the print dialog snapshots it.
-    setTimeout(() => win.print(), 200);
+    const win = doc.defaultView ?? window;
+    win.requestAnimationFrame(() => win.print());
   }
 
   static #onFormat(event, target) {
