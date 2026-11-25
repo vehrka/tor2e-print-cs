@@ -1,11 +1,11 @@
 ---
 id: TASK-6
 title: 'Decide: split traits into Distinctive Features and Flaws'
-status: Hand check
+status: Done
 assignee:
   - '@claude'
 created_date: '2026-11-24T21:58:31Z'
-updated_date: '2026-11-25T21:40:31Z'
+updated_date: '2026-11-25T22:04:14Z'
 labels:
   - template
   - idea
@@ -31,7 +31,7 @@ Source: PRPs/improvements-from-tor2e-6.3.md U3. After the 6.2.2 migration trait.
 ## Definition of Done
 <!-- DOD:BEGIN -->
 - [x] #1 Check in tests/smoke.mjs; `npm run smoke` passes (skip until the smoke tooling exists)
-- [ ] #2 Hand check in a v14 + tor2e world if the change has UI: button shows, window opens and prints once, clean preview, no raw `tor2e.*` keys, no console errors
+- [x] #2 Hand check in a v14 + tor2e world if the change has UI: button shows, window opens and prints once, clean preview, no raw `tor2e.*` keys, no console errors
 - [x] #3 README.md and CLAUDE.md (Status, schema notes) updated in the same commit
 - [x] #4 module.json `compatibility` / `relationships` updated if the tested Foundry or tor2e build changed; release tag noted if it ships
 <!-- DOD:END -->
@@ -40,4 +40,6 @@ Source: PRPs/improvements-from-tor2e-6.3.md U3. After the 6.2.2 migration trait.
 
 <!-- SECTION:NOTES:BEGIN -->
 Classic: traitGroups.{features,flaws} (non-flaw = feature), headings tor2e.actors.traits.{distinctiveFeatures,flaws}, each list hidden when empty; TOR2EPRINT.Sections.Traits removed. None of the fixtures has a flaw (all migrated to distinctiveFeature), so smoke T5 also renders with a synthetic flaw. Fit checks unchanged.
+
+Hand check passed in a v14 + tor2e world (user, 2026-11-25).
 <!-- SECTION:NOTES:END -->

@@ -1,11 +1,11 @@
 ---
 id: TASK-26
 title: Bundle Uncial Antiqua font for form layout
-status: Hand check
+status: Done
 assignee:
   - '@claude'
 created_date: '2026-11-24T22:15:44Z'
-updated_date: '2026-11-25T21:39:22Z'
+updated_date: '2026-11-25T22:04:14Z'
 labels:
   - css
   - release
@@ -33,7 +33,7 @@ Source: PRPs/new-layout-cs-v1.md (target image ref/img/new_cs_v1.jpg). D8. Bundl
 ## Definition of Done
 <!-- DOD:BEGIN -->
 - [x] #1 Check in tests/smoke.mjs; `npm run smoke` passes (skip until the smoke tooling exists)
-- [ ] #2 Hand check in a v14 + tor2e world if the change has UI: button shows, window opens and prints once, clean preview, no raw `tor2e.*` keys, no console errors
+- [x] #2 Hand check in a v14 + tor2e world if the change has UI: button shows, window opens and prints once, clean preview, no raw `tor2e.*` keys, no console errors
 - [x] #3 README.md and CLAUDE.md (Status, schema notes) updated in the same commit
 - [x] #4 module.json `compatibility` / `relationships` updated if the tested Foundry or tor2e build changed; release tag noted if it ships
 <!-- DOD:END -->
@@ -42,4 +42,6 @@ Source: PRPs/new-layout-cs-v1.md (target image ref/img/new_cs_v1.jpg). D8. Bundl
 
 <!-- SECTION:NOTES:BEGIN -->
 Downloaded from github.com/google/fonts ofl/uncialantiqua (UncialAntiqua-Regular.ttf + OFL.txt); OFL.txt header: Copyright 2011 Brian J. Bonislawsky (Astigmatic), 'licensed under the SIL Open Font License, Version 1.1', RFN 'Uncial Antiqua'. Stored under fonts/uncial-antiqua/ (subfolder so Cinzel's OFL.txt won't collide in task-20). @font-face font-display: block, local url; used on .tp-form .tf-h headings (fallback tor2e Aniron). fonts/ added to deploy.sh allow-list and release.yml zip. Print already waits for document.fonts.ready (task-10). Smoke K2: face loaded, file served by module. Visual check on headless PDF. Hand check: confirm headings in a real print preview.
+
+Hand check passed in a v14 + tor2e world (user, 2026-11-25).
 <!-- SECTION:NOTES:END -->

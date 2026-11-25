@@ -1,11 +1,11 @@
 ---
 id: TASK-8
 title: Print enriched links and inline rolls as plain text
-status: Hand check
+status: Done
 assignee:
   - '@claude'
 created_date: '2026-11-24T22:13:03Z'
-updated_date: '2026-11-25T21:14:16Z'
+updated_date: '2026-11-25T22:04:06Z'
 labels:
   - css
 milestone: m-1
@@ -23,13 +23,13 @@ Source: PRPs/improvements-from-dh-print.md DH-2. styles/print.css has no rule fo
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
 - [x] #1 Both rules exist in styles/print.css scoped to .tor2e-print
-- [ ] #2 Hand check: a @UUID link and an inline roll in history/item description print as bold plain text, no pill, no icon
+- [x] #2 Hand check: a @UUID link and an inline roll in history/item description print as bold plain text, no pill, no icon
 <!-- AC:END -->
 
 ## Definition of Done
 <!-- DOD:BEGIN -->
 - [x] #1 Check in tests/smoke.mjs; `npm run smoke` passes (skip until the smoke tooling exists)
-- [ ] #2 Hand check in a v14 + tor2e world if the change has UI: button shows, window opens and prints once, clean preview, no raw `tor2e.*` keys, no console errors
+- [x] #2 Hand check in a v14 + tor2e world if the change has UI: button shows, window opens and prints once, clean preview, no raw `tor2e.*` keys, no console errors
 - [x] #3 README.md and CLAUDE.md (Status, schema notes) updated in the same commit
 - [x] #4 module.json `compatibility` / `relationships` updated if the tested Foundry or tor2e build changed; release tag noted if it ships
 <!-- DOD:END -->
@@ -38,4 +38,6 @@ Source: PRPs/improvements-from-dh-print.md DH-2. styles/print.css has no rule fo
 
 <!-- SECTION:NOTES:BEGIN -->
 Smoke P7 (red without rule: Foundry pill bg rgba(11,10,19,.9), icon inline-block; green with it). AC2 proxy only: probe elements inside .tor2e-print; real @UUID/inline roll in a printed history still to hand check. No doc change needed; DoD4 n/a.
+
+Hand check passed in a v14 + tor2e world (user, 2026-11-25).
 <!-- SECTION:NOTES:END -->
