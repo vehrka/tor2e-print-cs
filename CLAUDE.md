@@ -26,7 +26,7 @@ Foundry VTT v14 **module** that adds a print-optimized character-sheet layout fo
 
 ## Status
 
-- **v0.2 implemented:** `character` actor type only; targets Foundry v14 + tor2e 6.x. Files in repo root: `module.json`, `tor2eprint.mjs`, `modules/apps/character-print.mjs`, `templates/actors/character-print.hbs`, `styles/print.css`, `lang/en.json`, `README.md`, `deploy.sh`. Print window has a format toolbar (one format: classic, A4 landscape) and prints once per pick. Print context covers attributes, stature, resources, conditions, common skills (by attribute, with pips/favoured/magical), combat proficiencies, weapons, armour, equipment (`miscellaneous` items), virtues, rewards, traits, biography, history.
+- **v0.2 implemented:** `character` actor type only; targets Foundry v14 + tor2e 6.x. Files in repo root: `module.json`, `tor2eprint.mjs`, `modules/apps/character-print.mjs`, `templates/actors/character-print.hbs`, `styles/print.css`, `lang/en.json`, `README.md`, `deploy.sh`. Print window has a format toolbar (one format: classic, A4 landscape) and prints once per pick. Print context covers attributes, stature, resources, conditions, common skills (by attribute, with pips/favoured/magical), combat proficiencies, weapons, armour, equipment (`miscellaneous` items), virtues, rewards, traits, biography, history; plus form-layout fields (`buildFormFields`: points, treasure, distinctive features, conditions from `actor.statuses`, injury, load, shadow, gear, parry, protection, fixed slots).
 - **Not implemented:** `adversary`, `npc`, `community`, `lore` print variants. Defer until requested.
 - Open work lives in `backlog/`, not here. Keep this section to what is built.
 

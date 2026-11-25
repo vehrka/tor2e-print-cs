@@ -29,6 +29,75 @@ async function enrich(html, relativeTo, rollData) {
   return foundry.applications.ux.TextEditor.implementation.enrichHTML(String(html), { relativeTo, rollData, secrets: false });
 }
 
+/** Fixed combat proficiency order on the form layout (alphabetical, as on the printed sheet). */
+const FORM_PROFICIENCIES = ["axes", "bows", "spears", "swords"];
+
+/**
+ * Exactly `n` entries: the first `n` items, then `{ empty: true }` placeholders (blank lines to write on).
+ * @param {object[]} list
+ * @param {number} n
+ */
+function slots(list, n) {
+  return Array.from({ length: n }, (_, i) => list[i] ?? { empty: true });
+}
+
+/**
+ * Extra fields for the form layout. Sources confirmed at runtime against the tor2e 6.3.0 sheet (task-22).
+ * @param {Actor} actor
+ * @param {object} base  the classic context (weapons, equipment, proficiencies)
+ */
+function buildFormFields(actor, { weapons, equipment, proficiencies }) {
+  const s = actor.system;
+  const K = CONFIG.tor2e?.constants ?? {};
+  const num = (v) => Number(v) || 0;
+
+  // First equipped armour item per group, like the sheet (mail before leather).
+  const equipped = actor.items.filter((i) => i.type === "armour" && i.system.equipped?.value === true);
+  const inGroup = (...groups) => equipped.find((i) => groups.includes(i.system.group?.value));
+  const gearRow = (item) => item
+    ? { name: item.name, protection: num(item.system.protection?.value), load: num(item.system.load?.value) }
+    : { empty: true };
+  const armour = inGroup(K.mailArmour ?? "mail") ?? inGroup(K.leatherArmour ?? "leather");
+  const helm = inGroup(K.headgear ?? "head");
+  const shield = inGroup(K.shield ?? "shield");
+
+  // Item load: every not-dropped item with load. extendedData is tor2e internal: fall back to the same sum.
+  const itemLoad = actor.extendedData?._getItemLoad?.()
+    ?? actor.items.filter((i) => !i.system.dropped?.value).reduce((n, i) => n + Math.max(0, num(i.system.load?.value)), 0);
+
+  // Parry: base + Active Effect shield bonus (getParryBonus) + equipped shield.
+  const parryBase = num(s.combatAttributes?.parry?.value);
+  const parryBonus = actor.extendedData?.getParryBonus?.() ?? parryBase + num(s.bonuses?.defense?.shieldParry);
+  const shieldValue = num(shield?.system.protection?.value);
+
+  // Conditions from token statuses: system.stateOfHealth.* goes stale (task-22).
+  const has = (id) => actor.statuses?.has(id) ?? false;
+  const wounded = has("wounded");
+
+  const byKey = Object.fromEntries(proficiencies.map((p) => [p.key, p]));
+
+  return {
+    points: { adventure: num(s.adventurePoints?.value), skill: num(s.skillPoints?.value) },
+    treasure: num(s.treasure?.value),
+    distinctiveFeatures: actor.items
+      .filter((i) => i.type === "trait" && i.system.group?.value === (K.distinctiveFeature ?? "distinctiveFeature"))
+      .map((i) => i.name),
+    conditions: { weary: has("weary"), miserable: has("miserable"), wounded, poisoned: has("poisoned") },
+    // Wounded value = injury duration the Wounded effect carries; print it only while wounded.
+    injury: wounded && num(s.stateOfHealth?.wounded?.value) > 0 ? num(s.stateOfHealth.wounded.value) : null,
+    endurance: { value: num(s.resources?.endurance?.value), max: num(s.resources?.endurance?.max) },
+    hope: { value: num(s.resources?.hope?.value), max: num(s.resources?.hope?.max) },
+    load: { items: itemLoad, fatigue: num(s.resources?.travelLoad?.value) },
+    shadow: { temporary: num(s.resources?.shadow?.temporary?.value), scars: num(s.resources?.shadow?.shadowScars?.value) },
+    gear: { armour: gearRow(armour), helm: gearRow(helm), shield: gearRow(shield) },
+    parry: { base: parryBase, shield: shieldValue, total: parryBonus + shieldValue },
+    protection: num(armour?.system.protection?.value) + num(helm?.system.protection?.value),
+    formProficiencies: FORM_PROFICIENCIES.map((k) => byKey[k]).filter(Boolean),
+    weaponSlots: slots(weapons, 4),
+    usefulItems: slots(equipment, 6)
+  };
+}
+
 async function buildCharacterContext(actor) {
   const s = actor.system;
 
@@ -122,7 +191,7 @@ async function buildCharacterContext(actor) {
     simpleItems("trait")
   ]);
 
-  return {
+  const base = {
     actor,
     system: s,
     name: actor.name,
@@ -151,6 +220,7 @@ async function buildCharacterContext(actor) {
     rewards,
     traits
   };
+  return Object.assign(base, buildFormFields(actor, base));
 }
 
 /**
