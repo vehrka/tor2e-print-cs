@@ -53,6 +53,39 @@ try {
     await sheet.close();
 }
 
+// Print context mapper (Tor2eCharacterPrint._prepareContext), compared with the fixture heroes.
+const FIXTURES = ['Adelbard Tuck-Baggings', 'Arvegil', 'Gartphen', 'Hakkon Finnsson', 'Hans Grimald', 'Otrebør', 'Smoke Effect'];
+const OVERLONG = game.actors.find(a => a.name.startsWith('Smoke Overlong'))?.name;
+const missing = [...FIXTURES, OVERLONG].filter(n => game.actors.getName(n ?? '')?.type !== 'character');
+check('F1', 'all fixture heroes present', missing.join(', ') || 'all', 'all');
+const { Tor2eCharacterPrint } = await import(`/modules/${MODULE_ID}/modules/apps/character-print.mjs?${Date.now()}`);
+const contextOf = async name => new Tor2eCharacterPrint({ document: game.actors.getName(name) })._prepareContext({});
+const names = list => (list ?? []).map(x => x.name).join(', ');
+const attrs = c => Object.entries(c.attributes).map(([k, v]) => `${k}:${v.value}/${v.tn}`).join(' ');
+const skills = c => c.skills.map(s => `${s.key}:${s.value}${s.favoured ? '*' : ''}${s.magical ? 'M' : ''}`).join(' ');
+const ca = await contextOf('Arvegil');
+check('C0', 'Arvegil identity', [ca.name, ca.callingLabel, ca.standardOfLivingLabel].join('|'), 'Arvegil|Messenger|Frugal');
+check('C1', 'Arvegil attributes (rating/TN)', attrs(ca), 'strength:8/12 heart:5/15 wits:2/18');
+check('C2', 'Arvegil skills (pips, *favoured)', skills(ca),
+    'awe:1* enhearten:1 persuade:0 athletics:2 travel:2* stealth:2* awareness:2 insight:0 scan:1 explore:2 healing:2 hunting:2* song:0 courtesy:0 riddle:0 craft:0 battle:3* lore:2');
+check('C3', 'Arvegil skill pips filled = value', ca.skills.every(s => s.pips.filter(p => p.filled).length === s.value), true);
+check('C4', 'Arvegil combat proficiencies', ca.proficiencies.map(p => `${p.key}:${p.value}`).join(' '), 'axes:1 swords:0 spears:3 bows:0');
+check('C5', 'Arvegil weapons (dmg/inj/load)', ca.weapons.map(w => `${w.name}|${w.damage}|${w.injury}|${w.load}`).join('; '),
+    'Spear (1h) (G)|5|14|3; Spear (2h) (G)|5|16|0; Dagger|2|14|0');
+check('C6', 'Arvegil armour (prot/load)', ca.armours.map(a => `${a.name}|${a.protection}|${a.load}`).join('; '), 'Leather Corslet|2|6; Helm|1|4');
+check('C7', 'Arvegil virtues / rewards / traits', `${names(ca.virtues)} / ${names(ca.rewards)} / ${names(ca.traits)}`,
+    'MASTERY / GRIEVOUS (WEAPON) / BOLD, SUBTLE, FOLK-LORE');
+check('C8', 'Arvegil endurance / hope / valour+wisdom',
+    [`${ca.resources.endurance.value}/${ca.resources.endurance.max}`, `${ca.resources.hope.value}/${ca.resources.hope.max}`, `${ca.stature.valour.value}/${ca.stature.wisdom.value}`].join(' '), '28/28 11/11 1/1');
+const co = await contextOf('Otrebør');
+check('C9', 'Otrebør (non-ASCII) name, attributes, weapons', [co.name, attrs(co), names(co.weapons)].join('|'),
+    'Otrebør|strength:6/14 heart:4/16 wits:5/15|Bow, Dagger, Spear (1h) [K], Spear (2h)');
+const cad = await contextOf('Adelbard Tuck-Baggings');
+check('C10', 'Adelbard item AE: Hope max prepared (16), not _source (15)', cad.resources.hope.max, 16);
+const ce = await contextOf('Smoke Effect');
+check('C11', 'actor AE on attribute + skill: print shows prepared value (Wits 3/TN 17, Lore 3)',
+    `${ce.attributes.wits.value}/${ce.attributes.wits.tn} ${ce.skills.find(s => s.key === 'lore').value}`, '3/17 3');
+
 // Print CSS loaded. Foundry may wrap module styles in @layer/@import; walk grouping rules down to @media print.
 const walk = (rules, inPrint = false) => [...rules].flatMap(r => {
     if (r instanceof CSSImportRule) return r.styleSheet ? walk(r.styleSheet.cssRules, inPrint) : [];
@@ -62,5 +95,11 @@ const walk = (rules, inPrint = false) => [...rules].flatMap(r => {
 });
 const printRules = [...document.styleSheets].flatMap(s => { try { return walk(s.cssRules); } catch { return []; } });
 check('K0', 'print CSS hides Foundry chrome', printRules.some(s => s?.includes(':not(:has(.tor2e-print))')), true);
+
+// Fit (tools/smoke.mjs prints each to PDF): real heroes fit one page; the overlong hero may flow (task-19), reported only.
+export const pdfChecks = [
+    ...FIXTURES.map((actor, i) => ({ id: `G${i}`, what: `${actor} prints on one page`, actor, pages: 1 })),
+    { id: 'G9', what: 'overlong hero page count', actor: OVERLONG, pages: null }
+];
 
 export default results;

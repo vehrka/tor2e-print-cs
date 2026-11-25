@@ -55,7 +55,43 @@ try {
     }), MODULE_ID);
     console.log(`Logged in as ${SMOKE_USER} · core ${env.core} · system ${env.system} · ${MODULE_ID} ${env.module}`);
 
-    const results = await page.evaluate(async id => (await import(`/modules/${id}/tests/smoke.mjs?${Date.now()}`)).default, MODULE_ID);
+    const { results, pdfChecks } = await page.evaluate(async id => {
+        const m = await import(`/modules/${id}/tests/smoke.mjs?${Date.now()}`);
+        return { results: m.default, pdfChecks: m.pdfChecks ?? [] };
+    }, MODULE_ID);
+
+    // Print fit: open each actor's print window, print it to PDF with the print CSS and count pages.
+    // pdfChecks: [{ id, what, actor, pages }]; pages: expected page count, or null to report only.
+    for (const c of pdfChecks) {
+        await page.evaluate(async name => {
+            window.print = () => {};
+            const controls = [];
+            Hooks.callAll('getHeaderControlsApplicationV2', { document: game.actors.getName(name) }, controls);
+            controls.find(x => x.action === 'tor2eprint-btn').onClick();
+            await new Promise(r => setTimeout(r, 1000));
+            await Promise.allSettled([...document.querySelectorAll('.tor2e-print img')].map(i => i.decode()));
+        }, c.actor);
+        await page.emulateMedia({ media: 'print' });
+        // A clipping ancestor (Foundry's fixed body/window) would cut the sheet and fake a one-page fit.
+        const clipped = await page.evaluate(() => {
+            const root = document.querySelector('.tor2e-print');
+            const out = [];
+            for (let el = root.parentElement; el; el = el.parentElement)
+                if (getComputedStyle(el).overflowY !== 'visible' && el.scrollHeight > el.clientHeight + 1)
+                    out.push(el.tagName.toLowerCase() + (el.className ? '.' + [...el.classList].join('.') : ''));
+            return out;
+        });
+        const pdf = await page.pdf({ preferCSSPageSize: true });
+        await page.emulateMedia({ media: null });
+        await page.evaluate(async () => {
+            for (const a of [...foundry.applications.instances.values()])
+                if (a.element?.querySelector('.tor2e-print')) await a.close();
+        });
+        const pages = (pdf.toString('latin1').match(/\/Type\s*\/Page(?!s)/g) ?? []).length;
+        const actual = clipped.length ? `${pages}, clipped by ${clipped.join(' < ')}` : pages;
+        results.push({ ...c, actual, expected: c.pages ?? 'not clipped', pass: clipped.length ? false : c.pages == null ? null : pages === c.pages });
+    }
+
     for (const r of results) {
         const mark = r.pass === true ? 'PASS' : r.pass === false ? 'FAIL' : 'info';
         console.log(`${mark.padEnd(4)}  ${r.id.padEnd(5)} ${r.what}  →  ${r.actual}${r.pass === false ? `  (expected ${r.expected})` : ''}`);

@@ -1,11 +1,11 @@
 ---
 id: TASK-15
 title: 'Smoke tests: fixture heroes, context values, fits-one-page'
-status: To Do
+status: In Progress
 assignee:
   - '@claude'
 created_date: '2026-11-24T22:13:04Z'
-updated_date: '2026-11-25T06:55:56Z'
+updated_date: '2026-11-25T21:02:51Z'
 labels:
   - tooling
 milestone: m-1
